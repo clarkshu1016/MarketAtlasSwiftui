@@ -58,6 +58,8 @@ jobs:
             -configuration Debug \
             -destination "generic/platform=iOS" \
             -archivePath $RUNNER_TEMP/MarketAtlas.xcarchive \
+            CODE_SIGN_STYLE=Manual \
+            DEVELOPMENT_TEAM=AY6Y6KCP7Y \
             "CODE_SIGN_IDENTITY=Apple Distribution" \
             OTHER_CODE_SIGN_FLAGS="--keychain $RUNNER_TEMP/signing.keychain-db"
 
