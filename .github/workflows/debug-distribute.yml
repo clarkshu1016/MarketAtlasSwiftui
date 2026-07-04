@@ -56,10 +56,13 @@ jobs:
             -project MarketAtlas.xcodeproj \
             -scheme MarketAtlas \
             -configuration Debug \
+            -destination "generic/platform=iOS" \
             -archivePath $RUNNER_TEMP/MarketAtlas.xcarchive \
             CODE_SIGN_STYLE=Manual \
+            DEVELOPMENT_TEAM=AY6Y6KCP7Y \
             "CODE_SIGN_IDENTITY=Apple Distribution" \
-            "PROVISIONING_PROFILE_SPECIFIER=${{ secrets.PROVISIONING_PROFILE_NAME }}"
+            "PROVISIONING_PROFILE_SPECIFIER=${{ secrets.PROVISIONING_PROFILE_NAME }}" \
+            OTHER_CODE_SIGN_FLAGS="--keychain $RUNNER_TEMP/signing.keychain-db"
 
       # ── 6. Export IPA (Ad Hoc for Firebase distribution) ─────────────
       - name: Export IPA
