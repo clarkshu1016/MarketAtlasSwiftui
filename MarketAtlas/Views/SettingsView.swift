@@ -15,7 +15,15 @@ struct SettingsView: View {
             }
 
             Section("About") {
-                LabeledContent("Version", value: "1.0.0")
+                LabeledContent("Version", value: {
+                    let v = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
+                    let b = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"
+                    #if DEBUG
+                    return "\(v) (\(b)) Debug"
+                    #else
+                    return "\(v) (\(b))"
+                    #endif
+                }())
             }
 
             Section {
