@@ -79,7 +79,7 @@ jobs:
           echo "$FIREBASE_SERVICE_ACCOUNT" > $RUNNER_TEMP/service-account.json
           npm install -g firebase-tools
           export GOOGLE_APPLICATION_CREDENTIALS=$RUNNER_TEMP/service-account.json
-          NOTES="Branch: ${{ github.ref_name }} | Commit: ${{ github.sha }}"
+          NOTES="[${{ github.ref_name }}] $(git log -1 --pretty=%s)"
           firebase appdistribution:distribute $RUNNER_TEMP/ipa/MarketAtlas.ipa \
             --app ${{ secrets.FIREBASE_APP_ID }} \
             --groups "testers" \
