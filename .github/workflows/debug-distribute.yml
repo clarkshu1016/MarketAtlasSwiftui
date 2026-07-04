@@ -59,8 +59,7 @@ jobs:
             -archivePath $RUNNER_TEMP/MarketAtlas.xcarchive \
             CODE_SIGN_STYLE=Manual \
             "CODE_SIGN_IDENTITY=Apple Distribution" \
-            "PROVISIONING_PROFILE_SPECIFIER=${{ secrets.PROVISIONING_PROFILE_NAME }}" \
-            | xcpretty
+            "PROVISIONING_PROFILE_SPECIFIER=${{ secrets.PROVISIONING_PROFILE_NAME }}"
 
       # ── 6. Export IPA (Ad Hoc for Firebase distribution) ─────────────
       - name: Export IPA
