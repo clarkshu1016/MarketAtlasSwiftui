@@ -5,6 +5,22 @@ struct FinancialPoint: Codable {
     let value: Int64
 }
 
+struct QuarterlyPoint: Codable {
+    let year: Int
+    let quarter: Int   // 1-4
+    let value: Int64
+}
+
+struct QuarterlyMetrics: Codable {
+    let cash_on_hand: [QuarterlyPoint]
+}
+
+struct QuarterlyResponse: Codable {
+    let slug: String
+    let ticker: String?
+    let financials: QuarterlyMetrics
+}
+
 struct PricePoint: Codable, Identifiable {
     let timestamp: Int
     let price: Double

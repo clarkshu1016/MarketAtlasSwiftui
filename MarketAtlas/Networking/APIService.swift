@@ -2,7 +2,7 @@ import Foundation
 
 #if DEBUG
   #if targetEnvironment(simulator)
-  private let kBaseURL = "http://localhost:8000"   // Simulator → Mac's localhost
+  private let kBaseURL = "http://127.0.0.1:8000"   // Simulator → Mac's localhost (IPv4 explicit)
   #else
   private let kBaseURL = "http://shuclarknoMacBook-Pro.local:8000" // Physical device → Mac's mDNS hostname (stable)
   #endif
@@ -41,6 +41,11 @@ final class APIService {
     func fetchFinancials(slug: String) async throws -> FinancialResponse {
         let (data, _) = try await URLSession.shared.data(from: base.appendingPathComponent("api/companies/\(slug)/financials"))
         return try decoder.decode(FinancialResponse.self, from: data)
+    }
+
+    func fetchQuarterlyFinancials(slug: String) async throws -> QuarterlyResponse {
+        let (data, _) = try await URLSession.shared.data(from: base.appendingPathComponent("api/companies/\(slug)/financials/quarterly"))
+        return try decoder.decode(QuarterlyResponse.self, from: data)
     }
 
     func fetchPriceHistory(slug: String, range: String = "1y", token: String? = nil) async throws -> PriceHistoryResponse {
@@ -113,6 +118,18 @@ final class APIService {
         req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         let (data, _) = try await URLSession.shared.data(for: req)
         return try decoder.decode(ReturnsResponse.self, from: data)
+    }
+
+    // MARK: - AI Chat
+
+    func sendChatMessage(message: String, history: [ChatMessage]) async throws -> ChatResponse {
+        var req = URLRequest(url: base.appendingPathComponent("api/ai/chat"))
+        req.httpMethod = "POST"
+        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        req.timeoutInterval = 180  // LLM inference can be slow
+        req.httpBody = try JSONEncoder().encode(ChatRequest(message: message, history: history))
+        let (data, _) = try await URLSession.shared.data(for: req)
+        return try decoder.decode(ChatResponse.self, from: data)
     }
 
     // MARK: - AI Screener

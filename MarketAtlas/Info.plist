@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>MarketAtlas uses the microphone to let you ask questions by voice.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>MarketAtlas uses speech recognition to convert your voice to text.</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
