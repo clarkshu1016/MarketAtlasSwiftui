@@ -29,7 +29,7 @@ struct ContentView: View {
             }
             .tabItem { Label("Favourites", systemImage: "star.fill") }
 
-            // ── Chat (centre) ─────────────────────────────────────
+            // ── Chat (center) ─────────────────────────────────────
             ChatView()
                 .tabItem { Label("Chat", systemImage: "sparkles") }
 
