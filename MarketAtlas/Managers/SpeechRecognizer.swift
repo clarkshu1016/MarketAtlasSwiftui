@@ -62,7 +62,7 @@ final class SpeechRecognizer: @unchecked Sendable {
 
         do {
             let session = AVAudioSession.sharedInstance()
-            try session.setCategory(.record, mode: .measurement, options: .allowBluetoothHFP)
+            try session.setCategory(.record, mode: .measurement, options: .allowBluetooth)
             try session.setActive(true, options: .notifyOthersOnDeactivation)
 
             let request = SFSpeechAudioBufferRecognitionRequest()
