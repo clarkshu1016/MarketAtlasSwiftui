@@ -53,9 +53,7 @@ final class SpeechRecognizer: @unchecked Sendable {
         let speechAuth = await withCheckedContinuation { cont in
             SFSpeechRecognizer.requestAuthorization { cont.resume(returning: $0) }
         }
-        let micAuth = await withCheckedContinuation { cont in
-            AVAudioSession.sharedInstance().requestRecordPermission { cont.resume(returning: $0) }
-        }
+        let micAuth = await AVAudioApplication.requestRecordPermission()
 
         guard speechAuth == .authorized, micAuth else {
             DispatchQueue.main.async { self.permissionDenied = true }
@@ -64,7 +62,7 @@ final class SpeechRecognizer: @unchecked Sendable {
 
         do {
             let session = AVAudioSession.sharedInstance()
-            try session.setCategory(.record, mode: .measurement, options: .allowBluetooth)
+            try session.setCategory(.record, mode: .measurement, options: .allowBluetoothHFP)
             try session.setActive(true, options: .notifyOthersOnDeactivation)
 
             let request = SFSpeechAudioBufferRecognitionRequest()
