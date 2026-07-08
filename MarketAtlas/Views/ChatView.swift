@@ -70,7 +70,7 @@ struct ChatView: View {
 
     private let suggestions = [
         "Top 10 by market cap",
-        "Most employees worldwide",
+        "Top companies by employee count",
         "NVIDIA revenue history",
         "Compare Apple vs Microsoft",
         "Highest dividend yield",
