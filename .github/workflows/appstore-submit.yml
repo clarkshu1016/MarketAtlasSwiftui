@@ -20,7 +20,13 @@ jobs:
         with:
           xcode-version: '16.3'
 
-      # ── 3. Auto-increment build number ───────────────────────────────
+      # ── 3. Download iOS Platform ──────────────────────────────────────
+      - name: Download iOS Platform
+        run: |
+          sudo xcodebuild -license accept
+          xcodebuild -downloadPlatform iOS
+
+      # ── 4. Auto-increment build number ───────────────────────────────
       - name: Set build number
         run: |
           BUILD=$(git rev-list --count HEAD)
