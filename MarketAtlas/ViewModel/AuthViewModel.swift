@@ -50,6 +50,37 @@ final class AuthViewModel {
         }
     }
 
+    // MARK: - Sign in with Apple
+
+    @MainActor
+    func signInWithApple(identityToken: String, fullName: String?, email: String?) {
+        Task { await exchangeAppleWithBackend(identityToken: identityToken, fullName: fullName, email: email) }
+    }
+
+    private func exchangeAppleWithBackend(identityToken: String, fullName: String?, email: String?) async {
+        var req = URLRequest(url: APIService.baseURL.appendingPathComponent("auth/apple/native"))
+        req.httpMethod = "POST"
+        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        var body: [String: Any] = ["id_token": identityToken]
+        if let fullName, !fullName.isEmpty { body["full_name"] = fullName }
+        if let email { body["email"] = email }
+        req.httpBody = try? JSONSerialization.data(withJSONObject: body)
+
+        guard
+            let (data, _) = try? await URLSession.shared.data(for: req),
+            let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+            let token = json["token"] as? String
+        else { return }
+
+        let user = json["user"] as? [String: Any]
+        let name  = user?["name"]  as? String
+        let userEmail = user?["email"] as? String
+
+        await MainActor.run {
+            persist(token: token, name: name, email: userEmail, avatar: nil)
+        }
+    }
+
     // MARK: - Delete account
 
     func deleteAccount() async throws {

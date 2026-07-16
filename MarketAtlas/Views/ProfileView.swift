@@ -1,3 +1,4 @@
+import AuthenticationServices
 import SwiftUI
 
 struct ProfileView: View {
@@ -158,6 +159,32 @@ struct ProfileView: View {
             }
             GoogleSignInCustomButton(action: { authVM.signInWithGoogle() })
                 .padding(.horizontal, 40)
+
+            SignInWithAppleButton(.signIn) { request in
+                request.requestedScopes = [.fullName, .email]
+            } onCompletion: { result in
+                switch result {
+                case .success(let auth):
+                    guard
+                        let credential = auth.credential as? ASAuthorizationAppleIDCredential,
+                        let tokenData = credential.identityToken,
+                        let token = String(data: tokenData, encoding: .utf8)
+                    else { return }
+                    let firstName = credential.fullName?.givenName ?? ""
+                    let lastName  = credential.fullName?.familyName ?? ""
+                    let fullName  = [firstName, lastName].filter { !$0.isEmpty }.joined(separator: " ")
+                    authVM.signInWithApple(
+                        identityToken: token,
+                        fullName: fullName.isEmpty ? nil : fullName,
+                        email: credential.email
+                    )
+                case .failure:
+                    break
+                }
+            }
+            .signInWithAppleButtonStyle(.black)
+            .frame(height: 50)
+            .padding(.horizontal, 40)
             Spacer()
         }
         .navigationTitle("Profile")
