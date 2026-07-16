@@ -50,6 +50,14 @@ final class AuthViewModel {
         }
     }
 
+    // MARK: - Delete account
+
+    func deleteAccount() async throws {
+        guard let token else { return }
+        try await APIService.shared.deleteAccount(token: token)
+        await MainActor.run { signOut() }
+    }
+
     // MARK: - Sign out
 
     func signOut() {

@@ -120,6 +120,18 @@ final class APIService {
         return try decoder.decode(ReturnsResponse.self, from: data)
     }
 
+    // MARK: - Account
+
+    func deleteAccount(token: String) async throws {
+        var req = URLRequest(url: base.appendingPathComponent("auth/account"))
+        req.httpMethod = "DELETE"
+        req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        let (_, resp) = try await URLSession.shared.data(for: req)
+        guard let http = resp as? HTTPURLResponse, (200..<300).contains(http.statusCode) else {
+            throw URLError(.badServerResponse)
+        }
+    }
+
     // MARK: - AI Chat
 
     func sendChatMessage(message: String, history: [ChatMessage]) async throws -> ChatResponse {

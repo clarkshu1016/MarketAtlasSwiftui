@@ -4,6 +4,10 @@ struct ProfileView: View {
     @Environment(AuthViewModel.self) private var authVM
     @Environment(FavoritesViewModel.self) private var favVM
 
+    @State private var showDeleteConfirmation = false
+    @State private var isDeletingAccount = false
+    @State private var deleteError: String?
+
     var body: some View {
         if authVM.isLoggedIn {
             profileContent
@@ -51,9 +55,56 @@ struct ProfileView: View {
                     Label("Sign Out", systemImage: "rectangle.portrait.and.arrow.right")
                 }
             }
+
+            // ── Danger zone ───────────────────────────────────────
+            Section {
+                Button(role: .destructive) {
+                    showDeleteConfirmation = true
+                } label: {
+                    if isDeletingAccount {
+                        HStack {
+                            ProgressView().tint(.red)
+                            Text("Deleting Account…")
+                        }
+                    } else {
+                        Label("Delete Account", systemImage: "trash")
+                    }
+                }
+                .disabled(isDeletingAccount)
+
+                if let error = deleteError {
+                    Text(error)
+                        .font(.caption)
+                        .foregroundStyle(.red)
+                }
+            } footer: {
+                Text("Permanently deletes your account and all associated data. This cannot be undone.")
+            }
         }
         .navigationTitle("Profile")
         .navigationBarTitleDisplayMode(.large)
+        .confirmationDialog(
+            "Delete Account",
+            isPresented: $showDeleteConfirmation,
+            titleVisibility: .visible
+        ) {
+            Button("Delete Account", role: .destructive) {
+                Task {
+                    isDeletingAccount = true
+                    deleteError = nil
+                    do {
+                        try await authVM.deleteAccount()
+                        favVM.companies = []
+                    } catch {
+                        deleteError = "Failed to delete account. Please try again."
+                    }
+                    isDeletingAccount = false
+                }
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("This will permanently delete your account and all your data. This action cannot be undone.")
+        }
     }
 
     // MARK: - Avatar
