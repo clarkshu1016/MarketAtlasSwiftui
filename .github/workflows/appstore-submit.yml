@@ -29,7 +29,7 @@ jobs:
       # ── 4. Auto-increment build number ───────────────────────────────
       - name: Set build number
         run: |
-          BUILD=$(git rev-list --count HEAD)
+          BUILD=$(( ${{ github.run_number }} + 50 ))
           echo "Build number: $BUILD"
           sed -i '' "s/CURRENT_PROJECT_VERSION = [0-9]*/CURRENT_PROJECT_VERSION = $BUILD/g" \
             MarketAtlas.xcodeproj/project.pbxproj
