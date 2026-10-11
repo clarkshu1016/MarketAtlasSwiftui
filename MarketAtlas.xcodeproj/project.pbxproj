@@ -665,8 +665,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kean/Pulse";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.2.3;
+				kind = upToNextMinorVersion;
+				minimumVersion = 5.1.4;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
