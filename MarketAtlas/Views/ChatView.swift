@@ -158,7 +158,8 @@ struct ChatView: View {
                     // Mic / Stop / Send — one button
                     Button {
                         if isRec {
-                            SpeechRecognizer.shared.stop()
+                            // finish(), not stop(): stop() cancels recognition and drops the last words.
+                            SpeechRecognizer.shared.finish()
                         } else if hasText {
                             inputFocused = false
                             Task { await vm.send() }
@@ -204,6 +205,14 @@ struct ChatView: View {
             Button("Cancel", role: .cancel) {}
         } message: {
             Text("Please enable Microphone and Speech Recognition in Settings.")
+        }
+        .alert("Voice Input", isPresented: Binding(
+            get: { SpeechRecognizer.shared.errorMessage != nil },
+            set: { if !$0 { SpeechRecognizer.shared.errorMessage = nil } }
+        )) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(SpeechRecognizer.shared.errorMessage ?? "")
         }
     }
 }

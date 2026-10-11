@@ -1,4 +1,5 @@
 import AVFoundation
+import NaturalLanguage
 import Observation
 
 @Observable
@@ -23,12 +24,32 @@ final class SpeechManager: NSObject {
         if synthesizer.isSpeaking {
             synthesizer.stopSpeaking(at: .immediate)
         }
+        // Dictation leaves the session in a record category; make sure we can actually play.
+        let session = AVAudioSession.sharedInstance()
+        if session.category != .playAndRecord {
+            try? session.setCategory(.playback, mode: .spokenAudio)
+        }
+        try? session.setActive(true)
+
         let utterance = AVSpeechUtterance(string: text)
-        utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+        utterance.voice = Self.voice(for: text)
         utterance.rate = 0.52
         utterance.pitchMultiplier = 1.0
         speakingMessageId = messageId
         synthesizer.speak(utterance)
+    }
+
+    /// Pick a voice that matches the text — the chat now answers in the user's language,
+    /// and an English voice reading Japanese or Chinese is unintelligible.
+    private static func voice(for text: String) -> AVSpeechSynthesisVoice? {
+        let identifier: String
+        switch NLLanguageRecognizer.dominantLanguage(for: text) {
+        case .japanese:           identifier = "ja-JP"
+        case .simplifiedChinese:  identifier = "zh-CN"
+        case .traditionalChinese: identifier = "zh-TW"
+        default:                  identifier = "en-US"
+        }
+        return AVSpeechSynthesisVoice(language: identifier) ?? AVSpeechSynthesisVoice(language: "en-US")
     }
 
     func stop() {
