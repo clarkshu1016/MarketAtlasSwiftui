@@ -12,6 +12,8 @@
 		07BD8BCE2FE830E30049C413 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 07BD8BCD2FE830E30049C413 /* FirebaseCore */; };
 		07BD8BD02FE830E30049C413 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 07BD8BCF2FE830E30049C413 /* FirebaseCrashlytics */; };
 		07BD8BDB2FEAC3E40049C413 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 07BD8BDA2FEAC3E40049C413 /* GoogleSignInSwift */; };
+		07BD8C042FEB1E000049C413 /* Pulse in Frameworks */ = {isa = PBXBuildFile; productRef = 07BD8C022FEB1E000049C413 /* Pulse */; };
+		07BD8C052FEB1E000049C413 /* PulseUI in Frameworks */ = {isa = PBXBuildFile; productRef = 07BD8C032FEB1E000049C413 /* PulseUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +80,8 @@
 				07BD8BD02FE830E30049C413 /* FirebaseCrashlytics in Frameworks */,
 				07BD8BCE2FE830E30049C413 /* FirebaseCore in Frameworks */,
 				07BD8BCC2FE830E30049C413 /* FirebaseAnalyticsCore in Frameworks */,
+				07BD8C042FEB1E000049C413 /* Pulse in Frameworks */,
+				07BD8C052FEB1E000049C413 /* PulseUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,6 +147,8 @@
 				07BD8BCD2FE830E30049C413 /* FirebaseCore */,
 				07BD8BCF2FE830E30049C413 /* FirebaseCrashlytics */,
 				07BD8BDA2FEAC3E40049C413 /* GoogleSignInSwift */,
+				07BD8C022FEB1E000049C413 /* Pulse */,
+				07BD8C032FEB1E000049C413 /* PulseUI */,
 			);
 			productName = MarketAtlas;
 			productReference = 07BD8ACE2FE7790D0049C413 /* MarketAtlas.app */;
@@ -229,6 +235,7 @@
 			packageReferences = (
 				07BD8BC82FE830E30049C413 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				07BD8BD92FEAC3E40049C413 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				07BD8C012FEB1E000049C413 /* XCRemoteSwiftPackageReference "Pulse" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 07BD8ACF2FE7790D0049C413 /* Products */;
@@ -654,6 +661,14 @@
 				minimumVersion = 9.2.0;
 			};
 		};
+		07BD8C012FEB1E000049C413 /* XCRemoteSwiftPackageReference "Pulse" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kean/Pulse";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.2.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -681,6 +696,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 07BD8BD92FEAC3E40049C413 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignInSwift;
+		};
+		07BD8C022FEB1E000049C413 /* Pulse */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 07BD8C012FEB1E000049C413 /* XCRemoteSwiftPackageReference "Pulse" */;
+			productName = Pulse;
+		};
+		07BD8C032FEB1E000049C413 /* PulseUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 07BD8C012FEB1E000049C413 /* XCRemoteSwiftPackageReference "Pulse" */;
+			productName = PulseUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

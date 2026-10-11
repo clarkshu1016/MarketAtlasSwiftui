@@ -13,6 +13,9 @@ struct MarketAtlasApp: App {
         WindowGroup {
             ContentView()
                 .onOpenURL { GIDSignIn.sharedInstance.handle($0) }
+                #if DEBUG
+                .pulseFloatingBubble()
+                #endif
         }
     }
 }
