@@ -89,9 +89,9 @@ struct CompanyDetailView: View {
     }
 
     private func handleFavorite() {
-        guard let ticker = company.ticker else { return }
+        guard let ticker = company.ticker, let token = authVM.token else { return }
         let adding = !favVM.isFavorite(ticker)
-        Task { await favVM.toggle(company: company, token: authVM.token!) }
+        Task { await favVM.toggle(company: company, token: token) }
 
         if adding {
             UIImpactFeedbackGenerator(style: .medium).impactOccurred()
@@ -273,13 +273,11 @@ struct CompanyDetailView: View {
                         .scaleEffect(starScale)
                         .rotationEffect(.degrees(starRotation))
                 }
+                .accessibilityLabel(favVM.isFavorite(ticker) ? "Remove from favourites" : "Add to favourites")
             }
         }
-        .alert("Sign In Required", isPresented: $showSignInPrompt) {
-            Button("Sign in with Google") { authVM.signInWithGoogle() }
-            Button("Cancel", role: .cancel) { }
-        } message: {
-            Text("Sign in to save favourites across your devices.")
+        .sheet(isPresented: $showSignInPrompt) {
+            SignInSheet()
         }
     }
 }

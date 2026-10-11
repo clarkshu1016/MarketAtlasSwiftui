@@ -2,16 +2,23 @@ import SwiftUI
 
 struct ChangeBadge: View {
     let value: Double
-    private var color: Color { value >= 0 ? .green : .red }
+    // Round first so "-0.004" reads as an unchanged 0.00%, not a red "-0.00%".
+    private var rounded: Double { (value * 100).rounded() / 100 }
+    private var color: Color { rounded > 0 ? .green : rounded < 0 ? .red : .secondary }
+    private var spoken: String {
+        rounded == 0 ? "unchanged"
+                     : "\(rounded > 0 ? "up" : "down") \(String(format: "%.2f", abs(rounded))) percent"
+    }
 
     var body: some View {
-        Text(String(format: "%+.2f%%", value))
+        Text(String(format: "%+.2f%%", rounded))
             .font(.system(size: 11, weight: .semibold, design: .monospaced))
             .lineLimit(1)
             .foregroundStyle(color)
             .padding(.horizontal, 6)
             .padding(.vertical, 3)
             .background(color.opacity(0.12), in: RoundedRectangle(cornerRadius: 5, style: .continuous))
+            .accessibilityLabel(spoken)
     }
 }
 

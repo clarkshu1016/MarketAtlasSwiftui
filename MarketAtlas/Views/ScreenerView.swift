@@ -75,7 +75,7 @@ struct ScreenerView: View {
                         .foregroundStyle(.red)
                 }
             } header: {
-                Text("AI Search (Gemma)")
+                Text("AI Search")
             } footer: {
                 Text("Describe what you're looking for in plain language.")
             }
@@ -162,7 +162,7 @@ struct ScreenerView: View {
                     Text(error).foregroundStyle(.red).font(.caption)
                 }
             } else if hasSearched {
-                Section(results.isEmpty ? "No Results" : "\(results.count) Companies") {
+                Section(results.isEmpty ? "No Results" : "\(results.count) \(results.count == 1 ? "Company" : "Companies")") {
                     if results.isEmpty {
                         ContentUnavailableView(
                             "No Matches",

@@ -3,22 +3,36 @@ import Observation
 
 @Observable
 final class CompanyViewModel {
-    var allCompanies: [Company] = []
+    var allCompanies: [Company] = [] { didSet { recomputeFiltered() } }
     var availableCountries: [String] = []
     var availableTags: [String] = []
     var stats: StatsResponse?
-    var selectedMetric: MetricType = .marketCap
-    var sortDescending: Bool = true
-    var selectedCountry: String? = nil
-    var selectedTag: String? = nil
-    var searchText: String = ""
+    var selectedMetric: MetricType = .marketCap { didSet { recomputeFiltered() } }
+    var sortDescending: Bool = true { didSet { recomputeFiltered() } }
+    var selectedCountry: String? = nil { didSet { recomputeFiltered() } }
+    var selectedTag: String? = nil { didSet { recomputeFiltered() } }
+    var searchText: String = "" { didSet { recomputeFiltered() } }
     var isLoading = false
     var errorMessage: String?
     private var lastLoadedAt: Date?
 
-    // MARK: - Computed
+    /// Filtered + sorted list. Cached: it is recomputed only when an input changes,
+    /// not on every SwiftUI body evaluation (the full list is ~11k companies).
+    private(set) var filteredCompanies: [Company] = []
 
-    var filteredCompanies: [Company] {
+    // MARK: - Data freshness
+
+    /// When the server last refreshed its company data (from `/api/stats`).
+    var dataUpdatedAt: Date? {
+        guard let raw = stats?.last_updated else { return nil }
+        // Backend sends microsecond precision ("…07.566263+00:00"); drop the fraction to parse reliably.
+        let trimmed = raw.replacingOccurrences(of: #"\.\d+"#, with: "", options: .regularExpression)
+        return ISO8601DateFormatter().date(from: trimmed)
+    }
+
+    // MARK: - Filtering
+
+    private func recomputeFiltered() {
         var list = allCompanies
 
         if !searchText.isEmpty {
@@ -38,18 +52,20 @@ final class CompanyViewModel {
             list = list.filter { $0.tags?.contains(tag) ?? false }
         }
 
-        list.sort { a, b in
-            let av = selectedMetric.value(from: a)
-            let bv = selectedMetric.value(from: b)
-            switch (av, bv) {
-            case (nil, nil): return a.name < b.name
-            case (nil, _):   return false
-            case (_, nil):   return true
-            case (let av?, let bv?):
-                return sortDescending ? av > bv : av < bv
+        // Decorate-sort-undecorate: read each sort key once instead of twice per comparison.
+        let metric = selectedMetric
+        let descending = sortDescending
+        filteredCompanies = list
+            .map { (company: $0, value: metric.value(from: $0)) }
+            .sorted { a, b in
+                switch (a.value, b.value) {
+                case (nil, nil):           return a.company.name < b.company.name
+                case (nil, _):             return false
+                case (_, nil):             return true
+                case (let av?, let bv?):   return descending ? av > bv : av < bv
+                }
             }
-        }
-        return list
+            .map(\.company)
     }
 
     // MARK: - Actions
@@ -96,7 +112,7 @@ final class CompanyViewModel {
             sortDescending.toggle()
         } else {
             selectedMetric = metric
-            sortDescending = true
+            sortDescending = metric.defaultDescending
         }
     }
 }

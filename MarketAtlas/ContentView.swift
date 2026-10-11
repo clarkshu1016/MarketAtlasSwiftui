@@ -6,6 +6,7 @@ struct ContentView: View {
     @State private var favVM  = FavoritesViewModel()
     @State private var authVM = AuthViewModel()
     @AppStorage("app_appearance") private var appearance: String = "system"
+    @State private var notice: String?
 
     private var preferredScheme: ColorScheme? {
         switch appearance {
@@ -56,6 +57,27 @@ struct ContentView: View {
             Button("Dismiss", role: .cancel) { vm.errorMessage = nil }
         } message: {
             Text(vm.errorMessage ?? "")
+        }
+        // Token expired / revoked → sign out instead of leaving the app in a half-logged-in state.
+        .onReceive(NotificationCenter.default.publisher(for: .apiUnauthorized)) { _ in
+            guard authVM.isLoggedIn else { return }
+            authVM.signOut()
+            favVM.companies = []
+            notice = APIError.unauthorized.errorDescription
+        }
+        // Surface favourite-sync failures (the optimistic change was already rolled back).
+        .onChange(of: favVM.syncError) { _, message in
+            guard let message else { return }
+            notice = message
+            favVM.syncError = nil
+        }
+        .alert("Heads Up", isPresented: Binding(
+            get: { notice != nil },
+            set: { if !$0 { notice = nil } }
+        )) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(notice ?? "")
         }
     }
 }

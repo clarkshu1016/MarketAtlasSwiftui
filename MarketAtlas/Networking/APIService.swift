@@ -1,4 +1,7 @@
 import Foundation
+#if DEBUG
+import Pulse
+#endif
 
 #if DEBUG
   #if targetEnvironment(simulator)
@@ -10,148 +13,233 @@ import Foundation
 private let kBaseURL = "https://marketatlas-api.appdevgpt.com"
 #endif
 
+// MARK: - Errors
+
+enum APIError: LocalizedError {
+    /// The server rejected the bearer token (expired / revoked).
+    case unauthorized
+    case server(statusCode: Int)
+    case offline
+    case timeout
+    case network
+    case decoding
+
+    var errorDescription: String? {
+        switch self {
+        case .unauthorized:  return "Your session has expired. Please sign in again."
+        case .server(let c): return "The server had a problem (\(c)). Please try again in a moment."
+        case .offline:       return "You appear to be offline. Check your connection and try again."
+        case .timeout:       return "The request timed out. Please try again."
+        case .network:       return "Couldn't reach the server. Please try again."
+        case .decoding:      return "Received unexpected data from the server."
+        }
+    }
+}
+
+extension Notification.Name {
+    /// Posted (on the main thread) when an authenticated request comes back 401.
+    static let apiUnauthorized = Notification.Name("MarketAtlas.apiUnauthorized")
+}
+
+// MARK: - Service
+
 final class APIService {
     static let shared = APIService()
     static let baseURL = URL(string: kBaseURL)!
     private let decoder = JSONDecoder()
     private let base = URL(string: kBaseURL)!
 
+    // Debug builds route requests through Pulse so they show up in the debug console
+    // (floating bubble). URLSessionProxy — not URLSessionProxyDelegate — is required
+    // because it's the only Pulse option that works with async/await URLSession APIs.
+    #if DEBUG
+    private let session = URLSessionProxy(configuration: .default)
+    #else
+    private let session = URLSession.shared
+    #endif
+
+    // MARK: - Request plumbing
+
+    /// Sends the request, validates the HTTP status and maps failures to `APIError`.
+    /// Task cancellation is surfaced as `CancellationError` so callers can ignore it.
+    @discardableResult
+    private func send(_ request: URLRequest, allowing extra: Set<Int> = []) async throws -> Data {
+        let data: Data
+        let response: URLResponse
+        do {
+            (data, response) = try await session.data(for: request)
+        } catch let error as URLError {
+            switch error.code {
+            case .cancelled:                                       throw CancellationError()
+            case .notConnectedToInternet, .dataNotAllowed:         throw APIError.offline
+            case .timedOut:                                        throw APIError.timeout
+            default:                                               throw APIError.network
+            }
+        }
+
+        guard let http = response as? HTTPURLResponse else { throw APIError.network }
+        switch http.statusCode {
+        case 200..<300:
+            return data
+        case let code where extra.contains(code):
+            return data
+        case 401 where request.value(forHTTPHeaderField: "Authorization") != nil:
+            await MainActor.run { NotificationCenter.default.post(name: .apiUnauthorized, object: nil) }
+            throw APIError.unauthorized
+        case let code:
+            throw APIError.server(statusCode: code)
+        }
+    }
+
+    private func fetch<T: Decodable>(_ type: T.Type, _ request: URLRequest) async throws -> T {
+        let data = try await send(request)
+        do { return try decoder.decode(T.self, from: data) } catch { throw APIError.decoding }
+    }
+
+    private func get(_ path: String, query: [URLQueryItem] = [], token: String? = nil) -> URLRequest {
+        var comps = URLComponents(url: base.appendingPathComponent(path), resolvingAgainstBaseURL: true)!
+        if !query.isEmpty { comps.queryItems = query }
+        var req = URLRequest(url: comps.url!)
+        if let token { req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization") }
+        return req
+    }
+
+    private func request(_ method: String, _ path: String, token: String? = nil) -> URLRequest {
+        var req = get(path, token: token)
+        req.httpMethod = method
+        return req
+    }
+
     // MARK: - Companies
 
     func fetchCompanies() async throws -> [Company] {
-        var comps = URLComponents(url: base.appendingPathComponent("api/companies"), resolvingAgainstBaseURL: true)!
-        comps.queryItems = [
+        let req = get("api/companies", query: [
             URLQueryItem(name: "sort_by", value: "market_cap"),
             URLQueryItem(name: "order",   value: "desc"),
-        ]
-        let (data, _) = try await URLSession.shared.data(from: comps.url!)
-        return try decoder.decode(CompaniesResponse.self, from: data).companies
+        ])
+        return try await fetch(CompaniesResponse.self, req).companies
     }
 
     func fetchStats() async throws -> StatsResponse {
-        let (data, _) = try await URLSession.shared.data(from: base.appendingPathComponent("api/stats"))
-        return try decoder.decode(StatsResponse.self, from: data)
+        try await fetch(StatsResponse.self, get("api/stats"))
     }
 
     func fetchCountries() async throws -> [String] {
-        let (data, _) = try await URLSession.shared.data(from: base.appendingPathComponent("api/countries"))
-        return try decoder.decode(CountriesResponse.self, from: data).countries
+        try await fetch(CountriesResponse.self, get("api/countries")).countries
     }
 
     func fetchFinancials(slug: String) async throws -> FinancialResponse {
-        let (data, _) = try await URLSession.shared.data(from: base.appendingPathComponent("api/companies/\(slug)/financials"))
-        return try decoder.decode(FinancialResponse.self, from: data)
+        try await fetch(FinancialResponse.self, get("api/companies/\(slug)/financials"))
     }
 
     func fetchQuarterlyFinancials(slug: String) async throws -> QuarterlyResponse {
-        let (data, _) = try await URLSession.shared.data(from: base.appendingPathComponent("api/companies/\(slug)/financials/quarterly"))
-        return try decoder.decode(QuarterlyResponse.self, from: data)
+        try await fetch(QuarterlyResponse.self, get("api/companies/\(slug)/financials/quarterly"))
     }
 
     func fetchPriceHistory(slug: String, range: String = "1y", token: String? = nil) async throws -> PriceHistoryResponse {
-        var comps = URLComponents(url: base.appendingPathComponent("api/companies/\(slug)/price-history"), resolvingAgainstBaseURL: true)!
-        comps.queryItems = [URLQueryItem(name: "range", value: range)]
-        var req = URLRequest(url: comps.url!)
-        if let token { req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization") }
-        let (data, _) = try await URLSession.shared.data(for: req)
-        return try decoder.decode(PriceHistoryResponse.self, from: data)
+        let req = get("api/companies/\(slug)/price-history",
+                      query: [URLQueryItem(name: "range", value: range)], token: token)
+        return try await fetch(PriceHistoryResponse.self, req)
     }
 
     func fetchMarketCapHistory(slug: String) async throws -> MarketCapHistoryResponse {
-        let (data, _) = try await URLSession.shared.data(from: base.appendingPathComponent("api/companies/\(slug)/market-cap-history"))
-        return try decoder.decode(MarketCapHistoryResponse.self, from: data)
+        try await fetch(MarketCapHistoryResponse.self, get("api/companies/\(slug)/market-cap-history"))
+    }
+
+    // MARK: - Market insights
+
+    func fetchPerformance(period: String, order: String, minMarketCap: Double, limit: Int = 50) async throws -> PerformanceResponse {
+        let query = [
+            URLQueryItem(name: "period", value: period),
+            URLQueryItem(name: "order", value: order),
+            URLQueryItem(name: "limit", value: String(limit)),
+            URLQueryItem(name: "min_market_cap", value: String(Int(minMarketCap))),
+        ]
+        return try await fetch(PerformanceResponse.self, get("api/market/performance", query: query))
+    }
+
+    func fetchTimeMachine(date: Date, limit: Int = 20) async throws -> TimeMachineResponse {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "UTC")!
+        let c = calendar.dateComponents([.year, .month, .day], from: date)
+        let iso = String(format: "%04d-%02d-%02d", c.year ?? 2000, c.month ?? 1, c.day ?? 1)
+        let query = [URLQueryItem(name: "date", value: iso), URLQueryItem(name: "limit", value: String(limit))]
+        return try await fetch(TimeMachineResponse.self, get("api/market/time-machine", query: query))
+    }
+
+    func fetchCountryHeatmap(period: String) async throws -> CountryHeatmapResponse {
+        try await fetch(CountryHeatmapResponse.self,
+                        get("api/market/heatmap/countries", query: [URLQueryItem(name: "period", value: period)]))
+    }
+
+    func fetchCompanyHeatmap(country: String, period: String, limit: Int = 80) async throws -> CompanyHeatmapResponse {
+        let query = [
+            URLQueryItem(name: "country", value: country),
+            URLQueryItem(name: "period", value: period),
+            URLQueryItem(name: "limit", value: String(limit)),
+        ]
+        return try await fetch(CompanyHeatmapResponse.self, get("api/market/heatmap/companies", query: query))
     }
 
     // MARK: - Favorites
 
     func fetchFavorites(token: String) async throws -> [Company] {
-        var req = URLRequest(url: base.appendingPathComponent("api/favorites"))
-        req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        let (data, _) = try await URLSession.shared.data(for: req)
-        return try decoder.decode(CompaniesResponse.self, from: data).companies
+        try await fetch(CompaniesResponse.self, get("api/favorites", token: token)).companies
     }
 
     func addFavorite(ticker: String, token: String) async throws {
-        var req = URLRequest(url: base.appendingPathComponent("api/favorites/\(ticker)"))
-        req.httpMethod = "POST"
-        req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        let (_, resp) = try await URLSession.shared.data(for: req)
-        guard (resp as? HTTPURLResponse)?.statusCode != 409 else { return } // already exists
+        // 409 = already a favourite, which is the state we wanted.
+        try await send(request("POST", "api/favorites/\(ticker)", token: token), allowing: [409])
     }
 
     func removeFavorite(ticker: String, token: String) async throws {
-        var req = URLRequest(url: base.appendingPathComponent("api/favorites/\(ticker)"))
-        req.httpMethod = "DELETE"
-        req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        _ = try await URLSession.shared.data(for: req)
+        try await send(request("DELETE", "api/favorites/\(ticker)", token: token))
     }
 
     // MARK: - Pro endpoints
 
     func fetchMovers() async throws -> MoversResponse {
-        let (data, _) = try await URLSession.shared.data(from: base.appendingPathComponent("api/market/movers"))
-        return try decoder.decode(MoversResponse.self, from: data)
+        try await fetch(MoversResponse.self, get("api/market/movers"))
     }
 
     func fetchScreener(params: [String: String], token: String?) async throws -> [Company] {
-        var comps = URLComponents(url: base.appendingPathComponent("api/screener"), resolvingAgainstBaseURL: true)!
-        comps.queryItems = params.map { URLQueryItem(name: $0.key, value: $0.value) }
-        var req = URLRequest(url: comps.url!)
-        if let token {
-            req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        }
-        let (data, _) = try await URLSession.shared.data(for: req)
-        return try decoder.decode(CompaniesResponse.self, from: data).companies
+        let query = params.map { URLQueryItem(name: $0.key, value: $0.value) }
+        return try await fetch(CompaniesResponse.self, get("api/screener", query: query, token: token)).companies
     }
 
     func fetchCompare(tickers: [String], token: String) async throws -> [Company] {
-        var comps = URLComponents(url: base.appendingPathComponent("api/compare"), resolvingAgainstBaseURL: true)!
-        comps.queryItems = [URLQueryItem(name: "tickers", value: tickers.joined(separator: ","))]
-        var req = URLRequest(url: comps.url!)
-        req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        let (data, _) = try await URLSession.shared.data(for: req)
-        return try decoder.decode(CompaniesResponse.self, from: data).companies
+        let req = get("api/compare",
+                      query: [URLQueryItem(name: "tickers", value: tickers.joined(separator: ","))],
+                      token: token)
+        return try await fetch(CompaniesResponse.self, req).companies
     }
 
     func fetchReturns(slug: String, token: String) async throws -> ReturnsResponse {
-        var req = URLRequest(url: base.appendingPathComponent("api/companies/\(slug)/returns"))
-        req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        let (data, _) = try await URLSession.shared.data(for: req)
-        return try decoder.decode(ReturnsResponse.self, from: data)
+        try await fetch(ReturnsResponse.self, get("api/companies/\(slug)/returns", token: token))
     }
 
     // MARK: - Account
 
     func deleteAccount(token: String) async throws {
-        var req = URLRequest(url: base.appendingPathComponent("auth/account"))
-        req.httpMethod = "DELETE"
-        req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        let (_, resp) = try await URLSession.shared.data(for: req)
-        guard let http = resp as? HTTPURLResponse, (200..<300).contains(http.statusCode) else {
-            throw URLError(.badServerResponse)
-        }
+        try await send(request("DELETE", "auth/account", token: token))
     }
 
     // MARK: - AI Chat
 
     func sendChatMessage(message: String, history: [ChatMessage]) async throws -> ChatResponse {
-        var req = URLRequest(url: base.appendingPathComponent("api/ai/chat"))
-        req.httpMethod = "POST"
+        var req = request("POST", "api/ai/chat")
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
         req.timeoutInterval = 180  // LLM inference can be slow
         req.httpBody = try JSONEncoder().encode(ChatRequest(message: message, history: history))
-        let (data, _) = try await URLSession.shared.data(for: req)
-        return try decoder.decode(ChatResponse.self, from: data)
+        return try await fetch(ChatResponse.self, req)
     }
 
     // MARK: - AI Screener
 
     func aiScreener(query: String) async throws -> AIScreenerResponse {
-        var req = URLRequest(url: base.appendingPathComponent("api/ai/screener"))
-        req.httpMethod = "POST"
+        var req = request("POST", "api/ai/screener")
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
         req.httpBody = try JSONSerialization.data(withJSONObject: ["query": query])
-        let (data, _) = try await URLSession.shared.data(for: req)
-        return try decoder.decode(AIScreenerResponse.self, from: data)
+        return try await fetch(AIScreenerResponse.self, req)
     }
 }

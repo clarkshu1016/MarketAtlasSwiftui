@@ -20,6 +20,22 @@ enum MetricType: String, CaseIterable, Identifiable {
     case cashOnHand       = "cash_on_hand"
     case priceToBook      = "price_to_book"
 
+    // Derived from fields we already have — no extra scraping needed.
+    case priceToSales        = "price_to_sales"
+    case earningsYield       = "earnings_yield"
+    case netCash             = "net_cash"
+    case debtToAssets        = "debt_to_assets"
+    case revenuePerEmployee  = "revenue_per_employee"
+
+    /// Which way the list sorts the first time the metric is picked. Cheap-is-better ratios
+    /// start ascending; everything that existed before keeps its original (descending) behaviour.
+    var defaultDescending: Bool {
+        switch self {
+        case .priceToSales, .debtToAssets: return false
+        default:                           return true
+        }
+    }
+
     var label: String {
         switch self {
         case .marketCap:        return "Market Cap"
@@ -38,6 +54,11 @@ enum MetricType: String, CaseIterable, Identifiable {
         case .totalDebt:        return "Total Debt"
         case .cashOnHand:       return "Cash"
         case .priceToBook:      return "P/B Ratio"
+        case .priceToSales:       return "P/S Ratio"
+        case .earningsYield:      return "Earnings Yield"
+        case .netCash:            return "Net Cash"
+        case .debtToAssets:       return "Debt / Assets"
+        case .revenuePerEmployee: return "Revenue / Employee"
         }
     }
 
@@ -59,6 +80,11 @@ enum MetricType: String, CaseIterable, Identifiable {
         case .totalDebt:        return "banknote.fill"
         case .cashOnHand:       return "dollarsign.bank.building.fill"
         case .priceToBook:      return "book.fill"
+        case .priceToSales:       return "cart.fill"
+        case .earningsYield:      return "chart.line.uptrend.xyaxis"
+        case .netCash:            return "plus.forwardslash.minus"
+        case .debtToAssets:       return "scalemass.fill"
+        case .revenuePerEmployee: return "person.fill.checkmark"
         }
     }
 
@@ -80,6 +106,21 @@ enum MetricType: String, CaseIterable, Identifiable {
         case .totalDebt:        return c.total_debt
         case .cashOnHand:       return c.cash_on_hand
         case .priceToBook:      return c.price_to_book
+        case .priceToSales:
+            guard let cap = c.market_cap, let rev = c.revenue, cap > 0, rev > 0 else { return nil }
+            return cap / rev
+        case .earningsYield:
+            guard let cap = c.market_cap, let earn = c.earnings, cap > 0 else { return nil }
+            return earn / cap * 100
+        case .netCash:
+            guard let cash = c.cash_on_hand, let debt = c.total_debt else { return nil }
+            return cash - debt
+        case .debtToAssets:
+            guard let debt = c.total_debt, let assets = c.total_assets, assets > 0 else { return nil }
+            return debt / assets * 100
+        case .revenuePerEmployee:
+            guard let rev = c.revenue, let emp = c.employees, emp > 0, rev > 0 else { return nil }
+            return rev / Double(emp)
         }
     }
 
@@ -111,6 +152,11 @@ enum MetricType: String, CaseIterable, Identifiable {
         case .totalDebt:        return c.total_debt_display         ?? "—"
         case .cashOnHand:       return c.cash_on_hand_display       ?? "—"
         case .priceToBook:      return c.price_to_book.map     { String(format: "%.2f\u{00D7}", $0) }  ?? "—"
+        case .priceToSales:     return value(from: c).map { String(format: "%.2f\u{00D7}", $0) } ?? "—"
+        case .earningsYield:    return value(from: c).map { String(format: "%.2f%%", $0) } ?? "—"
+        case .netCash:          return value(from: c).map(Money.short) ?? "—"
+        case .debtToAssets:     return value(from: c).map { String(format: "%.1f%%", $0) } ?? "—"
+        case .revenuePerEmployee: return value(from: c).map(Money.short) ?? "—"
         }
     }
 }

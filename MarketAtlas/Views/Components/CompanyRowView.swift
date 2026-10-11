@@ -62,6 +62,19 @@ struct CompanyRowView: View {
         }
         .padding(.vertical, 5)
         .contentShape(Rectangle())
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(accessibilityText)
+    }
+
+    private var accessibilityText: String {
+        var parts = ["Rank \(rank)", company.name]
+        if let t = company.ticker { parts.append(t) }
+        parts.append("\(metric.label) \(metric.display(from: company))")
+        if let ch = company.change_24h {
+            parts.append(ch == 0 ? "unchanged today"
+                                 : "\(ch > 0 ? "up" : "down") \(String(format: "%.2f", abs(ch))) percent today")
+        }
+        return parts.joined(separator: ", ")
     }
 }
 

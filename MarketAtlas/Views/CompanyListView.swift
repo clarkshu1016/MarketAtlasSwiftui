@@ -4,6 +4,9 @@ struct CompanyListView: View {
     @Bindable var vm: CompanyViewModel
     @State private var showScrollToTop = false
     @State private var showScreener = false
+    @State private var exploreDestination: ExploreDestination?
+
+    private enum ExploreDestination: Hashable { case heatmap, performance, timeMachine }
 
     var body: some View {
         ScrollViewReader { proxy in
@@ -40,20 +43,40 @@ struct CompanyListView: View {
 
                     // Count label
                     let companies = vm.filteredCompanies
-                    Text(countLabel(count: companies.count))
-                        .font(.system(size: 12, weight: .medium))
-                        .foregroundStyle(.tertiary)
-                        .padding(.horizontal, 16)
-                        .padding(.top, 2)
-                        .listRowInsets(EdgeInsets())
-                        .listRowBackground(Color.clear)
-                        .listRowSeparator(.hidden)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(countLabel(count: companies.count))
+                            .foregroundStyle(.tertiary)
+                        if let updated = vm.dataUpdatedAt {
+                            FreshnessLabel(updatedAt: updated)
+                        }
+                    }
+                    .font(.system(size: 12, weight: .medium))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 16)
+                    .padding(.top, 2)
+                    .listRowInsets(EdgeInsets())
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
 
                     // Company rows
                     if companies.isEmpty && !vm.isLoading {
-                        ContentUnavailableView.search(text: vm.searchText)
+                        if vm.allCompanies.isEmpty {
+                            // Nothing was ever loaded — this is a load failure, not an empty search.
+                            ContentUnavailableView {
+                                Label("Couldn't Load Companies", systemImage: "wifi.exclamationmark")
+                            } description: {
+                                Text(vm.errorMessage ?? "Check your connection and try again.")
+                            } actions: {
+                                Button("Try Again") { Task { await vm.refresh() } }
+                                    .buttonStyle(.borderedProminent)
+                            }
                             .listRowBackground(Color.clear)
                             .listRowSeparator(.hidden)
+                        } else {
+                            ContentUnavailableView.search(text: vm.searchText)
+                                .listRowBackground(Color.clear)
+                                .listRowSeparator(.hidden)
+                        }
                     } else {
                         ForEach(Array(companies.enumerated()), id: \.element.id) { idx, company in
                             NavigationLink {
@@ -94,6 +117,7 @@ struct CompanyListView: View {
                             .frame(width: 48, height: 48)
                             .background(Color.accentColor, in: Circle())
                     }
+                    .accessibilityLabel("Scroll to top")
                     .padding(.trailing, 20)
                     .padding(.bottom, 88)
                     .transition(.scale(scale: 0.6).combined(with: .opacity))
@@ -108,11 +132,35 @@ struct CompanyListView: View {
         .animation(.default, value: vm.selectedMetric)
         .animation(.default, value: vm.selectedCountry)
         .animation(.default, value: vm.selectedTag)
+        .navigationDestination(item: $exploreDestination) { destination in
+            switch destination {
+            case .heatmap:     HeatmapView()
+            case .performance: PerformanceView()
+            case .timeMachine: TimeMachineView()
+            }
+        }
         .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Menu {
+                    Button { exploreDestination = .heatmap } label: {
+                        Label("Heatmap", systemImage: "square.grid.3x3.fill")
+                    }
+                    Button { exploreDestination = .performance } label: {
+                        Label("Performance", systemImage: "chart.line.uptrend.xyaxis")
+                    }
+                    Button { exploreDestination = .timeMachine } label: {
+                        Label("Time Machine", systemImage: "clock.arrow.circlepath")
+                    }
+                } label: {
+                    Image(systemName: "safari")
+                }
+                .accessibilityLabel("Explore")
+            }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button { showScreener = true } label: {
                     Image(systemName: "slider.horizontal.3")
                 }
+                .accessibilityLabel("Screener")
             }
         }
         .sheet(isPresented: $showScreener) {
@@ -125,7 +173,24 @@ struct CompanyListView: View {
             .flatMap { $0.split(separator: " ", maxSplits: 1).last.map(String.init) }
             .map { " · \($0)" } ?? ""
         let tagLabel = vm.selectedTag.map { " · \($0)" } ?? ""
-        return "\(count) companies\(regionLabel)\(tagLabel) · sorted by \(vm.selectedMetric.label)"
+        return "\(count) \(count == 1 ? "company" : "companies")\(regionLabel)\(tagLabel) · sorted by \(vm.selectedMetric.label)"
+    }
+}
+
+/// "Updated 3 months ago" — turns orange when the data is more than 2 days old.
+private struct FreshnessLabel: View {
+    let updatedAt: Date
+
+    private var isStale: Bool { Date().timeIntervalSince(updatedAt) > 2 * 24 * 3600 }
+
+    var body: some View {
+        let relative = updatedAt.formatted(.relative(presentation: .named))
+        HStack(spacing: 4) {
+            Image(systemName: isStale ? "exclamationmark.triangle.fill" : "clock")
+            Text("Data updated \(relative)")
+        }
+        .font(.system(size: 11, weight: .medium))
+        .foregroundStyle(isStale ? Color.orange : Color.secondary.opacity(0.6))
     }
 }
 

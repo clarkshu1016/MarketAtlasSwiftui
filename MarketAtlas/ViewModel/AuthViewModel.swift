@@ -12,6 +12,9 @@ final class AuthViewModel {
 
     var isLoggedIn: Bool { token != nil }
 
+    /// Set when a sign-in attempt fails (not when the user cancels); shown by `SignInButtons`.
+    var authError: String?
+
     // MARK: - Sign in
 
     @MainActor
@@ -22,8 +25,17 @@ final class AuthViewModel {
         else { return }
 
         GIDSignIn.sharedInstance.signIn(withPresenting: rootVC) { [weak self] result, error in
-            guard let result, error == nil,
-                  let idToken = result.user.idToken?.tokenString else { return }
+            if let error {
+                // The user backing out of the Google sheet is not an error worth reporting.
+                if (error as NSError).code != GIDSignInError.canceled.rawValue {
+                    self?.authError = "Google sign-in failed. Please try again."
+                }
+                return
+            }
+            guard let result, let idToken = result.user.idToken?.tokenString else {
+                self?.authError = "Google sign-in failed. Please try again."
+                return
+            }
             let avatarURL = result.user.profile?.imageURL(withDimension: 96)?.absoluteString
             Task { await self?.exchangeWithBackend(idToken: idToken, avatarURL: avatarURL) }
         }
@@ -35,18 +47,28 @@ final class AuthViewModel {
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
         req.httpBody = try? JSONSerialization.data(withJSONObject: ["id_token": idToken])
 
-        guard
-            let (data, _) = try? await URLSession.shared.data(for: req),
-            let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-            let token = json["token"] as? String
-        else { return }
-
-        let user = json["user"] as? [String: Any]
-        let name  = user?["name"]  as? String
-        let email = user?["email"] as? String
-
+        guard let session = await exchange(req) else { return }
         await MainActor.run {
-            persist(token: token, name: name, email: email, avatar: avatarURL)
+            persist(token: session.token, name: session.name, email: session.email, avatar: avatarURL)
+        }
+    }
+
+    /// Posts the sign-in request and extracts the session. Reports failures via `authError`.
+    private func exchange(_ request: URLRequest) async -> (token: String, name: String?, email: String?)? {
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard
+                (response as? HTTPURLResponse).map({ (200..<300).contains($0.statusCode) }) == true,
+                let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+                let token = json["token"] as? String
+            else { throw APIError.decoding }
+            let user = json["user"] as? [String: Any]
+            return (token, user?["name"] as? String, user?["email"] as? String)
+        } catch is CancellationError {
+            return nil
+        } catch {
+            await MainActor.run { authError = "Sign-in failed. Check your connection and try again." }
+            return nil
         }
     }
 
@@ -66,18 +88,9 @@ final class AuthViewModel {
         if let email { body["email"] = email }
         req.httpBody = try? JSONSerialization.data(withJSONObject: body)
 
-        guard
-            let (data, _) = try? await URLSession.shared.data(for: req),
-            let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-            let token = json["token"] as? String
-        else { return }
-
-        let user = json["user"] as? [String: Any]
-        let name  = user?["name"]  as? String
-        let userEmail = user?["email"] as? String
-
+        guard let session = await exchange(req) else { return }
         await MainActor.run {
-            persist(token: token, name: name, email: userEmail, avatar: nil)
+            persist(token: session.token, name: session.name, email: session.email, avatar: nil)
         }
     }
 

@@ -17,13 +17,28 @@ struct FavoritesView: View {
     private var favoritesList: some View {
         List {
             if favVM.companies.isEmpty && !favVM.isLoading {
-                ContentUnavailableView(
-                    "No Favourites Yet",
-                    systemImage: "star",
-                    description: Text("Open a company and tap ★ to save it here.")
-                )
-                .listRowBackground(Color.clear)
-                .listRowSeparator(.hidden)
+                if favVM.loadFailed {
+                    ContentUnavailableView {
+                        Label("Couldn't Load Favourites", systemImage: "wifi.exclamationmark")
+                    } description: {
+                        Text(favVM.errorMessage ?? "Check your connection and try again.")
+                    } actions: {
+                        Button("Try Again") {
+                            if let token = authVM.token { Task { await favVM.load(token: token) } }
+                        }
+                        .buttonStyle(.borderedProminent)
+                    }
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
+                } else {
+                    ContentUnavailableView(
+                        "No Favourites Yet",
+                        systemImage: "star",
+                        description: Text("Open a company and tap ★ to save it here.")
+                    )
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
+                }
             } else {
                 ForEach(Array(favVM.companies.enumerated()), id: \.element.id) { idx, company in
                     NavigationLink {
@@ -68,8 +83,9 @@ struct FavoritesView: View {
 
     private func deleteFavorites(at offsets: IndexSet) async {
         guard let token = authVM.token else { return }
-        for idx in offsets {
-            let company = favVM.companies[idx]
+        // Resolve the companies up front — indices shift as each one is removed.
+        let targets = offsets.map { favVM.companies[$0] }
+        for company in targets {
             await favVM.toggle(company: company, token: token)
         }
     }
@@ -91,8 +107,7 @@ struct FavoritesView: View {
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 32)
             }
-            GoogleSignInCustomButton(action: { authVM.signInWithGoogle() })
-                .padding(.horizontal, 40)
+            SignInButtons()
             Spacer()
         }
         .navigationTitle("Favourites")
