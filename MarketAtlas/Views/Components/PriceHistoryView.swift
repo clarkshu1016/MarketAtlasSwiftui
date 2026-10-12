@@ -187,6 +187,8 @@ struct PriceHistoryView: View {
                         } label: {
                             Text(m.label)
                                 .font(.system(size: 11, weight: .semibold))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.7)
                                 .foregroundStyle(metric == m ? btnSelText : btnUnselText)
                                 .padding(.horizontal, 8)
                                 .padding(.vertical, 5)

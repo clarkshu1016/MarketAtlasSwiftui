@@ -177,7 +177,7 @@ struct MarketRaceView: View {
     private func chip(_ title: String, systemImage: String, active: Bool) -> some View {
         HStack(spacing: 5) {
             Image(systemName: systemImage).font(.system(size: 12))
-            Text(title).lineLimit(1).frame(maxWidth: 120, alignment: .leading)
+            Text(title).lineLimit(1).minimumScaleFactor(0.7).frame(maxWidth: 120, alignment: .leading)
             Image(systemName: "chevron.down").font(.system(size: 9, weight: .bold))
         }
         .font(.system(size: 13, weight: active ? .semibold : .regular))
@@ -385,11 +385,17 @@ private struct RaceChart: View {
                 Text(title)
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
-                Spacer()
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.6)
+                    .fixedSize(horizontal: false, vertical: true)
+                Spacer(minLength: 8)
                 Text(dateLabel)
                     .font(.system(size: 30, weight: .heavy, design: .rounded))
                     .foregroundStyle(.primary)
                     .monospacedDigit()
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.6)
+                    .layoutPriority(1)
             }
 
             ZStack(alignment: .topLeading) {
