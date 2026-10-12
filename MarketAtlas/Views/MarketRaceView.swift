@@ -2,11 +2,11 @@ import SwiftUI
 
 /// Animated bar-chart race: the ten largest companies by market cap, month by month since a chosen year.
 struct MarketRaceView: View {
-    private static let startYears = [2000, 2005, 2010, 2015, 2020]
+    /// The race always runs from here to today; the slider covers the whole range.
+    private static let startYear = 2000
     private static let visibleBars = 10
     private static let rowHeight: CGFloat = 42
 
-    @State private var startYear = 2010
     @State private var response: RaceResponse?
     @State private var isLoading = false
     @State private var errorMessage: String?
@@ -14,7 +14,7 @@ struct MarketRaceView: View {
     // Playback: `frame` is a fractional month index. While playing it advances from `baseFrame`.
     @State private var baseFrame: Double = 0
     @State private var playStart: Date?
-    @State private var speed: Double = 1
+    @State private var speed: Double = 2
 
     private var frameCount: Int { response?.dates.count ?? 0 }
     private var lastFrame: Double { Double(max(frameCount - 1, 0)) }
@@ -29,8 +29,6 @@ struct MarketRaceView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            yearChips
-
             if let response, frameCount > 1 {
                 TimelineView(.animation(minimumInterval: 1.0 / 30, paused: !isPlaying)) { context in
                     let f = frame(at: context.date)
@@ -67,23 +65,11 @@ struct MarketRaceView: View {
         .background(Color(UIColor.systemGroupedBackground))
         .navigationTitle("Market Cap Race")
         .navigationBarTitleDisplayMode(.inline)
-        .task(id: startYear) { await load() }
+        .task { await load() }
         .onDisappear { pause(at: frame(at: .now)) }
     }
 
     // MARK: Pieces
-
-    private var yearChips: some View {
-        HStack(spacing: 8) {
-            ForEach(Self.startYears, id: \.self) { year in
-                Button(String(year)) { startYear = year }
-                    .buttonStyle(.bordered)
-                    .buttonBorderShape(.capsule)
-                    .tint(startYear == year ? .accentColor : .secondary)
-            }
-        }
-        .padding(.vertical, 10)
-    }
 
     private func controls(frame f: Double) -> some View {
         HStack(spacing: 14) {
@@ -96,13 +82,22 @@ struct MarketRaceView: View {
             }
             .accessibilityLabel(isPlaying ? Text("Pause") : (f >= lastFrame ? Text("Replay") : Text("Play")))
 
-            Slider(value: Binding(
-                get: { f },
-                set: { newValue in
-                    baseFrame = newValue
-                    if isPlaying { playStart = .now }
+            VStack(spacing: 2) {
+                Slider(value: Binding(
+                    get: { f },
+                    set: { newValue in
+                        baseFrame = newValue
+                        if isPlaying { playStart = .now }
+                    }
+                ), in: 0...max(lastFrame, 1))
+                HStack {
+                    Text(verbatim: response?.dates.first.map { String($0.prefix(4)) } ?? "")
+                    Spacer()
+                    Text(verbatim: response?.dates.last.map { String($0.prefix(4)) } ?? "")
                 }
-            ), in: 0...max(lastFrame, 1))
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+            }
 
             Menu {
                 ForEach([0.5, 1, 2, 4], id: \.self) { s in
@@ -141,7 +136,7 @@ struct MarketRaceView: View {
         errorMessage = nil
         pause(at: 0)
         do {
-            let loaded = try await APIService.shared.fetchRace(start: startYear)
+            let loaded = try await APIService.shared.fetchRace(start: Self.startYear)
             response = loaded
             play(from: 0)
         } catch is CancellationError {
