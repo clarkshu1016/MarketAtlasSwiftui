@@ -52,12 +52,21 @@ struct PaywallView: View {
         return String(localized: "\(days)-day free trial")
     }
 
+    /// Debug only: with `hide_pulse_bubble` set (clean-screenshot mode) the paywall omits the "couldn't load prices" state.
+    private static var screenshotMode: Bool {
+        #if DEBUG
+        UserDefaults.standard.bool(forKey: "hide_pulse_bubble")
+        #else
+        false
+        #endif
+    }
+
     #if DEBUG
     private static func placeholder(_ plan: PlanID) -> Option {
         switch plan {
-        case .monthly:   Option(plan: plan, price: "$6.99", perMonth: nil, trial: String(localized: "\(7)-day free trial"))
-        case .quarterly: Option(plan: plan, price: "$17.99", perMonth: "$6.00", trial: String(localized: "\(7)-day free trial"))
-        case .yearly:    Option(plan: plan, price: "$49.99", perMonth: "$4.17", trial: String(localized: "\(7)-day free trial"))
+        case .monthly:   Option(plan: plan, price: "$9.99", perMonth: nil, trial: String(localized: "\(7)-day free trial"))
+        case .quarterly: Option(plan: plan, price: "$24.99", perMonth: "$8.33", trial: String(localized: "\(7)-day free trial"))
+        case .yearly:    Option(plan: plan, price: "$59.99", perMonth: "$5.00", trial: String(localized: "\(7)-day free trial"))
         case .lifetime:  Option(plan: plan, price: "$199.99", perMonth: nil, trial: nil)
         }
     }
@@ -210,9 +219,9 @@ struct PaywallView: View {
             }
             .buttonStyle(.borderedProminent)
             .controlSize(.large)
-            .disabled(entitlements.isPurchasing || entitlements.products[selected] == nil)
+            .disabled(entitlements.isPurchasing || (entitlements.products[selected] == nil && !Self.screenshotMode))
 
-            if entitlements.productsLoaded, entitlements.products.isEmpty {
+            if entitlements.productsLoaded, entitlements.products.isEmpty, !Self.screenshotMode {
                 Text("Prices couldn't be loaded. Check your connection and try again.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -250,12 +259,14 @@ struct PaywallView: View {
             .font(.caption.weight(.semibold))
 
             #if DEBUG
-            Button("Unlock for testing") {
-                UserDefaults.standard.set(true, forKey: DebugProOverride.key)
-                Task { await entitlements.refreshAccess() }
+            if !Self.screenshotMode {
+                Button("Unlock for testing") {
+                    UserDefaults.standard.set(true, forKey: DebugProOverride.key)
+                    Task { await entitlements.refreshAccess() }
+                }
+                .font(.caption2)
+                .foregroundStyle(.tertiary)
             }
-            .font(.caption2)
-            .foregroundStyle(.tertiary)
             #endif
         }
     }
