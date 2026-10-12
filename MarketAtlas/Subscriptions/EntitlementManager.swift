@@ -184,10 +184,11 @@ final class EntitlementManager {
 }
 
 #if DEBUG
-/// Debug builds can't see the App Store products (their bundle ID isn't an App Store Connect app), so they are
-/// unlocked by default; switch it off in Settings → Developer to see the paywall.
+/// Debug builds can't see the App Store products (their bundle ID isn't an App Store Connect app), so the
+/// purchase button is disabled there. A fresh install starts locked, like a real first launch (tour, then paywall);
+/// tap "Unlock for testing" on the paywall, or use Settings → Developer, to get into the app.
 enum DebugProOverride {
     static let key = "debug_pro_override"
-    static var isOn: Bool { UserDefaults.standard.object(forKey: key) as? Bool ?? true }
+    static var isOn: Bool { UserDefaults.standard.object(forKey: key) as? Bool ?? false }
 }
 #endif
