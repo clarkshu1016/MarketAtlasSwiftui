@@ -3,15 +3,55 @@ import Foundation
 import Pulse
 #endif
 
-#if DEBUG
-  #if targetEnvironment(simulator)
-  private let kBaseURL = "http://127.0.0.1:8000"   // Simulator → Mac's localhost (IPv4 explicit)
-  #else
-  private let kBaseURL = "http://shuclarknoMacBook-Pro.local:8000" // Physical device → Mac's mDNS hostname (stable)
-  #endif
-#else
-private let kBaseURL = "https://marketatlas-api.appdevgpt.com"
-#endif
+// MARK: - Server environment
+
+/// Which backend the app talks to. Release builds are always `.production`; Debug builds can switch
+/// in Settings (a physical device can't reach the Mac's local server when away from home).
+enum ServerEnvironment: String, CaseIterable, Identifiable {
+    case production, local
+
+    var id: String { rawValue }
+    var label: String { self == .production ? "Production" : "Local Mac" }
+
+    static let storageKey = "debug_server_environment"
+    static let productionURL = "https://marketatlas-api.appdevgpt.com"
+
+    var url: URL {
+        switch self {
+        case .production:
+            return URL(string: Self.productionURL)!
+        case .local:
+            #if targetEnvironment(simulator)
+            return URL(string: "http://127.0.0.1:8000")!                    // Simulator → Mac's localhost (IPv4 explicit)
+            #else
+            return URL(string: "http://shuclarknoMacBook-Pro.local:8000")!  // Device → Mac's mDNS hostname
+            #endif
+        }
+    }
+
+    /// Default: the simulator uses the local server, a physical device uses production.
+    static var `default`: ServerEnvironment {
+        #if targetEnvironment(simulator)
+        return .local
+        #else
+        return .production
+        #endif
+    }
+
+    static var current: ServerEnvironment {
+        #if DEBUG
+        let raw = UserDefaults.standard.string(forKey: storageKey)
+        return raw.flatMap(ServerEnvironment.init(rawValue:)) ?? .default
+        #else
+        return .production
+        #endif
+    }
+}
+
+extension Notification.Name {
+    /// Posted (Debug builds) after the user switches server — sessions and cached data belong to the old one.
+    static let serverEnvironmentChanged = Notification.Name("MarketAtlas.serverEnvironmentChanged")
+}
 
 // MARK: - Errors
 
@@ -45,9 +85,9 @@ extension Notification.Name {
 
 final class APIService {
     static let shared = APIService()
-    static let baseURL = URL(string: kBaseURL)!
+    static var baseURL: URL { ServerEnvironment.current.url }
     private let decoder = JSONDecoder()
-    private let base = URL(string: kBaseURL)!
+    private var base: URL { Self.baseURL }
 
     // Debug builds route requests through Pulse so they show up in the debug console
     // (floating bubble). URLSessionProxy — not URLSessionProxyDelegate — is required

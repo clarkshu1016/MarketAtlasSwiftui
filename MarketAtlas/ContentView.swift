@@ -65,6 +65,14 @@ struct ContentView: View {
             favVM.companies = []
             notice = APIError.unauthorized.errorDescription
         }
+        #if DEBUG
+        // Debug server switch: the session and cached data belong to the previous server.
+        .onReceive(NotificationCenter.default.publisher(for: .serverEnvironmentChanged)) { _ in
+            authVM.signOut()
+            favVM.companies = []
+            Task { await vm.refresh() }
+        }
+        #endif
         // Surface favourite-sync failures (the optimistic change was already rolled back).
         .onChange(of: favVM.syncError) { _, message in
             guard let message else { return }
