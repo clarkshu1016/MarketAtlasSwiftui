@@ -34,6 +34,9 @@ struct MarketRaceView: View {
     private static let startYear = 2000
     private static let visibleBars = 10
     private static let rowHeight: CGFloat = 42
+    /// Wider windows (iPad) get taller rows so the chart fills the screen instead of floating in blank space.
+    @Environment(\.horizontalSizeClass) private var sizeClass
+    private var rowHeight: CGFloat { sizeClass == .regular ? 66 : Self.rowHeight }
 
     let countries: [String]
 
@@ -71,7 +74,7 @@ struct MarketRaceView: View {
                 VStack(spacing: 12) {
                     TimelineView(.animation(minimumInterval: 1.0 / 30, paused: !isPlaying)) { context in
                         let f = frame(at: context.date)
-                        RaceChart(response: response, frame: f, bars: Self.visibleBars, rowHeight: Self.rowHeight,
+                        RaceChart(response: response, frame: f, bars: Self.visibleBars, rowHeight: rowHeight,
                                   title: query.metric.title, annual: isAnnual, colors: colors)
                             .padding(14)
                             .background(
@@ -398,20 +401,22 @@ private struct RaceBar: View {
     let rowHeight: CGFloat
     let palette: (Color, Color)
 
-    private let nameWidth: CGFloat = 92
+    /// Fonts, logo and name column grow with the row on iPad (1 on iPhone).
+    private var scale: CGFloat { max(1, rowHeight / 42) }
+    private var nameWidth: CGFloat { 92 * scale }
 
     var body: some View {
         HStack(spacing: 6) {
-            RaceLogo(urlString: series.logo_url, label: series.ticker ?? series.name, size: 24)
+            RaceLogo(urlString: series.logo_url, label: series.ticker ?? series.name, size: 24 * scale)
             Text(Company.shortName(series.name))
-                .font(.system(size: 12, weight: .semibold))
+                .font(.system(size: 12 * scale, weight: .semibold))
                 .foregroundStyle(.primary)
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
                 .frame(width: nameWidth, alignment: .leading)
 
             GeometryReader { geo in
-                let barWidth = max(4, (geo.size.width - 64) * CGFloat(value / maxValue))
+                let barWidth = max(4, (geo.size.width - 64 * scale) * CGFloat(value / maxValue))
                 HStack(spacing: 5) {
                     RoundedRectangle(cornerRadius: 6, style: .continuous)
                         .fill(LinearGradient(colors: [palette.0, palette.1], startPoint: .leading, endPoint: .trailing))
@@ -422,7 +427,7 @@ private struct RaceBar: View {
                         .shadow(color: palette.1.opacity(0.28), radius: 4, y: 2)
                         .frame(width: barWidth)
                     Text(Money.short(value))
-                        .font(.system(size: 11, weight: .semibold, design: .rounded))
+                        .font(.system(size: 11 * scale, weight: .semibold, design: .rounded))
                         .foregroundStyle(.secondary)
                         .lineLimit(1)
                         .fixedSize()

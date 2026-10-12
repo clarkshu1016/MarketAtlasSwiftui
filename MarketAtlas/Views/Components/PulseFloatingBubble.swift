@@ -10,6 +10,7 @@ private struct PulseFloatingBubbleModifier: ViewModifier {
     @State private var showConsole = false
 
     private let bubbleSize: CGFloat = 44
+    private let hideBubble = UserDefaults.standard.bool(forKey: "hide_pulse_bubble")
 
     func body(content: Content) -> some View {
         content
@@ -35,6 +36,8 @@ private struct PulseFloatingBubbleModifier: ViewModifier {
                         .frame(width: bubbleSize, height: bubbleSize)
                         .shadow(radius: 3, y: 1)
                         .position(clamped)
+                        .opacity(hideBubble ? 0 : 1)          // `defaults write … hide_pulse_bubble -bool true` for clean screenshots
+                        .allowsHitTesting(!hideBubble)
                         .onTapGesture { showConsole = true }
                         .gesture(
                             DragGesture()
