@@ -6,6 +6,7 @@ struct ContentView: View {
     @State private var favVM  = FavoritesViewModel()
     @State private var authVM = AuthViewModel()
     @AppStorage("app_appearance") private var appearance: String = "system"
+    @AppStorage("onboarding_seen") private var onboardingSeen = false
     @State private var notice: String?
 
     private var preferredScheme: ColorScheme? {
@@ -25,8 +26,14 @@ struct ContentView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color(UIColor.systemGroupedBackground))
         case .locked:
-            PaywallView()
-                .preferredColorScheme(preferredScheme)
+            // First launch without access: a short tour of what Pro unlocks, then the paywall.
+            if onboardingSeen {
+                PaywallView()
+                    .preferredColorScheme(preferredScheme)
+            } else {
+                OnboardingView { withAnimation { onboardingSeen = true } }
+                    .preferredColorScheme(preferredScheme)
+            }
         case .unlocked:
             mainTabs
         }

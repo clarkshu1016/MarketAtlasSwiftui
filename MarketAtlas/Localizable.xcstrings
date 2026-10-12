@@ -970,6 +970,28 @@
         }
       }
     },
+    "Ask anything": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "何でも聞いてみよう"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "随心提问"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "隨心提問"
+          }
+        }
+      }
+    },
     "Ask anything about markets, companies,\nor financial metrics.": {
       "localizations": {
         "ja": {
@@ -1472,6 +1494,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "消費"
+          }
+        }
+      }
+    },
+    "Continue": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "続ける"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "继续"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "繼續"
           }
         }
       }
@@ -2115,6 +2159,28 @@
       }
     },
     "English": {},
+    "Every country and sector on one screen. Tile size is market cap, colour is the change.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すべての国とセクターを1画面に。タイルの大きさは時価総額、色は値動きです。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "所有国家和行业，一屏尽览。方块大小代表市值，颜色代表涨跌。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "所有國家和產業，一屏盡覽。方塊大小代表市值，顏色代表漲跌。"
+          }
+        }
+      }
+    },
     "Explore": {
       "localizations": {
         "ja": {
@@ -3283,6 +3349,28 @@
         }
       }
     },
+    "Next": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "次へ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "下一步"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "下一步"
+          }
+        }
+      }
+    },
     "No Data": {
       "localizations": {
         "ja": {
@@ -4383,6 +4471,28 @@
         }
       }
     },
+    "Rankings, comparisons and revenue history in plain language. Type or speak.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ランキング、企業の比較、売上の推移を、ふだんの言葉で。入力でも音声でも。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "用日常语言查询排名、对比公司、看营收走势。可输入，也可语音。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "用日常語言查詢排名、比較公司、看營收走勢。可輸入，也可語音。"
+          }
+        }
+      }
+    },
     "Real Estate": {
       "localizations": {
         "ja": {
@@ -4801,6 +4911,28 @@
         }
       }
     },
+    "See how the world's biggest companies overtook each other, from 2000 to today.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2000年から現在まで、世界の大企業が順位を入れ替える様子をご覧ください。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "看全球最大的公司如何从 2000 年至今不断超越、易位。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "看全球最大的公司如何從 2000 年至今不斷超越、易位。"
+          }
+        }
+      }
+    },
     "Server": {
       "localizations": {
         "ja": {
@@ -5109,6 +5241,28 @@
         }
       }
     },
+    "Skip": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "スキップ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "跳过"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "略過"
+          }
+        }
+      }
+    },
     "Sorry, I couldn't process that. Please try again.": {
       "localizations": {
         "ja": {
@@ -5413,6 +5567,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "伺服器發生問題（%lld），請稍後再試。"
+          }
+        }
+      }
+    },
+    "The whole market at a glance": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "市場全体を、ひと目で"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一屏看懂整个市场"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一屏看懂整個市場"
           }
         }
       }
@@ -5899,6 +6075,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "語音輸入意外中斷，請再試一次。"
+          }
+        }
+      }
+    },
+    "Watch the giants race": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "世界の大企業の順位変動を再生"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "看全球巨头排位大战"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "看全球巨頭排位大戰"
           }
         }
       }
