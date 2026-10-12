@@ -333,7 +333,13 @@ private struct RaceChart: View {
 
     private var dateLabel: String {
         let index = min(max(Int(frame.rounded()), 0), response.dates.count - 1)
-        if annual { return response.dates[index] }
+        if annual {
+            // Yearly data has no months. Format the year for the language ("2018", "2018年").
+            guard let year = Int(response.dates[index]),
+                  let date = Calendar(identifier: .gregorian).date(from: DateComponents(year: year, month: 1, day: 1))
+            else { return response.dates[index] }
+            return date.formatted(.dateTime.year())
+        }
         let parts = response.dates[index].split(separator: "-").compactMap { Int($0) }
         guard parts.count == 2,
               let date = Calendar(identifier: .gregorian).date(from: DateComponents(year: parts[0], month: parts[1], day: 1))
