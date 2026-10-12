@@ -209,16 +209,37 @@ struct PaywallView: View {
         return option.trial != nil ? String(localized: "Start Free Trial") : String(localized: "Subscribe")
     }
 
+    /// Debug builds can't load App Store products, so there the button simulates a purchase (unlocks the app) to let the
+    /// screens after the paywall be walked through. Always false in TestFlight / App Store builds.
+    private var simulatesPurchase: Bool {
+        #if DEBUG
+        entitlements.products[selected] == nil
+        #else
+        false
+        #endif
+    }
+
+    private func buy() {
+        #if DEBUG
+        if simulatesPurchase {
+            UserDefaults.standard.set(true, forKey: DebugProOverride.key)
+            Task { await entitlements.refreshAccess() }
+            return
+        }
+        #endif
+        Task { await entitlements.purchase(selected) }
+    }
+
     private var purchaseButton: some View {
         VStack(spacing: 8) {
             Button {
-                Task { await entitlements.purchase(selected) }
+                buy()
             } label: {
                 Group {
                     if entitlements.isPurchasing {
                         ProgressView().tint(.white)
                     } else {
-                        Text(buttonTitle).font(.system(size: 17, weight: .bold))
+                        Text(simulatesPurchase ? "\(buttonTitle) · DEBUG" : buttonTitle).font(.system(size: 17, weight: .bold))
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -227,7 +248,7 @@ struct PaywallView: View {
             // an extra minHeight on the label stacked on top of that and made the button ~78 pt tall.
             .buttonStyle(.borderedProminent)
             .controlSize(.large)
-            .disabled(entitlements.isPurchasing || (entitlements.products[selected] == nil && !Self.screenshotMode))
+            .disabled(entitlements.isPurchasing || (entitlements.products[selected] == nil && !simulatesPurchase && !Self.screenshotMode))
 
             if entitlements.productsLoaded, entitlements.products.isEmpty, !Self.screenshotMode {
                 Text("Prices couldn't be loaded. Check your connection and try again.")
