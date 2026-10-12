@@ -68,8 +68,32 @@ struct MarketRaceView: View {
         VStack(spacing: 0) {
             filterBar
 
-            Spacer(minLength: 0)
+            // Scrollable so a short screen (or large text) never squeezes the chart or hides the footnote;
+            // on a tall screen the content is still centred.
+            GeometryReader { geo in
+                ScrollView {
+                    VStack(spacing: 0) {
+                        Spacer(minLength: 0)
+                        raceContent
+                        Spacer(minLength: 0)
+                    }
+                    .frame(maxWidth: .infinity, minHeight: geo.size.height)
+                }
+                .scrollBounceBehavior(.basedOnSize)
+            }
+        }
+        .background(Color(UIColor.systemGroupedBackground))
+        .navigationTitle("Ranking Race")
+        .navigationBarTitleDisplayMode(.inline)
+        .task(id: query) { await load() }
+        .onDisappear { pause(at: frame(at: .now)) }
+        .sheet(isPresented: $showCountryPicker) {
+            CountryPickerSheet(countries: countries, selected: $query.country)
+        }
+    }
 
+    @ViewBuilder private var raceContent: some View {
+        Group {
             if let response, frameCount > 1 {
                 VStack(spacing: 12) {
                     TimelineView(.animation(minimumInterval: 1.0 / 30, paused: !isPlaying)) { context in
@@ -94,8 +118,10 @@ struct MarketRaceView: View {
                     Text(DisplayName.note(note))
                         .font(.caption)
                         .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
                         .padding(.horizontal, 16)
                         .padding(.top, 8)
+                        .padding(.bottom, 12)
                 }
             } else if isLoading {
                 ProgressView()
@@ -111,15 +137,6 @@ struct MarketRaceView: View {
                 ContentUnavailableView("No Data", systemImage: "chart.bar.xaxis",
                                        description: Text("No history for this combination."))
             }
-            Spacer(minLength: 0)
-        }
-        .background(Color(UIColor.systemGroupedBackground))
-        .navigationTitle("Ranking Race")
-        .navigationBarTitleDisplayMode(.inline)
-        .task(id: query) { await load() }
-        .onDisappear { pause(at: frame(at: .now)) }
-        .sheet(isPresented: $showCountryPicker) {
-            CountryPickerSheet(countries: countries, selected: $query.country)
         }
     }
 
