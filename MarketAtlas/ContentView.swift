@@ -71,6 +71,7 @@ struct ContentView: View {
         .preferredColorScheme(preferredScheme)
         .environment(favVM)
         .environment(authVM)
+        .environment(vm)
         .alert("Connection Error", isPresented: Binding(
             get: { vm.errorMessage != nil },
             set: { if !$0 { vm.errorMessage = nil } }

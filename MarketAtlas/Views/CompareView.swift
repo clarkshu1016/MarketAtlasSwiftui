@@ -5,6 +5,8 @@ import SwiftUI
 struct CompareView: View {
     /// Everything that can be picked (the Markets list).
     let pool: [Company]
+    /// Opened from a company page: start with this company (looked up in `pool` for its full figures).
+    var initial: Company? = nil
 
     private static let maxCompanies = 4
     private static let palette: [Color] = [
@@ -109,8 +111,15 @@ struct CompareView: View {
         .task {
             // Start with the two biggest companies so there is something to look at straight away.
             if selected.isEmpty {
-                let top = pool.filter { $0.slug != nil }.sorted { ($0.market_cap ?? 0) > ($1.market_cap ?? 0) }.prefix(2)
-                selected = Array(top)
+                let ranked = pool.filter { $0.slug != nil }.sorted { ($0.market_cap ?? 0) > ($1.market_cap ?? 0) }
+                if let initial {
+                    // Prefer the full record from the list: companies reached from a heatmap carry fewer fields.
+                    let first = pool.first { $0.id == initial.id } ?? initial
+                    let partner = ranked.first { $0.id != first.id }
+                    selected = [first] + (partner.map { [$0] } ?? [])
+                } else {
+                    selected = Array(ranked.prefix(2))
+                }
                 for c in selected { await loadHistory(for: c) }
             }
         }

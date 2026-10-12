@@ -67,6 +67,8 @@ struct CompanyDetailView: View {
     let company: Company
     @Environment(FavoritesViewModel.self) private var favVM
     @Environment(AuthViewModel.self) private var authVM
+    /// The Markets list, used as the pool when comparing (nil in previews).
+    @Environment(CompanyViewModel.self) private var companyList: CompanyViewModel?
     @State private var showSignInPrompt = false
     @State private var starScale: CGFloat = 1.0
     @State private var starRotation: Double = 0
@@ -260,6 +262,14 @@ struct CompanyDetailView: View {
             }
         }
         .toolbar {
+            if let pool = companyList?.allCompanies, !pool.isEmpty, company.slug != nil {
+                NavigationLink {
+                    CompareView(pool: pool, initial: company)
+                } label: {
+                    Image(systemName: "rectangle.split.2x1")
+                }
+                .accessibilityLabel("Compare")
+            }
             if let ticker = company.ticker {
                 Button {
                     if authVM.isLoggedIn {
