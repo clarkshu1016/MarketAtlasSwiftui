@@ -135,7 +135,7 @@ struct MarketRaceView: View {
                 }
 
                 Button { showCountryPicker = true } label: {
-                    chip(query.country.map(DisplayName.country) ?? String(localized: "Country"),
+                    chip(query.country.map(DisplayName.country) ?? String(localized: "Country/Region"),
                          systemImage: "globe", active: query.country != nil)
                 }
 
@@ -157,7 +157,7 @@ struct MarketRaceView: View {
     private func chip(_ title: String, systemImage: String, active: Bool) -> some View {
         HStack(spacing: 5) {
             Image(systemName: systemImage).font(.system(size: 12))
-            Text(title).lineLimit(1)
+            Text(title).lineLimit(1).frame(maxWidth: 120, alignment: .leading)
             Image(systemName: "chevron.down").font(.system(size: 9, weight: .bold))
         }
         .font(.system(size: 13, weight: active ? .semibold : .regular))
@@ -271,7 +271,7 @@ private struct CountryPickerSheet: View {
             List {
                 if search.isEmpty {
                     Button { selected = nil; dismiss() } label: {
-                        row("🌍 " + String(localized: "All countries"), isSelected: selected == nil)
+                        row("🌍 " + String(localized: "All countries/regions"), isSelected: selected == nil)
                     }
                 }
                 ForEach(filtered, id: \.self) { country in
@@ -280,8 +280,8 @@ private struct CountryPickerSheet: View {
                     }
                 }
             }
-            .searchable(text: $search, prompt: "Search countries")
-            .navigationTitle("Country")
+            .searchable(text: $search, prompt: "Search countries/regions")
+            .navigationTitle("Country/Region")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) { Button("Done") { dismiss() } }
@@ -343,7 +343,8 @@ private struct RaceChart: View {
 
     var body: some View {
         let all = ranked
-        let top = Array(all.prefix(bars))
+        // Companies with no data yet (value 0) are not part of the ranking.
+        let top = Array(all.filter { $0.value > 0 }.prefix(bars))
         let maxValue = max(top.first?.value ?? 1, 1)
         let rankOf = Dictionary(uniqueKeysWithValues: top.enumerated().map { ($1.id, $0) })
 

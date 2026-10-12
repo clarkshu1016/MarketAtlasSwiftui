@@ -596,12 +596,12 @@
         }
       }
     },
-    "All countries": {
+    "All countries/regions": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "すべての国"
+            "value": "すべての国・地域"
           }
         },
         "zh-Hans": {
@@ -684,12 +684,12 @@
         }
       }
     },
-    "Any country": {
+    "Any country/region": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "すべての国"
+            "value": "すべての国・地域"
           }
         },
         "zh-Hans": {
@@ -1410,12 +1410,12 @@
         }
       }
     },
-    "Country": {
+    "Country/Region": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "国"
+            "value": "国・地域"
           }
         },
         "zh-Hans": {
@@ -4097,12 +4097,12 @@
         }
       }
     },
-    "Search countries": {
+    "Search countries/regions": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "国を検索"
+            "value": "国・地域を検索"
           }
         },
         "zh-Hans": {

@@ -124,10 +124,10 @@ struct ScreenerView: View {
                     .tint(.accentColor)
             }
 
-            Section("Country") {
+            Section("Country/Region") {
                 Button { showCountryPicker = true } label: {
                     HStack {
-                        Text(selectedCountry.isEmpty ? String(localized: "Any country") : DisplayName.country(selectedCountry))
+                        Text(selectedCountry.isEmpty ? String(localized: "Any country/region") : DisplayName.country(selectedCountry))
                             .foregroundStyle(selectedCountry.isEmpty ? .secondary : .primary)
                         Spacer()
                         Image(systemName: "chevron.right")
@@ -216,7 +216,7 @@ struct ScreenerView: View {
                     showCountryPicker = false
                 } label: {
                     HStack {
-                        Text("Any country").foregroundStyle(.primary)
+                        Text("Any country/region").foregroundStyle(.primary)
                         Spacer()
                         if selectedCountry.isEmpty {
                             Image(systemName: "checkmark").foregroundStyle(Color.accentColor)
@@ -241,8 +241,8 @@ struct ScreenerView: View {
                     .buttonStyle(.plain)
                 }
             }
-            .searchable(text: $countrySearch, prompt: "Search countries")
-            .navigationTitle("Country")
+            .searchable(text: $countrySearch, prompt: "Search countries/regions")
+            .navigationTitle("Country/Region")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {

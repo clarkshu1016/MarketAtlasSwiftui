@@ -57,7 +57,7 @@ struct HeatmapView: View {
                 }
 
                 // Every country, including the ones whose tiles are too small to read.
-                Section("All countries") {
+                Section("All countries/regions") {
                     ForEach(Array(response.items.enumerated()), id: \.element.id) { idx, item in
                         NavigationLink {
                             CountryHeatmapView(country: item.country, period: period)
