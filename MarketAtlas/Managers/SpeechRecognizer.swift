@@ -51,6 +51,9 @@ final class SpeechRecognizer {
     private var recognitionTask: SFSpeechRecognitionTask?
     private var sessionID = UUID()
     private var isStarting = false
+    /// True once the user (or an interruption) ended this recording. The recogniser then reports a
+    /// cancellation/"no more audio" error while it wraps up — that is how stopping normally ends.
+    private var userEnded = false
 
     private init() {
         // Anything that silently kills the audio engine must also reset our state,
@@ -121,6 +124,7 @@ final class SpeechRecognizer {
         SpeechManager.shared.stop()   // don't talk over the microphone
         let id = UUID()
         sessionID = id
+        userEnded = false
         transcript = ""
 
         do {
@@ -155,7 +159,11 @@ final class SpeechRecognizer {
                         onUpdate(text)
                     }
                     if isFinal || nsError != nil {
-                        if let nsError, text == nil { self.report(nsError) }
+                        // After a user-initiated stop the wrap-up error is expected; only surface errors
+                        // when the recording died on its own, or ended without producing any text.
+                        if let nsError, text == nil, !self.userEnded || self.transcript.isEmpty {
+                            self.report(nsError)
+                        }
                         self.recognitionTask = nil
                         self.stopCapture()
                         self.releaseAudioSession()
@@ -179,6 +187,7 @@ final class SpeechRecognizer {
     /// Stops the microphone and signals end-of-audio, but does NOT cancel the task,
     /// so the final transcript can still arrive.
     private func stopCapture() {
+        userEnded = true
         if let engine = audioEngine {
             if engine.isRunning { engine.stop() }
             engine.inputNode.removeTap(onBus: 0)   // safe even if the engine was already stopped
@@ -223,8 +232,10 @@ final class SpeechRecognizer {
     }
 
     private func report(_ error: NSError) {
-        // 1110 = no speech detected, 216/301 = cancelled: expected, not worth an alert.
-        let benign = error.domain == "kAFAssistantErrorDomain" && [1110, 216, 301].contains(error.code)
+        // 1110 = no speech detected, 216 / 301 = cancelled. The code is reported under either domain
+        // depending on whether recognition ran on-device (kLSR…) or on the server (kAFAssistant…).
+        let benign = ["kAFAssistantErrorDomain", "kLSRErrorDomain"].contains(error.domain)
+            && [1110, 216, 301].contains(error.code)
         guard !benign, (error as NSError).code != NSUserCancelledError else { return }
         errorMessage = "Voice input stopped unexpectedly. Please try again."
     }

@@ -45,8 +45,14 @@ final class SpeechManager: NSObject {
         let identifier: String
         switch NLLanguageRecognizer.dominantLanguage(for: text) {
         case .japanese:           identifier = "ja-JP"
-        case .simplifiedChinese:  identifier = "zh-CN"
-        case .traditionalChinese: identifier = "zh-TW"
+        case .simplifiedChinese, .traditionalChinese:
+            // Short sentences use characters common to both scripts, so the detector often picks the
+            // wrong one. The user's chosen voice language is a better signal when it is Chinese.
+            switch VoiceLanguage.selected {
+            case .chineseSimplified:  identifier = "zh-CN"
+            case .chineseTraditional: identifier = "zh-TW"
+            default:                  identifier = NLLanguageRecognizer.dominantLanguage(for: text) == .traditionalChinese ? "zh-TW" : "zh-CN"
+            }
         default:                  identifier = "en-US"
         }
         return AVSpeechSynthesisVoice(language: identifier) ?? AVSpeechSynthesisVoice(language: "en-US")
