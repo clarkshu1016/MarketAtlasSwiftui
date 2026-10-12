@@ -136,7 +136,7 @@ struct CompanyListView: View {
             switch destination {
             case .performance: PerformanceView()
             case .timeMachine: TimeMachineView()
-            case .race:        MarketRaceView()
+            case .race:        MarketRaceView(countries: vm.availableCountries)
             }
         }
         .toolbar {
@@ -149,7 +149,7 @@ struct CompanyListView: View {
                         Label("Time Machine", systemImage: "clock.arrow.circlepath")
                     }
                     Button { exploreDestination = .race } label: {
-                        Label("Market Cap Race", systemImage: "flag.checkered")
+                        Label("Ranking Race", systemImage: "flag.checkered")
                     }
                 } label: {
                     Image(systemName: "safari")

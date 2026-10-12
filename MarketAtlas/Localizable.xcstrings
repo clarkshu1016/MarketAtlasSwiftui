@@ -2667,6 +2667,28 @@
         }
       }
     },
+    "Metric": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "指標"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "指标"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "指標"
+          }
+        }
+      }
+    },
     "Microphone Access Required": {
       "localizations": {
         "ja": {
@@ -2993,6 +3015,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "暫無財務資料。"
+          }
+        }
+      }
+    },
+    "No history for this combination.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この条件の履歴はありません。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "该组合没有历史数据。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "此組合沒有歷史資料。"
           }
         }
       }
@@ -3741,6 +3785,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "第 %lld 名，%@，當時 %@，此後 %@，%@"
+          }
+        }
+      }
+    },
+    "Ranking Race": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ランキングレース"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "排名赛跑"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "排名賽跑"
           }
         }
       }
@@ -4757,6 +4823,28 @@
         }
       }
     },
+    "Top 10 by earnings": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "利益トップ10"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "利润前十的公司"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "獲利前十的公司"
+          }
+        }
+      }
+    },
     "Top 10 by market cap": {
       "localizations": {
         "ja": {
@@ -4775,6 +4863,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "市值前十的公司"
+          }
+        }
+      }
+    },
+    "Top 10 by revenue": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "売上高トップ10"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "营收前十的公司"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "營收前十的公司"
           }
         }
       }

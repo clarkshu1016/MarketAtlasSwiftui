@@ -221,8 +221,11 @@ final class APIService {
         return try await fetch(CompanyHeatmapResponse.self, get("api/market/heatmap/companies", query: query))
     }
 
-    func fetchRace(start: Int) async throws -> RaceResponse {
-        try await fetch(RaceResponse.self, get("api/market/race", query: [URLQueryItem(name: "start", value: String(start))]))
+    func fetchRace(metric: String, start: Int, country: String?, sector: String?) async throws -> RaceResponse {
+        var query = [URLQueryItem(name: "metric", value: metric), URLQueryItem(name: "start", value: String(start))]
+        if let country { query.append(URLQueryItem(name: "country", value: country)) }
+        if let sector { query.append(URLQueryItem(name: "sector", value: sector)) }
+        return try await fetch(RaceResponse.self, get("api/market/race", query: query))
     }
 
     func fetchSectorHeatmap(period: String) async throws -> SectorHeatmapResponse {

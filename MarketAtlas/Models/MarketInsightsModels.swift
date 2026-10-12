@@ -150,8 +150,11 @@ enum Sector {
 // MARK: - /api/market/race
 
 struct RaceResponse: Codable {
+    let metric: String?
+    /// "month" (market cap) or "year" (earnings, revenue).
+    let granularity: String?
     let start: Int
-    /// Months, "YYYY-MM".
+    /// Frames: months "YYYY-MM", or years "YYYY" for the annual metrics.
     let dates: [String]
     let series: [RaceSeries]
     let note: String?

@@ -1,6 +1,28 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "Annual figures as reported, for companies listed today that have financial history. The latest year may be incomplete.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "報告された年次の数値です。現在上場していて財務履歴のある企業が対象です。最新年は途中の数値の場合があります。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "按已披露的年度数据，仅包含目前仍在上市且有财务历史的公司。最近一年的数据可能不完整。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "依已揭露的年度資料，僅包含目前仍在上市且有財務歷史的公司。最近一年的資料可能不完整。"
+          }
+        }
+      }
+    },
     "Market-cap change (includes share issuance, buybacks and currency moves), weighted by market cap, over companies that have history at the start of the period.": {
       "localizations": {
         "ja": {

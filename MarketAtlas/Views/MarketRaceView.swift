@@ -1,17 +1,49 @@
 import SwiftUI
 
-/// Animated bar-chart race: the ten largest companies by market cap, month by month since a chosen year.
+/// Animated bar-chart race: the ten largest companies month by month (market cap) or year by year
+/// (earnings, revenue), optionally limited to one country and/or sector.
 struct MarketRaceView: View {
+    enum Metric: String, CaseIterable, Identifiable {
+        case marketCap = "market_cap", earnings, revenue
+        var id: String { rawValue }
+        var label: String {
+            switch self {
+            case .marketCap: String(localized: "Market Cap")
+            case .earnings:  String(localized: "Earnings")
+            case .revenue:   String(localized: "Revenue")
+            }
+        }
+        var title: String {
+            switch self {
+            case .marketCap: String(localized: "Top 10 by market cap")
+            case .earnings:  String(localized: "Top 10 by earnings")
+            case .revenue:   String(localized: "Top 10 by revenue")
+            }
+        }
+    }
+
+    private struct Query: Hashable {
+        var metric: Metric
+        var country: String?
+        var sector: String?
+    }
+
+    private static let sectors = ["Technology", "Finance", "Consumer", "Industrials", "Healthcare", "Energy",
+                                  "Materials", "Media & Telecom", "Real Estate", "Services", "Unclassified"]
     /// The race always runs from here to today; the slider covers the whole range.
     private static let startYear = 2000
     private static let visibleBars = 10
     private static let rowHeight: CGFloat = 42
 
+    let countries: [String]
+
+    @State private var query = Query(metric: .marketCap, country: nil, sector: nil)
+    @State private var showCountryPicker = false
     @State private var response: RaceResponse?
     @State private var isLoading = false
     @State private var errorMessage: String?
 
-    // Playback: `frame` is a fractional month index. While playing it advances from `baseFrame`.
+    // Playback: `frame` is a fractional frame index. While playing it advances from `baseFrame`.
     @State private var baseFrame: Double = 0
     @State private var playStart: Date?
     @State private var speed: Double = 2
@@ -19,21 +51,27 @@ struct MarketRaceView: View {
     private var frameCount: Int { response?.dates.count ?? 0 }
     private var lastFrame: Double { Double(max(frameCount - 1, 0)) }
     private var isPlaying: Bool { playStart != nil }
-    /// One month per 0.25 s at 1×.
-    private var monthsPerSecond: Double { 4 * speed }
+    private var isAnnual: Bool { response?.granularity == "year" }
+    /// Monthly data: one frame per 0.25 s at 1×; annual data: one per second.
+    private var framesPerSecond: Double { (isAnnual ? 1 : 4) * speed }
 
     private func frame(at date: Date) -> Double {
         guard let playStart else { return baseFrame }
-        return min(lastFrame, baseFrame + date.timeIntervalSince(playStart) * monthsPerSecond)
+        return min(lastFrame, baseFrame + date.timeIntervalSince(playStart) * framesPerSecond)
     }
 
     var body: some View {
         VStack(spacing: 0) {
+            filterBar
+
+            Spacer(minLength: 0)
+
             if let response, frameCount > 1 {
                 TimelineView(.animation(minimumInterval: 1.0 / 30, paused: !isPlaying)) { context in
                     let f = frame(at: context.date)
                     VStack(spacing: 12) {
-                        RaceChart(response: response, frame: f, bars: Self.visibleBars, rowHeight: Self.rowHeight)
+                        RaceChart(response: response, frame: f, bars: Self.visibleBars, rowHeight: Self.rowHeight,
+                                  title: query.metric.title, annual: isAnnual)
                         controls(frame: f)
                     }
                     .onChange(of: f >= lastFrame && isPlaying) { _, finished in
@@ -41,6 +79,7 @@ struct MarketRaceView: View {
                     }
                 }
                 .padding(.horizontal, 16)
+                .opacity(isLoading ? 0.35 : 1)
 
                 if let note = response.note {
                     Text(DisplayName.note(note))
@@ -50,7 +89,7 @@ struct MarketRaceView: View {
                         .padding(.top, 8)
                 }
             } else if isLoading {
-                ProgressView().frame(maxHeight: .infinity)
+                ProgressView()
             } else if let errorMessage {
                 ContentUnavailableView {
                     Label("Couldn't Load", systemImage: "wifi.exclamationmark")
@@ -59,14 +98,69 @@ struct MarketRaceView: View {
                 } actions: {
                     Button("Try Again") { Task { await load() } }.buttonStyle(.borderedProminent)
                 }
+            } else if response != nil {
+                ContentUnavailableView("No Data", systemImage: "chart.bar.xaxis",
+                                       description: Text("No history for this combination."))
             }
             Spacer(minLength: 0)
         }
         .background(Color(UIColor.systemGroupedBackground))
-        .navigationTitle("Market Cap Race")
+        .navigationTitle("Ranking Race")
         .navigationBarTitleDisplayMode(.inline)
-        .task { await load() }
+        .task(id: query) { await load() }
         .onDisappear { pause(at: frame(at: .now)) }
+        .sheet(isPresented: $showCountryPicker) {
+            CountryPickerSheet(countries: countries, selected: $query.country)
+        }
+    }
+
+    // MARK: Filters
+
+    /// Three compact chips; a chip is highlighted when it narrows the race.
+    private var filterBar: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 8) {
+                Menu {
+                    Picker("Metric", selection: $query.metric) {
+                        ForEach(Metric.allCases) { Text($0.label).tag($0) }
+                    }
+                } label: {
+                    chip(query.metric.label, systemImage: "chart.bar.fill", active: query.metric != .marketCap)
+                }
+
+                Button { showCountryPicker = true } label: {
+                    chip(query.country.map(DisplayName.country) ?? String(localized: "Country"),
+                         systemImage: "globe", active: query.country != nil)
+                }
+
+                Menu {
+                    Picker("Sector", selection: $query.sector) {
+                        Text("Any sector").tag(String?.none)
+                        ForEach(Self.sectors, id: \.self) { Text(Sector.displayName($0)).tag(String?.some($0)) }
+                    }
+                } label: {
+                    chip(query.sector.map(Sector.displayName) ?? String(localized: "Sector"),
+                         systemImage: "square.grid.2x2", active: query.sector != nil)
+                }
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 10)
+        }
+    }
+
+    private func chip(_ title: String, systemImage: String, active: Bool) -> some View {
+        HStack(spacing: 5) {
+            Image(systemName: systemImage).font(.system(size: 12))
+            Text(title).lineLimit(1)
+            Image(systemName: "chevron.down").font(.system(size: 9, weight: .bold))
+        }
+        .font(.system(size: 13, weight: active ? .semibold : .regular))
+        .padding(.horizontal, 12)
+        .padding(.vertical, 7)
+        .foregroundStyle(active ? Color.accentColor : .primary)
+        .background(Capsule().fill(active ? Color.accentColor.opacity(0.12) : Color(UIColor.secondarySystemGroupedBackground)))
+        .overlay(Capsule().strokeBorder(active ? Color.accentColor.opacity(0.8) : Color(UIColor.separator).opacity(0.4),
+                                        lineWidth: active ? 1.5 : 0.5))
     }
 
     // MARK: Pieces
@@ -136,7 +230,8 @@ struct MarketRaceView: View {
         errorMessage = nil
         pause(at: 0)
         do {
-            let loaded = try await APIService.shared.fetchRace(start: Self.startYear)
+            let loaded = try await APIService.shared.fetchRace(metric: query.metric.rawValue, start: Self.startYear,
+                                                               country: query.country, sector: query.sector)
             response = loaded
             play(from: 0)
         } catch is CancellationError {
@@ -149,6 +244,54 @@ struct MarketRaceView: View {
     }
 }
 
+// MARK: - Country picker
+
+private struct CountryPickerSheet: View {
+    let countries: [String]
+    @Binding var selected: String?
+    @Environment(\.dismiss) private var dismiss
+    @State private var search = ""
+
+    private var filtered: [String] {
+        guard !search.isEmpty else { return countries }
+        return countries.filter {
+            $0.localizedCaseInsensitiveContains(search) || DisplayName.country($0).localizedCaseInsensitiveContains(search)
+        }
+    }
+
+    var body: some View {
+        NavigationStack {
+            List {
+                if search.isEmpty {
+                    Button { selected = nil; dismiss() } label: {
+                        row("🌍 " + String(localized: "All countries"), isSelected: selected == nil)
+                    }
+                }
+                ForEach(filtered, id: \.self) { country in
+                    Button { selected = country; dismiss() } label: {
+                        row(DisplayName.country(country), isSelected: selected == country)
+                    }
+                }
+            }
+            .searchable(text: $search, prompt: "Search countries")
+            .navigationTitle("Country")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) { Button("Done") { dismiss() } }
+            }
+        }
+        .presentationDetents([.medium, .large])
+    }
+
+    private func row(_ text: String, isSelected: Bool) -> some View {
+        HStack {
+            Text(text).foregroundStyle(.primary)
+            Spacer()
+            if isSelected { Image(systemName: "checkmark").foregroundStyle(Color.accentColor) }
+        }
+    }
+}
+
 // MARK: - The chart for one (fractional) frame
 
 private struct RaceChart: View {
@@ -156,6 +299,8 @@ private struct RaceChart: View {
     let frame: Double
     let bars: Int
     let rowHeight: CGFloat
+    let title: String
+    let annual: Bool
 
     private struct Entry: Identifiable {
         let series: RaceSeries
@@ -180,6 +325,7 @@ private struct RaceChart: View {
 
     private var dateLabel: String {
         let index = min(max(Int(frame.rounded()), 0), response.dates.count - 1)
+        if annual { return response.dates[index] }
         let parts = response.dates[index].split(separator: "-").compactMap { Int($0) }
         guard parts.count == 2,
               let date = Calendar(identifier: .gregorian).date(from: DateComponents(year: parts[0], month: parts[1], day: 1))
@@ -195,7 +341,7 @@ private struct RaceChart: View {
 
         VStack(spacing: 8) {
             HStack(alignment: .firstTextBaseline) {
-                Text("Top 10 by market cap")
+                Text(title)
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                 Spacer()
