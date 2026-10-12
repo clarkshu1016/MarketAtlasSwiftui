@@ -14,6 +14,8 @@
     <dict>
         <key>com.appdevgpt.marketatlas1.debug</key>
         <string>MarketAtlas Dev AdHoc</string>
+        <key>com.appdevgpt.marketatlas1.debug.widget</key>
+        <string>MarketAtlas Dev Widget AdHoc</string>
     </dict>
 </dict>
 </plist>

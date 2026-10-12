@@ -12,6 +12,8 @@
     <dict>
         <key>com.appdevgpt.marketatlas1</key>
         <string>MarketAtlas AppStore</string>
+        <key>com.appdevgpt.marketatlas1.widget</key>
+        <string>MarketAtlas Widget AppStore</string>
     </dict>
 </dict>
 </plist>

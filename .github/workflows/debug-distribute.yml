@@ -57,10 +57,14 @@ jobs:
       - name: Install provisioning profile
         env:
           PROFILE_BASE64: ${{ secrets.PROVISIONING_PROFILE_BASE64 }}
+          WIDGET_PROFILE_BASE64: ${{ secrets.WIDGET_PROVISIONING_PROFILE_BASE64 }}
         run: |
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           echo -n "$PROFILE_BASE64" | base64 --decode \
             -o ~/Library/MobileDevice/Provisioning\ Profiles/adhoc.mobileprovision
+          # The home-screen widget is a separate target with its own bundle ID and profile.
+          echo -n "$WIDGET_PROFILE_BASE64" | base64 --decode \
+            -o ~/Library/MobileDevice/Provisioning\ Profiles/adhoc-widget.mobileprovision
 
       # ── 5. Build DEBUG archive ────────────────────────────────────────
       - name: Archive (Debug)

@@ -14,6 +14,7 @@
 		07BD8BDB2FEAC3E40049C413 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 07BD8BDA2FEAC3E40049C413 /* GoogleSignInSwift */; };
 		07BD8C042FEB1E000049C413 /* Pulse in Frameworks */ = {isa = PBXBuildFile; productRef = 07BD8C022FEB1E000049C413 /* Pulse */; };
 		07BD8C052FEB1E000049C413 /* PulseUI in Frameworks */ = {isa = PBXBuildFile; productRef = 07BD8C032FEB1E000049C413 /* PulseUI */; };
+		07BD8D0B2FF0A1B30049C413 /* MarketAtlasWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 07BD8D022FF0A1B30049C413 /* MarketAtlasWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,12 +32,34 @@
 			remoteGlobalIDString = 07BD8ACD2FE7790D0049C413;
 			remoteInfo = MarketAtlas;
 		};
+		07BD8D0D2FF0A1B30049C413 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 07BD8AC62FE7790D0049C413 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 07BD8D012FF0A1B30049C413;
+			remoteInfo = MarketAtlasWidget;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		07BD8D0C2FF0A1B30049C413 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				07BD8D0B2FF0A1B30049C413 /* MarketAtlasWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		07BD8ACE2FE7790D0049C413 /* MarketAtlas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MarketAtlas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07BD8ADB2FE7790E0049C413 /* MarketAtlasTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MarketAtlasTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		07BD8AE52FE7790E0049C413 /* MarketAtlasUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MarketAtlasUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		07BD8D022FF0A1B30049C413 /* MarketAtlasWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MarketAtlasWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -46,6 +69,13 @@
 				Info.plist,
 			);
 			target = 07BD8ACD2FE7790D0049C413 /* MarketAtlas */;
+		};
+		07BD8D042FF0A1B30049C413 /* Exceptions for "MarketAtlasWidget" folder in "MarketAtlasWidget" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 07BD8D012FF0A1B30049C413 /* MarketAtlasWidget */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -66,6 +96,14 @@
 		07BD8AE82FE7790E0049C413 /* MarketAtlasUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = MarketAtlasUITests;
+			sourceTree = "<group>";
+		};
+		07BD8D032FF0A1B30049C413 /* MarketAtlasWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				07BD8D042FF0A1B30049C413 /* Exceptions for "MarketAtlasWidget" folder in "MarketAtlasWidget" target */,
+			);
+			path = MarketAtlasWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -99,6 +137,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		07BD8D062FF0A1B30049C413 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -108,6 +153,7 @@
 				07BD8AD02FE7790D0049C413 /* MarketAtlas */,
 				07BD8ADE2FE7790E0049C413 /* MarketAtlasTests */,
 				07BD8AE82FE7790E0049C413 /* MarketAtlasUITests */,
+				07BD8D032FF0A1B30049C413 /* MarketAtlasWidget */,
 				07BD8ACF2FE7790D0049C413 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -118,6 +164,7 @@
 				07BD8ACE2FE7790D0049C413 /* MarketAtlas.app */,
 				07BD8ADB2FE7790E0049C413 /* MarketAtlasTests.xctest */,
 				07BD8AE52FE7790E0049C413 /* MarketAtlasUITests.xctest */,
+				07BD8D022FF0A1B30049C413 /* MarketAtlasWidget.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -132,10 +179,12 @@
 				07BD8ACA2FE7790D0049C413 /* Sources */,
 				07BD8ACB2FE7790D0049C413 /* Frameworks */,
 				07BD8ACC2FE7790D0049C413 /* Resources */,
+				07BD8D0C2FF0A1B30049C413 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				07BD8D0E2FF0A1B30049C413 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				07BD8AD02FE7790D0049C413 /* MarketAtlas */,
@@ -200,6 +249,28 @@
 			productReference = 07BD8AE52FE7790E0049C413 /* MarketAtlasUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		07BD8D012FF0A1B30049C413 /* MarketAtlasWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 07BD8D082FF0A1B30049C413 /* Build configuration list for PBXNativeTarget "MarketAtlasWidget" */;
+			buildPhases = (
+				07BD8D052FF0A1B30049C413 /* Sources */,
+				07BD8D062FF0A1B30049C413 /* Frameworks */,
+				07BD8D072FF0A1B30049C413 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				07BD8D032FF0A1B30049C413 /* MarketAtlasWidget */,
+			);
+			name = MarketAtlasWidget;
+			packageProductDependencies = (
+			);
+			productName = MarketAtlasWidget;
+			productReference = 07BD8D022FF0A1B30049C413 /* MarketAtlasWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -211,6 +282,9 @@
 				LastUpgradeCheck = 2660;
 				TargetAttributes = {
 					07BD8ACD2FE7790D0049C413 = {
+						CreatedOnToolsVersion = 26.5;
+					};
+					07BD8D012FF0A1B30049C413 = {
 						CreatedOnToolsVersion = 26.5;
 					};
 					07BD8ADA2FE7790E0049C413 = {
@@ -245,6 +319,7 @@
 				07BD8ACD2FE7790D0049C413 /* MarketAtlas */,
 				07BD8ADA2FE7790E0049C413 /* MarketAtlasTests */,
 				07BD8AE42FE7790E0049C413 /* MarketAtlasUITests */,
+				07BD8D012FF0A1B30049C413 /* MarketAtlasWidget */,
 			);
 		};
 /* End PBXProject section */
@@ -265,6 +340,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		07BD8AE32FE7790E0049C413 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		07BD8D072FF0A1B30049C413 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -295,6 +377,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		07BD8D052FF0A1B30049C413 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -307,6 +396,11 @@
 			isa = PBXTargetDependency;
 			target = 07BD8ACD2FE7790D0049C413 /* MarketAtlas */;
 			targetProxy = 07BD8AE62FE7790E0049C413 /* PBXContainerItemProxy */;
+		};
+		07BD8D0E2FF0A1B30049C413 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 07BD8D012FF0A1B30049C413 /* MarketAtlasWidget */;
+			targetProxy = 07BD8D0D2FF0A1B30049C413 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -605,6 +699,70 @@
 			};
 			name = Release;
 		};
+		07BD8D092FF0A1B30049C413 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = AY6Y6KCP7Y;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MarketAtlasWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "MarketAtlas Widget";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.appdevgpt.marketatlas1.debug.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "MarketAtlas Dev Widget AdHoc";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		07BD8D0A2FF0A1B30049C413 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = AY6Y6KCP7Y;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MarketAtlasWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "MarketAtlas Widget";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.appdevgpt.marketatlas1.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "MarketAtlas Widget AppStore";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -640,6 +798,15 @@
 			buildConfigurations = (
 				07BD8AF62FE7790E0049C413 /* Debug */,
 				07BD8AF72FE7790E0049C413 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		07BD8D082FF0A1B30049C413 /* Build configuration list for PBXNativeTarget "MarketAtlasWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				07BD8D092FF0A1B30049C413 /* Debug */,
+				07BD8D0A2FF0A1B30049C413 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
