@@ -750,6 +750,28 @@
         }
       }
     },
+    "Add company": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "企業を追加"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "添加公司"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新增公司"
+          }
+        }
+      }
+    },
     "Add to favourites": {
       "localizations": {
         "ja": {
@@ -1406,6 +1428,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "公司規模篩選：%@"
+          }
+        }
+      }
+    },
+    "Compare": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "比較"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "对比"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "比較"
           }
         }
       }
@@ -2379,6 +2423,50 @@
         }
       }
     },
+    "Growth": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "成長率"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "涨幅"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "漲幅"
+          }
+        }
+      }
+    },
+    "Growth, start of period = 100": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "成長率（期間開始 = 100）"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "涨幅（期初 = 100）"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "漲幅（期初 = 100）"
+          }
+        }
+      }
+    },
     "Heads Up": {
       "localizations": {
         "ja": {
@@ -2749,6 +2837,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "載入中…"
+          }
+        }
+      }
+    },
+    "Log scale, so equal percentage moves look equal.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "対数目盛のため、同じ変化率は同じ傾きで表示されます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "采用对数坐标，相同的涨跌幅在图上斜率一致。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "採用對數座標，相同的漲跌幅在圖上斜率一致。"
           }
         }
       }
@@ -3213,6 +3323,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "最小：%@"
+          }
+        }
+      }
+    },
+    "Mode": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "モード"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "模式"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "模式"
           }
         }
       }
@@ -3789,6 +3921,28 @@
         }
       }
     },
+    "Operating margin": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "営業利益率"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "营业利润率"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "營業利益率"
+          }
+        }
+      }
+    },
     "Order": {
       "localizations": {
         "ja": {
@@ -4185,6 +4339,28 @@
         }
       }
     },
+    "Pick at least two companies to compare.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "比較するには2社以上を選んでください。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "请至少选择两家公司进行对比。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "請至少選擇兩家公司進行比較。"
+          }
+        }
+      }
+    },
     "Plan": {
       "localizations": {
         "ja": {
@@ -4269,6 +4445,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "價格"
+          }
+        }
+      }
+    },
+    "Price change (24h)": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "価格変動（24時間）"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "价格涨跌（24 小时）"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "價格漲跌（24 小時）"
           }
         }
       }
@@ -4379,6 +4577,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "季度"
+          }
+        }
+      }
+    },
+    "Range": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "期間"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "范围"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "範圍"
           }
         }
       }
@@ -4533,6 +4753,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "收到伺服器傳回的異常資料。"
+          }
+        }
+      }
+    },
+    "Remove": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "削除"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "移除"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "移除"
           }
         }
       }
@@ -5259,6 +5501,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "略過"
+          }
+        }
+      }
+    },
+    "Some companies have no data at the start of this period, so their line begins later.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "期間の開始時点でデータがない企業は、線が途中から始まります。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "部分公司在期初没有数据，因此曲线从较晚的时间开始。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "部分公司在期初沒有資料，因此曲線從較晚的時間開始。"
           }
         }
       }
