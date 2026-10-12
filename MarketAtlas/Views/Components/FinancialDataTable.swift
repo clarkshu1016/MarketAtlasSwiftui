@@ -53,8 +53,15 @@ private struct YoyCell: View {
 struct FinancialDataTable: View {
     let points: [BarChartPoint]
 
-    private static let colW: CGFloat = 72
+    private static let minColW: CGFloat = 72
     private static let iconW: CGFloat = 28
+    @State private var availableWidth: CGFloat = 0
+
+    /// Columns share the card's full width when it is wider than the minimum (iPad).
+    private var colW: CGFloat {
+        guard !sorted.isEmpty, availableWidth > 0 else { return Self.minColW }
+        return max(Self.minColW, ((availableWidth - Self.iconW) / CGFloat(sorted.count)).rounded(.down))
+    }
 
     private var sorted: [BarChartPoint] { points.sorted { $0.year < $1.year } }
 
@@ -68,7 +75,7 @@ struct FinancialDataTable: View {
                         Text(pt.yearStr)
                             .font(.system(size: 12, weight: .medium))
                             .foregroundStyle(.secondary)
-                            .frame(width: Self.colW, alignment: .center)
+                            .frame(width: colW, alignment: .center)
                     }
                 }
                 .padding(.vertical, 8)
@@ -83,7 +90,7 @@ struct FinancialDataTable: View {
                         .foregroundStyle(Color.blue.opacity(0.85))
                         .frame(width: Self.iconW)
                     ForEach(sorted) { pt in
-                        ValueCell(value: pt.value, width: Self.colW)
+                        ValueCell(value: pt.value, width: colW)
                     }
                 }
                 .padding(.vertical, 10)
@@ -97,7 +104,7 @@ struct FinancialDataTable: View {
                         .foregroundStyle(Color.orange)
                         .frame(width: Self.iconW)
                     ForEach(sorted) { pt in
-                        YoyCell(yoy: pt.yoy, width: Self.colW)
+                        YoyCell(yoy: pt.yoy, width: colW)
                     }
                 }
                 .padding(.vertical, 10)
@@ -105,5 +112,12 @@ struct FinancialDataTable: View {
         }
         .background(Color(UIColor.secondarySystemGroupedBackground))
         .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+        .background(
+            GeometryReader { g in
+                Color.clear
+                    .onAppear { availableWidth = g.size.width }
+                    .onChange(of: g.size.width) { _, w in availableWidth = w }
+            }
+        )
     }
 }

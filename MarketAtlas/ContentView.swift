@@ -60,6 +60,7 @@ struct ContentView: View {
             }
             .tabItem { Label("Profile", systemImage: "person.fill") }
         }
+        .adaptiveTabStyle()
         .preferredColorScheme(preferredScheme)
         .environment(favVM)
         .environment(authVM)
@@ -101,6 +102,13 @@ struct ContentView: View {
         } message: {
             Text(notice ?? "")
         }
+    }
+}
+
+private extension View {
+    /// iOS 18+: sidebar-adaptable tabs, so a narrow iPad window gets a sidebar instead of an overflowing top bar.
+    @ViewBuilder func adaptiveTabStyle() -> some View {
+        if #available(iOS 18.0, *) { tabViewStyle(.sidebarAdaptable) } else { self }
     }
 }
 

@@ -97,7 +97,7 @@ struct CompanyListView: View {
                 }
                 .listStyle(.plain)
                 .refreshable { await vm.refresh() }
-                .background(Color(UIColor.systemGroupedBackground))
+                .readableWidth()
                 .overlay {
                     if vm.isLoading && vm.allCompanies.isEmpty {
                         ProgressView("Loading…")

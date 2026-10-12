@@ -6,11 +6,11 @@ struct StatsRowView: View {
     var body: some View {
         HStack(spacing: 10) {
             StatCard(icon: "building.2.fill",    color: .accentColor,
-                     value: stats.map { "\($0.total_companies)" } ?? "—",
+                     value: stats.map { $0.total_companies.formatted() } ?? "—",
                      label: String(localized: "Companies"))
             StatCard(icon: "globe.americas.fill", color: .green,
                      value: stats.map { "\($0.countries)" } ?? "—",
-                     label: String(localized: "Markets"))
+                     label: String(localized: "Countries & Regions"))
             StatCard(icon: "chart.pie.fill",      color: .orange,
                      value: stats?.total_market_cap_display ?? "—",
                      label: String(localized: "Market Cap"))
@@ -37,6 +37,8 @@ private struct StatCard: View {
             Text(label)
                 .font(.system(size: 10, weight: .medium))
                 .foregroundStyle(.secondary)
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(12)

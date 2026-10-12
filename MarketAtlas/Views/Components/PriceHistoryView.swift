@@ -264,7 +264,8 @@ struct PriceHistoryView: View {
                     .padding(.bottom, 12)
             } else {
                 GeometryReader { geo in
-                    let maxLabels = Int(geo.size.width / 52)
+                    // Cap the tick count: on a wide iPad chart a high count made every tick a repeated year.
+                    let maxLabels = min(max(Int(geo.size.width / 52), 2), 7)
                     Chart {
                         if metric == .price {
                             ForEach(filteredPrice) { pt in

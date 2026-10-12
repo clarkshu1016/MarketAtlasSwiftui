@@ -61,7 +61,7 @@ struct FavoritesView: View {
             }
         }
         .listStyle(.plain)
-        .background(Color(UIColor.systemGroupedBackground))
+        .readableWidth()
         .refreshable {
             if let token = authVM.token { await favVM.load(token: token) }
         }

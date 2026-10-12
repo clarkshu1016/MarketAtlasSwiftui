@@ -12,8 +12,10 @@ struct ProfileView: View {
         Group {
             if authVM.isLoggedIn {
                 profileContent
+                    .readableWidth()
             } else {
                 signInPrompt
+                    .readableWidth(background: Color(UIColor.systemBackground))
             }
         }
         .toolbar {

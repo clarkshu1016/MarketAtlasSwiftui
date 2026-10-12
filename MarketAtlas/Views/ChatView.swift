@@ -13,6 +13,7 @@ struct ChatView: View {
                 messageList
                 inputBar
             }
+            .readableWidth(background: Color(UIColor.systemBackground))
             .navigationTitle("AI Chat")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

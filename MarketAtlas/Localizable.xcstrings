@@ -1652,6 +1652,28 @@
         }
       }
     },
+    "Countries & Regions": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "国と地域"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "国家和地区"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "國家和地區"
+          }
+        }
+      }
+    },
     "Country/Region": {
       "localizations": {
         "ja": {
