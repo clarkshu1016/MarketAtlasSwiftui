@@ -6,7 +6,7 @@ struct CompanyListView: View {
     @State private var showScreener = false
     @State private var exploreDestination: ExploreDestination?
 
-    private enum ExploreDestination: Hashable { case heatmap, sectors, performance, timeMachine }
+    private enum ExploreDestination: Hashable { case performance, timeMachine }
 
     var body: some View {
         ScrollViewReader { proxy in
@@ -134,8 +134,6 @@ struct CompanyListView: View {
         .animation(.default, value: vm.selectedTag)
         .navigationDestination(item: $exploreDestination) { destination in
             switch destination {
-            case .heatmap:     HeatmapView()
-            case .sectors:     SectorHeatmapView()
             case .performance: PerformanceView()
             case .timeMachine: TimeMachineView()
             }
@@ -143,12 +141,6 @@ struct CompanyListView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Menu {
-                    Button { exploreDestination = .heatmap } label: {
-                        Label("Heatmap", systemImage: "square.grid.3x3.fill")
-                    }
-                    Button { exploreDestination = .sectors } label: {
-                        Label("Sector Heatmap", systemImage: "square.grid.2x2.fill")
-                    }
                     Button { exploreDestination = .performance } label: {
                         Label("Performance", systemImage: "chart.line.uptrend.xyaxis")
                     }

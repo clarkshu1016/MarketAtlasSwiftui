@@ -16,7 +16,7 @@ struct HeatmapView: View {
         }
     }
 
-    @State private var period: Period = .ytd
+    @Binding var period: Period
     @State private var selectedCountry: String?
     @State private var response: CountryHeatmapResponse?
     @State private var isLoading = false

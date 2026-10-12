@@ -1388,6 +1388,28 @@
         }
       }
     },
+    "Countries": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "国別"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "国家"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "國家"
+          }
+        }
+      }
+    },
     "Country": {
       "localizations": {
         "ja": {
@@ -2353,6 +2375,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "市值 ≥ %@"
+          }
+        }
+      }
+    },
+    "Map": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "マップ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "地图"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "地圖"
           }
         }
       }
@@ -3983,6 +4027,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "行業熱力圖"
+          }
+        }
+      }
+    },
+    "Sectors": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "セクター別"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "行业"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "行業"
           }
         }
       }

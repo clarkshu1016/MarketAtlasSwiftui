@@ -9,10 +9,22 @@ struct ProfileView: View {
     @State private var deleteError: String?
 
     var body: some View {
-        if authVM.isLoggedIn {
-            profileContent
-        } else {
-            signInPrompt
+        Group {
+            if authVM.isLoggedIn {
+                profileContent
+            } else {
+                signInPrompt
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                NavigationLink {
+                    SettingsView()
+                } label: {
+                    Image(systemName: "gearshape")
+                }
+                .accessibilityLabel("Settings")
+            }
         }
     }
 

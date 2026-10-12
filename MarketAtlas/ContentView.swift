@@ -34,17 +34,15 @@ struct ContentView: View {
             ChatView()
                 .tabItem { Label("Chat", systemImage: "sparkles") }
 
-            // ── Profile ──────────────────────────────────────────
+            // ── Heatmap ──────────────────────────────────────────
+            HeatmapTabView()
+                .tabItem { Label("Heatmap", systemImage: "square.grid.3x3.fill") }
+
+            // ── Profile (Settings lives behind the gear in its toolbar) ──
             NavigationStack {
                 ProfileView()
             }
             .tabItem { Label("Profile", systemImage: "person.fill") }
-
-            // ── Settings ─────────────────────────────────────────
-            NavigationStack {
-                SettingsView()
-            }
-            .tabItem { Label("Settings", systemImage: "gearshape.fill") }
         }
         .preferredColorScheme(preferredScheme)
         .environment(favVM)

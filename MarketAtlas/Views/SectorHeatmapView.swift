@@ -3,7 +3,7 @@ import SwiftUI
 /// Industry map: one tile per sector, sized by total market cap and coloured by the market-cap-weighted
 /// change over the selected period. Tap a sector for its largest companies.
 struct SectorHeatmapView: View {
-    @State private var period: HeatmapView.Period = .ytd
+    @Binding var period: HeatmapView.Period
     @State private var selectedSector: String?
     @State private var response: SectorHeatmapResponse?
     @State private var isLoading = false
