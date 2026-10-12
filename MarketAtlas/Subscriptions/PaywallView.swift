@@ -215,8 +215,10 @@ struct PaywallView: View {
                         Text(buttonTitle).font(.system(size: 17, weight: .bold))
                     }
                 }
-                .frame(maxWidth: .infinity, minHeight: 50)
+                .frame(maxWidth: .infinity)
             }
+            // The large prominent style already pads the label to the standard ~50 pt control height (HIG);
+            // an extra minHeight on the label stacked on top of that and made the button ~78 pt tall.
             .buttonStyle(.borderedProminent)
             .controlSize(.large)
             .disabled(entitlements.isPurchasing || (entitlements.products[selected] == nil && !Self.screenshotMode))
