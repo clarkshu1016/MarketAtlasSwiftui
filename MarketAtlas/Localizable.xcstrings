@@ -1,6 +1,50 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "%@ / %@. The subscription renews automatically unless you cancel at least 24 hours before the end of the current period. Manage or cancel any time in Settings > Apple Account > Subscriptions.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@／%@。現在の期間が終了する24時間前までに解約しない限り、サブスクリプションは自動的に更新されます。設定 > Apple アカウント > サブスクリプションで、いつでも管理・解約できます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@/%@。除非在当前周期结束前至少 24 小时取消，否则订阅将自动续订。可随时在“设置 > Apple 账户 > 订阅”中管理或取消。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@／%@。除非在目前週期結束前至少 24 小時取消，否則訂閱將自動續訂。可隨時在「設定 > Apple 帳號 > 訂閱」中管理或取消。"
+          }
+        }
+      }
+    },
+    "%@ / month": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "月あたり %@"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每月 %@"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每月 %@"
+          }
+        }
+      }
+    },
     "%@ heatmap": {
       "localizations": {
         "ja": {
@@ -222,6 +266,28 @@
         }
       }
     },
+    "%@, then %@ / %@. The subscription renews automatically unless you cancel at least 24 hours before the end of the current period. Manage or cancel any time in Settings > Apple Account > Subscriptions.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@、その後は%@／%@。現在の期間が終了する24時間前までに解約しない限り、サブスクリプションは自動的に更新されます。設定 > Apple アカウント > サブスクリプションで、いつでも管理・解約できます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@，之后 %@/%@。除非在当前周期结束前至少 24 小时取消，否则订阅将自动续订。可随时在“设置 > Apple 账户 > 订阅”中管理或取消。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@，之後 %@／%@。除非在目前週期結束前至少 24 小時取消，否則訂閱將自動續訂。可隨時在「設定 > Apple 帳號 > 訂閱」中管理或取消。"
+          }
+        }
+      }
+    },
     "%lld": {},
     "%lld companies": {
       "localizations": {
@@ -419,7 +485,51 @@
         }
       }
     },
+    "%lld-day free trial": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld日間の無料トライアル"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld 天免费试用"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld 天免費試用"
+          }
+        }
+      }
+    },
     "+%lld%%": {},
+    "11,000+ companies in 81 markets": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "81市場・11,000社以上の企業"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "覆盖 81 个市场的 11,000 多家公司"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "涵蓋 81 個市場的 11,000 多家公司"
+          }
+        }
+      }
+    },
     "24h Change": {
       "localizations": {
         "ja": {
@@ -438,6 +548,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "24 小時漲跌"
+          }
+        }
+      }
+    },
+    "3 months": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3か月"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3个月"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 個月"
           }
         }
       }
@@ -508,6 +640,28 @@
         }
       }
     },
+    "AI chat and AI screener": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AIチャットとAIスクリーナー"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AI 对话和 AI 筛选"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AI 對話與 AI 篩選"
+          }
+        }
+      }
+    },
     "About": {
       "localizations": {
         "ja": {
@@ -526,6 +680,50 @@
           "stringUnit": {
             "state": "translated",
             "value": "關於"
+          }
+        }
+      }
+    },
+    "Active": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "有効"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "有效"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "有效"
+          }
+        }
+      }
+    },
+    "Active until %@": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@まで有効"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "有效期至 %@"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "有效期限至 %@"
           }
         }
       }
@@ -838,6 +1036,28 @@
         }
       }
     },
+    "Best value": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "お得"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "最划算"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "最划算"
+          }
+        }
+      }
+    },
     "Biggest Drops": {
       "localizations": {
         "ja": {
@@ -922,6 +1142,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "借券成本"
+          }
+        }
+      }
+    },
+    "Buy Lifetime Access": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "買い切りで購入"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "购买终身权限"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "購買終身使用權"
           }
         }
       }
@@ -2115,6 +2357,28 @@
         }
       }
     },
+    "Heatmaps by country/region and sector": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "国・地域別とセクター別のヒートマップ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "国家/地区和行业热力图"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "國家／地區與產業熱力圖"
+          }
+        }
+      }
+    },
     "Highest dividend yield": {
       "localizations": {
         "ja": {
@@ -2133,6 +2397,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "殖利率最高的公司"
+          }
+        }
+      }
+    },
+    "Home Screen and Lock Screen widgets": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ホーム画面・ロック画面ウィジェット"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "主屏幕和锁屏小组件"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "主畫面與鎖定畫面小工具"
           }
         }
       }
@@ -2269,6 +2555,50 @@
         }
       }
     },
+    "Lifetime": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "買い切り"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "终身"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "終身"
+          }
+        }
+      }
+    },
+    "Lifetime — thank you for buying MarketAtlas": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "買い切り — MarketAtlasをご購入いただきありがとうございます"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "终身 — 感谢您购买 MarketAtlas"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "終身 — 感謝您購買 MarketAtlas"
+          }
+        }
+      }
+    },
     "Light": {
       "localizations": {
         "ja": {
@@ -2375,6 +2705,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "市值 ≥ %@"
+          }
+        }
+      }
+    },
+    "Manage Subscription": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "サブスクリプションを管理"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "管理订阅"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "管理訂閱"
           }
         }
       }
@@ -2777,6 +3129,28 @@
         }
       }
     },
+    "Monthly": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "月額"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "月度"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "月度"
+          }
+        }
+      }
+    },
     "NVIDIA revenue history": {
       "localizations": {
         "ja": {
@@ -3085,6 +3459,28 @@
         }
       }
     },
+    "No previous purchases were found for this Apple Account.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この Apple アカウントでは過去の購入が見つかりませんでした。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未找到此 Apple 账户的历史购买记录。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "找不到此 Apple 帳號的過往購買紀錄。"
+          }
+        }
+      }
+    },
     "Not Now": {
       "localizations": {
         "ja": {
@@ -3129,6 +3525,28 @@
         }
       }
     },
+    "Not subscribed": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未登録"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未订阅"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未訂閱"
+          }
+        }
+      }
+    },
     "Now %@": {
       "localizations": {
         "ja": {
@@ -3169,6 +3587,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "好"
+          }
+        }
+      }
+    },
+    "One-time purchase of %@. No subscription, no renewal.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@の買い切り購入です。サブスクリプションや自動更新はありません。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一次性购买 %@，无需订阅，不会自动续费。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一次性購買 %@，無需訂閱，不會自動續訂。"
           }
         }
       }
@@ -3503,6 +3943,28 @@
         }
       }
     },
+    "Pay once, keep it forever": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一度の支払いでずっと使える"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一次付费，永久使用"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一次付費，永久使用"
+          }
+        }
+      }
+    },
     "Peak": {
       "localizations": {
         "ja": {
@@ -3613,6 +4075,28 @@
         }
       }
     },
+    "Plan": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プラン"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "方案"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "方案"
+          }
+        }
+      }
+    },
     "Play": {
       "localizations": {
         "ja": {
@@ -3675,6 +4159,50 @@
           "stringUnit": {
             "state": "translated",
             "value": "價格"
+          }
+        }
+      }
+    },
+    "Prices couldn't be loaded. Check your connection and try again.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "価格を読み込めませんでした。接続を確認してもう一度お試しください。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法加载价格，请检查网络连接后重试。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無法載入價格，請檢查網路連線後再試。"
+          }
+        }
+      }
+    },
+    "Privacy Policy": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プライバシーポリシー"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "隐私政策"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "隱私權政策"
           }
         }
       }
@@ -3811,6 +4339,28 @@
         }
       }
     },
+    "Ranking Race and Time Machine": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ランキングレースとタイムマシン"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "排名赛跑和时光机"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "排名賽跑與時光機"
+          }
+        }
+      }
+    },
     "Real Estate": {
       "localizations": {
         "ja": {
@@ -3895,6 +4445,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "重播"
+          }
+        }
+      }
+    },
+    "Restore Purchases": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "購入を復元"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "恢复购买"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "還原購買項目"
           }
         }
       }
@@ -4581,6 +5153,28 @@
         }
       }
     },
+    "Start Free Trial": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無料トライアルを開始"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "开始免费试用"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "開始免費試用"
+          }
+        }
+      }
+    },
     "Stock rankings & financial data": {
       "localizations": {
         "ja": {
@@ -4599,6 +5193,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "股票排行與財務資料"
+          }
+        }
+      }
+    },
+    "Subscribe": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "登録する"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "订阅"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "訂閱"
           }
         }
       }
@@ -4647,6 +5263,28 @@
         }
       }
     },
+    "Terms of Use": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "利用規約"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用条款"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用條款"
+          }
+        }
+      }
+    },
     "The largest companies by market cap — and where they stand today": {
       "localizations": {
         "ja": {
@@ -4665,6 +5303,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "當時市值最大的公司，以及它們現在的位置"
+          }
+        }
+      }
+    },
+    "The purchase couldn't be verified. Please try again.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "購入を確認できませんでした。もう一度お試しください。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法验证此次购买，请重试。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無法驗證此次購買，請再試一次。"
           }
         }
       }
@@ -4731,6 +5391,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "伺服器發生問題（%lld），請稍後再試。"
+          }
+        }
+      }
+    },
+    "The world's biggest companies, ranked and explained.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "世界の大企業を、ランキングで分かりやすく。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "全球最大的公司，一目了然的排行与解读。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "全球最大的公司，一目瞭然的排行與解讀。"
           }
         }
       }
@@ -5287,6 +5969,28 @@
         }
       }
     },
+    "Yearly": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "年額"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "年度"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "年度"
+          }
+        }
+      }
+    },
     "Yield ≥ %@": {
       "localizations": {
         "ja": {
@@ -5485,6 +6189,28 @@
         }
       }
     },
+    "month": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "月"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "月"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "月"
+          }
+        }
+      }
+    },
     "no data": {
       "localizations": {
         "ja": {
@@ -5591,6 +6317,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "今日上漲百分之%@"
+          }
+        }
+      }
+    },
+    "year": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "年"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "年"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "年"
           }
         }
       }

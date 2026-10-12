@@ -1,14 +1,22 @@
+import StoreKit
 import SwiftUI
 
 struct SettingsView: View {
     @AppStorage("app_appearance") private var appearance: String = "system"
     @AppStorage(VoiceLanguage.storageKey) private var voiceLanguage: String = VoiceLanguage.auto.rawValue
+    @Environment(EntitlementManager.self) private var entitlements
+    @State private var showManageSubscriptions = false
+    #if DEBUG
+    @AppStorage(DebugProOverride.key) private var proOverride: Bool = true
+    #endif
     #if DEBUG
     @AppStorage(ServerEnvironment.storageKey) private var server: String = ServerEnvironment.default.rawValue
     #endif
 
     var body: some View {
         List {
+            subscriptionSection
+
             Section("Appearance") {
                 Picker("Theme", selection: $appearance) {
                     Label("System", systemImage: "circle.lefthalf.filled").tag("system")
@@ -30,6 +38,8 @@ struct SettingsView: View {
 
             #if DEBUG
             Section {
+                Toggle("Pro unlocked (debug)", isOn: $proOverride)
+                    .onChange(of: proOverride) { _, _ in Task { await entitlements.refreshAccess() } }
                 Picker("Server", selection: $server) {
                     ForEach(ServerEnvironment.allCases) { Text($0.label).tag($0.rawValue) }
                 }
@@ -73,6 +83,35 @@ struct SettingsView: View {
         }
         .navigationTitle("Settings")
         .navigationBarTitleDisplayMode(.large)
+        .manageSubscriptionsSheet(isPresented: $showManageSubscriptions)
+    }
+
+    // MARK: Subscription
+
+    private var subscriptionSection: some View {
+        Section {
+            LabeledContent("Plan") { Text(planText).foregroundStyle(.secondary) }
+            Button("Manage Subscription") { showManageSubscriptions = true }
+            Button("Restore Purchases") { Task { await entitlements.restore() } }
+        } header: {
+            Text("MarketAtlas Pro")
+        }
+    }
+
+    private var planText: String {
+        switch entitlements.access {
+        case .unlocked(.originalPurchaser):
+            return String(localized: "Lifetime — thank you for buying MarketAtlas")
+        case .unlocked(.lifetime):
+            return String(localized: "Lifetime")
+        case .unlocked(.subscription(let expires)):
+            if let expires { return String(localized: "Active until \(expires.formatted(date: .abbreviated, time: .omitted))") }
+            return String(localized: "Active")
+        case .unlocked(.debugOverride):
+            return String(localized: "Unlocked (debug)")
+        case .locked, .checking:
+            return String(localized: "Not subscribed")
+        }
     }
 }
 

@@ -11,6 +11,8 @@ struct MarketAtlasApp: App {
     private let googleClientID = "79484742801-eteenr1ve7lprp09ffk5afhdhqu6j5dm.apps.googleusercontent.com"
     #endif
 
+    @State private var entitlements = EntitlementManager()
+
     init() {
         GIDSignIn.sharedInstance.configuration = GIDConfiguration(clientID: googleClientID)
     }
@@ -18,6 +20,8 @@ struct MarketAtlasApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(entitlements)
+                .task { await entitlements.start() }
                 .onOpenURL { GIDSignIn.sharedInstance.handle($0) }
                 #if DEBUG
                 .pulseFloatingBubble()

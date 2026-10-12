@@ -16,7 +16,23 @@ struct ContentView: View {
         }
     }
 
+    @Environment(EntitlementManager.self) private var entitlements
+
     var body: some View {
+        switch entitlements.access {
+        case .checking:
+            ProgressView()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color(UIColor.systemGroupedBackground))
+        case .locked:
+            PaywallView()
+                .preferredColorScheme(preferredScheme)
+        case .unlocked:
+            mainTabs
+        }
+    }
+
+    private var mainTabs: some View {
         TabView {
             // ── Markets ──────────────────────────────────────────
             NavigationStack {
@@ -90,4 +106,5 @@ struct ContentView: View {
 
 #Preview("ContentView") {
     ContentView()
+        .environment(EntitlementManager())
 }
