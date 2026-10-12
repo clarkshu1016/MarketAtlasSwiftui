@@ -3,7 +3,7 @@ import Foundation
 /// Display-only translation of the labels the server sends in English ("🇺🇸 USA", "💳 Financial services").
 /// The raw strings stay the identifiers (filters, requests); only what the user reads is translated.
 enum DisplayName {
-    /// The localization the app is showing: "en", "ja", "zh-Hans" or "zh-Hant".
+    /// The localization the app is showing: "en", "ja", "zh-Hans", "zh-Hant", "ko", "es", "de", "fr" or "pt-BR".
     private static var language: String { Bundle.main.preferredLocalizations.first ?? "en" }
     private static var isEnglish: Bool { language.hasPrefix("en") }
 
@@ -37,6 +37,26 @@ enum DisplayName {
         case ("HK", "ja"):      "香港"
         case ("MO", "ja"):      "マカオ"
         case ("TW", "ja"):      "台湾"
+        case ("CN", "ko"):      "중국 본토"
+        case ("HK", "ko"):      "홍콩"
+        case ("MO", "ko"):      "마카오"
+        case ("TW", "ko"):      "대만"
+        case ("CN", "es"):      "China continental"
+        case ("HK", "es"):      "Hong Kong"
+        case ("MO", "es"):      "Macao"
+        case ("TW", "es"):      "Taiwán"
+        case ("CN", "de"):      "Festlandchina"
+        case ("HK", "de"):      "Hongkong"
+        case ("MO", "de"):      "Macau"
+        case ("TW", "de"):      "Taiwan"
+        case ("CN", "fr"):      "Chine continentale"
+        case ("HK", "fr"):      "Hong Kong"
+        case ("MO", "fr"):      "Macao"
+        case ("TW", "fr"):      "Taïwan"
+        case ("CN", "pt-BR"):   "China continental"
+        case ("HK", "pt-BR"):   "Hong Kong"
+        case ("MO", "pt-BR"):   "Macau"
+        case ("TW", "pt-BR"):   "Taiwan"
         default:                nil
         }
     }

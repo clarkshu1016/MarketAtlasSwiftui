@@ -1,0 +1,157 @@
+Financial services|금융 서비스
+Tech|기술
+Biotech|바이오테크
+Manufacturing|제조업
+Energy|에너지
+Pharmaceuticals|제약
+Real estate|부동산
+Banks|은행
+Investment|투자
+Software|소프트웨어
+Oil&Gas|석유·가스
+Retail|소매
+Food|식품
+Entertainment|엔터테인먼트
+Mining|광업
+Internet|인터넷
+Electricity|전력
+Professional services|전문 서비스
+Insurance|보험
+Transportation|운송
+REITs|리츠(REITs)
+Electronics|전자
+Video games|비디오 게임
+Tech Hardware|기술 하드웨어
+Chemicals|화학
+Telecommunication|통신
+Healthcare|헬스케어
+Travel|여행
+Construction|건설
+Semiconductors|반도체
+Medical Devices|의료기기
+Engineering|엔지니어링
+Utility companies|유틸리티
+Renewable energy|재생에너지
+IT services|IT 서비스
+Clothing|의류
+Building materials|건축자재
+Infrastructure|인프라
+Beverages|음료
+Gold mining|금광업
+Asset Management|자산운용
+Conglomerate|복합기업
+Media/Press|미디어/언론
+Aerospace|항공우주
+E-Commerce|전자상거래
+Automotive Suppliers|자동차 부품 공급사
+Maritime transportation|해상 운송
+Machinery manufacturing|기계 제조
+Steel industry|철강업
+Diagnostics and Testing|진단·검사
+AI|AI
+Restaurant chains|외식 체인
+Airlines|항공사
+Hotels|호텔
+Auto Parts|자동차 부품
+Advertising|광고
+Education|교육
+Alcoholic beverages|주류
+Cement|시멘트
+Agriculture|농업
+Medical Care Facilities|의료 시설
+Automakers|자동차 제조사
+Defense contractors|방위산업
+Gambling|도박·카지노
+Supermarket Chains|슈퍼마켓 체인
+IT security|IT 보안
+Consumer goods|소비재
+Steel producers|철강 제조사
+Packaging|포장
+Furniture|가구
+Luxury goods|명품
+Telecommunications equipment|통신 장비
+Specialty Vehicles|특수 차량
+Bitcoin|비트코인
+Genomics|유전체학
+DAX|DAX 지수
+Scientific & Technical Instruments|과학·기술 기기
+CAC 40|CAC 40 지수
+Cannabis|대마
+Silver Mining|은광업
+Uranium|우라늄
+Pulp and paper|펄프·제지
+Car retail|자동차 소매
+Staffing & Employment Services|인력·고용 서비스
+Home & Kitchen Appliances|가전·주방용품
+Waste & Recycling|폐기물·재활용
+Rental & Leasing Services|렌탈·리스
+Railways|철도
+Footwear|신발
+Electric Vehicles|전기차
+Batteries|배터리
+Oil & Gas Equipment & Services|석유·가스 장비 및 서비스
+Medical Equipment|의료 장비
+Dow jones|다우존스 지수
+Robotics|로보틱스
+Cosmetics and Beauty|화장품·뷰티
+Stock/Crypto exchanges|주식/암호화폐 거래소
+Stock exchanges|증권 거래소
+Sports goods|스포츠 용품
+Networking hardware|네트워크 장비
+Coal Mining|석탄 광업
+Aluminum|알루미늄
+Dairy companies|유제품
+Courier|택배
+Fertilizer companies|비료
+Tobacco|담배
+Used car retailer|중고차 판매
+Airports|공항
+Bitcoin mining|비트코인 채굴
+Aircraft manufacturers|항공기 제조사
+Container shipping|컨테이너 해운
+Ports|항만
+Gene therapy|유전자 치료
+Autonomous driving|자율주행
+Tires|타이어
+Shipbuilding|조선
+Drugstore|드럭스토어
+IoT|IoT
+Security & Protection Services|보안·경비 서비스
+EV charging|전기차 충전
+Eyewear|안경
+Car rental|렌터카
+Biofuel|바이오연료
+Esports|e스포츠
+Paint & Coating|도료·코팅
+Tool manufacturers|공구 제조사
+Football|축구
+Online Travel|온라인 여행
+Flavors & Fragrances|향료·향수
+Pollution control and treatment|오염 방지·처리
+Telehealth|원격의료
+Tools and Hardware|공구·철물
+Lidar|라이다
+Gloves & PPE|장갑·보호장비
+Dietary supplements|건강기능식품
+3D Printing|3D 프린팅
+Food Delivery|음식 배달
+Hydrogen fuel cell|수소 연료전지
+LED Lighting Manufacturers|LED 조명 제조사
+Ridesharing|차량 공유
+Toll Road Operators|유료도로 운영사
+Wellness|웰니스
+Toys|장난감
+Cruise Lines|크루즈
+Motorcycle Manufacturers|오토바이 제조사
+CRISPR|CRISPR 유전자 편집
+Multi-level marketing|다단계 판매
+Pizza|피자
+mRNA therapeutics|mRNA 치료제
+Aircraft leasing|항공기 리스
+Online Dating|온라인 데이팅
+Intellectual Property & Patent licensing|지식재산·특허 라이선스
+Recommerce|리커머스(중고 거래)
+Medical Instruments & Supplies|의료 기구·소모품
+Hospitality|호스피탈리티
+Personal Care|퍼스널 케어
+Glassware|유리 제품

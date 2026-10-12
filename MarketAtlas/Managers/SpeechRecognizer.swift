@@ -11,6 +11,11 @@ enum VoiceLanguage: String, CaseIterable, Identifiable {
     case japanese           = "ja-JP"
     case chineseSimplified  = "zh-CN"
     case chineseTraditional = "zh-TW"
+    case korean             = "ko-KR"
+    case spanish            = "es-ES"
+    case german             = "de-DE"
+    case french             = "fr-FR"
+    case portuguese         = "pt-BR"
 
     static let storageKey = "voice_language"
     var id: String { rawValue }
@@ -22,6 +27,11 @@ enum VoiceLanguage: String, CaseIterable, Identifiable {
         case .japanese:           return "日本語"
         case .chineseSimplified:  return "简体中文"
         case .chineseTraditional: return "繁體中文"
+        case .korean:             return "한국어"
+        case .spanish:            return "Español"
+        case .german:             return "Deutsch"
+        case .french:             return "Français"
+        case .portuguese:         return "Português"
         }
     }
 

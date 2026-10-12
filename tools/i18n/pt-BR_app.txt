@@ -1,0 +1,304 @@
+0|%@ / %@. A assinatura é renovada automaticamente, a menos que você a cancele pelo menos 24 horas antes do fim do período atual. Gerencie ou cancele quando quiser em Ajustes > Conta Apple > Assinaturas.
+1|%@ / mês
+2|Mapa de calor de %@
+3|Valor de mercado total %@ · %@
+4|Valor de mercado mundial %@ · %@
+5|%@ · %@%% do total · %lld empresas
+6|%@ · %@%% do mundo · %lld empresas
+7|%@ · variação do valor de mercado
+8|%@ — Maiores empresas
+9|%@ — Gráfico de preço
+11|%@, %@, %@
+12|%@, %@, %@ por cento do mundo, %@
+13|%@, depois %@ / %@. A assinatura é renovada automaticamente, a menos que você a cancele pelo menos 24 horas antes do fim do período atual. Gerencie ou cancele quando quiser em Ajustes > Conta Apple > Assinaturas.
+18|%lld, %@, %@, %@
+19|%lld dias de teste grátis
+21|Mais de 11.000 empresas em 81 países e regiões
+22|Variação 24 h
+23|3 meses
+24|Chat com IA
+25|Busca com IA
+26|Busca com IA indisponível: %@
+27|Chat com IA e filtro com IA
+28|Sobre
+29|Ativa
+30|Ativa até %@
+31|Atividade
+32|Adicionar empresa
+33|Adicionar aos favoritos
+34|Todos
+35|Todos os países/regiões
+36|Todos os setores
+37|Todos os tamanhos
+38|Resultados financeiros anuais
+39|Qualquer país/região
+40|Qualquer setor
+41|Aparência
+42|Falha ao entrar com a Apple. Tente novamente.
+43|Pergunte o que quiser
+44|Pergunte qualquer coisa sobre mercados, empresas\nou indicadores financeiros.
+45|Automático
+46|Melhor margem operacional
+47|Melhor custo-benefício
+48|Maiores quedas
+49|Maiores perdedoras
+50|Maiores em %@
+51|Custo de empréstimo
+52|Comprar acesso vitalício
+53|Cancelar
+54|Alta de valor
+55|Queda de valor
+56|Caixa
+57|Chat
+58|Verifique sua conexão e tente novamente.
+59|Mais perto do pico
+60|Empresas
+61|Porte da empresa
+62|Filtro de porte da empresa, %@
+63|Comparar
+64|Comparar Apple e Microsoft
+65|Comparação
+66|Erro de conexão
+67|Consumo
+68|Continuar
+69|Não foi possível carregar
+70|Não foi possível carregar as empresas
+71|Não foi possível carregar os favoritos
+72|Não foi possível adicionar %@ aos favoritos. %@
+73|Não foi possível acessar o servidor. Tente novamente.
+74|Não foi possível remover %@ dos favoritos. %@
+75|Não foi possível iniciar o microfone. Tente novamente.
+76|Países
+77|Países e regiões
+78|País/Região
+79|Escuro
+80|Dados atualizados %@
+81|Data
+82|Dívida / Ativos
+83|Somente em builds Debug. Ao trocar, você é desconectado, pois as contas ficam separadas em cada servidor. “Production” é o servidor real; “Local Mac” exige que o backend esteja rodando no seu Mac.
+84|Excluir conta
+85|Excluindo conta…
+86|Descreva o que você procura com suas próprias palavras.
+87|Desenvolvedor
+88|Dispensar
+89|Distância da máxima histórica
+90|Div ≥ %@
+91|Rend. de dividendos
+92|Dividendo %
+93|Concluir
+94|Lucro
+95|Rendimento do lucro
+96|Funcionários
+97|Energia
+98|English
+99|Todos os países e setores em uma única tela. O tamanho do bloco é o valor de mercado; a cor, a variação.
+100|Explorar
+101|Falha ao excluir a conta. Tente novamente.
+102|Favoritos
+103|Filtros: %@
+104|Finanças
+105|Indicadores financeiros
+106|Mais longe do pico
+107|Maiores altas
+108|Falha ao entrar com o Google. Tente novamente.
+109|Crescimento
+110|Crescimento, início do período = 100
+111|Atenção
+112|Saúde
+113|Mapa de calor
+114|Mapas de calor por país/região e setor
+115|Maior rendimento de dividendos
+116|Widgets para a Tela de Início e a Tela Bloqueada
+117|Industriais
+118|Idioma
+119|Idioma usado ao tocar no microfone no chat com IA. Automático segue o idioma do dispositivo.
+120|As %lld maiores empresas · %@ no total
+121|Maiores em %@
+122|Passivos
+123|Vitalício
+124|Vitalício — obrigado por comprar o MarketAtlas
+125|Claro
+126|Ouvindo…
+127|Carregando…
+128|Escala logarítmica: variações percentuais iguais parecem iguais.
+129|Maiores baixas
+130|Valor de mercado ≥ %@
+131|Gerenciar assinatura
+132|Mapa
+133|Margem ≥ %@
+134|Valor de mercado
+135|Corrida de valor de mercado
+136|Mapa de calor do mercado
+137|Mapa de calor do mercado por setor
+140|MarketAtlas — classifique e explore as maiores empresas do mundo. https://apps.apple.com/app/id6784918078
+141|Mercados
+142|Materiais
+143|P/L máx.
+144|Máx.: %@
+145|Mídia e telecom
+146|Mensagem para o MarketAtlas AI
+147|Indicador
+148|Acesso ao microfone necessário
+149|Rend. mínimo de dividendos
+150|Margem operacional mínima
+151|Mín.: %@
+152|Modo
+153|Mensal
+154|Receita da NVIDIA ao longo do tempo
+155|Perto do pico
+156|Ativos líquidos
+157|Caixa líquido
+158|Lucro líquido
+159|Próximo
+160|Sem dados
+161|Nenhum favorito ainda
+162|Nenhuma correspondência
+163|Sem indicadores
+164|Sem resultados
+165|Nenhum dado financeiro disponível.
+166|Sem histórico para esta combinação.
+167|Sem histórico de valor de mercado para essa data.
+168|Nenhum microfone disponível.
+169|Nenhuma compra anterior foi encontrada para esta Conta Apple.
+170|Agora não
+171|Fora do ranking agora
+172|Sem assinatura
+173|Agora %@
+174|OK
+175|Compra única de %@. Sem assinatura, sem renovação.
+176|Margem op.
+177|Abrir Ajustes
+178|Abra uma empresa e toque em ★ para salvá-la aqui.
+179|Margem operacional
+180|Ordem
+181|P/VP
+182|P/L
+183|P/L
+184|P/L ≤ %@
+185|P/L ≤ %lld
+186|P/R
+187|Últimos 10 anos
+188|Últimos 3 anos
+189|Últimos 5 anos
+190|Último ano
+191|Pausar
+192|Pague uma vez, use para sempre
+193|Pico
+194|Pico %@ · %@
+195|Desempenho
+196|Período
+197|Exclui permanentemente sua conta e todos os dados associados. Esta ação não pode ser desfeita.
+198|Escolha pelo menos duas empresas para comparar.
+199|Plano
+200|Reproduzir
+201|Ative o Microfone e o Reconhecimento de Fala em Ajustes.
+202|Preço
+203|Variação do preço (24 h)
+204|Não foi possível carregar os preços. Verifique sua conexão e tente novamente.
+205|Política de Privacidade
+206|Perfil
+207|Trimestre
+208|Trimestral
+209|Intervalo
+210|Posição %lld
+211|Posição %lld, %@, %@ na época, %@ desde então, %@
+212|Corrida de ranking
+213|Corrida de ranking e Máquina do tempo
+214|Rankings, comparações e histórico de receita com suas próprias palavras. Digite ou fale.
+215|Imobiliário
+216|Dados inesperados recebidos do servidor.
+217|Remover
+218|Remover dos favoritos
+219|Repetir
+220|Restaurar compras
+221|Tentar novamente
+222|Receita
+223|Receita / Funcionário
+224|Salve seus favoritos
+225|Filtrar
+226|Filtro
+227|Filtrando…
+228|Voltar ao topo
+229|Buscar empresa ou ticker…
+230|Buscar países/regiões
+231|Setor
+232|Mapa de calor por setor
+233|Mapa de calor por setor
+234|Setores
+235|Veja como as maiores empresas do mundo se ultrapassaram, de 2000 até hoje.
+236|Servidor
+237|Serviços
+238|Ajustes
+239|Compartilhar
+240|Entrar
+241|Falha ao entrar
+242|Login necessário
+243|Sair
+244|Entre para salvar e sincronizar suas empresas favoritas em todos os dispositivos.
+245|Entre para salvar seus favoritos em todos os dispositivos.
+246|Entre para salvar seus favoritos e sincronizá-los em todos os dispositivos.
+247|Entrar com o Google
+248|Falha ao entrar. Verifique sua conexão e tente novamente.
+249|Desde 1º de janeiro
+250|Pular
+251|Algumas empresas não têm dados no início deste período, então a linha delas começa mais tarde.
+252|Desculpe, não consegui processar isso. Tente novamente.
+253|O reconhecimento de fala não está disponível agora. Verifique sua conexão e tente novamente.
+254|Velocidade
+255|Começar teste grátis
+256|Rankings de ações e dados financeiros
+257|Assinar
+258|Sistema
+259|Tecnologia
+260|Termos de Uso
+261|As maiores empresas por valor de mercado — e onde estão hoje
+262|Não foi possível verificar a compra. Tente novamente.
+263|O ranking é pelo valor de mercado nessa data.
+264|A solicitação expirou. Tente novamente.
+265|O servidor teve um problema (%lld). Tente novamente em instantes.
+266|Todo o mercado em um relance
+267|As maiores empresas do mundo, classificadas e explicadas.
+268|Tema
+269|Sua conta e todos os seus dados serão excluídos permanentemente. Esta ação não pode ser desfeita.
+270|Máquina do tempo
+271|Top %lld de %@ no total · %@
+272|Top 10 por lucro
+273|Top 10 por valor de mercado
+274|Top 10 por receita
+275|Melhores desempenhos
+276|Maiores empresas por número de funcionários
+277|Total
+278|Ativos totais
+279|Dívida total
+280|Valor de mercado total %@ · tamanho do bloco = valor de mercado, cor = variação
+281|Tentar novamente
+282|Tente ajustar os filtros.
+284|Sem classificação
+285|Usuário
+287|Valor
+288|Versão
+289|Entrada de voz
+290|A entrada de voz parou inesperadamente. Tente novamente.
+291|Veja a corrida dos gigantes
+292|Mapa de calor do mercado mundial
+293|Posição mundial
+294|Valor de mercado mundial %@ · tamanho do bloco = valor de mercado, cor = variação
+295|Ano
+296|Anual
+297|Rend. ≥ %@
+298|Anual (a/a)
+299|Anual %
+300|Parece que você está offline. Verifique sua conexão e tente novamente.
+301|Sua sessão expirou. Entre novamente.
+302|Zero
+303|queda de %@ por cento
+304|queda de %@ por cento hoje
+305|p. ex., ações de tecnologia japonesas com P/L abaixo de 20
+306|mês
+307|sem dados
+308|pagamento único
+309|sem alteração
+310|sem alteração hoje
+311|alta de %@ por cento
+312|alta de %@ por cento hoje
+313|ano

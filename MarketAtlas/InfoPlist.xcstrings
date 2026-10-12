@@ -27,6 +27,36 @@
             "state": "translated",
             "value": "MarketAtlas 使用麥克風，讓您可以用語音提問。"
           }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MarketAtlas는 음성으로 질문할 수 있도록 마이크를 사용합니다."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MarketAtlas usa el micrófono para que puedas hacer preguntas por voz."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MarketAtlas verwendet das Mikrofon, damit du Fragen per Sprache stellen kannst."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MarketAtlas utilise le microphone pour vous permettre de poser des questions à la voix."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O MarketAtlas usa o microfone para que você possa fazer perguntas por voz."
+          }
         }
       }
     },
@@ -55,6 +85,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "MarketAtlas 使用語音辨識將您的語音轉換為文字。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MarketAtlas는 음성을 텍스트로 변환하기 위해 음성 인식을 사용합니다."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MarketAtlas usa el reconocimiento de voz para convertir tu voz en texto."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MarketAtlas verwendet die Spracherkennung, um deine Sprache in Text umzuwandeln."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MarketAtlas utilise la reconnaissance vocale pour convertir votre voix en texte."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O MarketAtlas usa o reconhecimento de fala para converter sua voz em texto."
           }
         }
       }

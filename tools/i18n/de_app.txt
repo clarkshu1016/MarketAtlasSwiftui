@@ -1,0 +1,304 @@
+0|%@ / %@. Das Abo verlängert sich automatisch, sofern du nicht mindestens 24 Stunden vor Ende des aktuellen Zeitraums kündigst. Verwalte oder kündige es jederzeit unter Einstellungen > Apple-Account > Abonnements.
+1|%@ / Monat
+2|%@-Heatmap
+3|Gesamtmarktkapitalisierung %@ · %@
+4|Weltweite Marktkapitalisierung %@ · %@
+5|%@ · %@%% des Gesamten · %lld Unternehmen
+6|%@ · %@%% der Welt · %lld Unternehmen
+7|%@ · Veränderung der Marktkapitalisierung
+8|%@ – Größte Unternehmen
+9|%@ – Kurschart
+11|%@, %@, %@
+12|%@, %@, %@ Prozent der Welt, %@
+13|%@, danach %@ / %@. Das Abo verlängert sich automatisch, sofern du nicht mindestens 24 Stunden vor Ende des aktuellen Zeitraums kündigst. Verwalte oder kündige es jederzeit unter Einstellungen > Apple-Account > Abonnements.
+18|%lld, %@, %@, %@
+19|%lld Tage kostenlos testen
+21|Über 11.000 Unternehmen in 81 Ländern und Regionen
+22|Änderung 24 h
+23|3 Monate
+24|KI-Chat
+25|KI-Suche
+26|KI-Suche nicht verfügbar: %@
+27|KI-Chat und KI-Screener
+28|Info
+29|Aktiv
+30|Aktiv bis %@
+31|Aktivität
+32|Unternehmen hinzufügen
+33|Zu Favoriten hinzufügen
+34|Alle
+35|Alle Länder/Regionen
+36|Alle Sektoren
+37|Alle Größen
+38|Jahreszahlen
+39|Beliebiges Land/Region
+40|Beliebiger Sektor
+41|Darstellung
+42|Anmeldung mit Apple fehlgeschlagen. Bitte versuche es erneut.
+43|Frag einfach
+44|Frag alles über Märkte, Unternehmen\noder Finanzkennzahlen.
+45|Automatisch
+46|Beste operative Marge
+47|Bester Wert
+48|Größte Verluste
+49|Größte Verlierer
+50|Größte in %@
+51|Leihkosten
+52|Lebenslangen Zugang kaufen
+53|Abbrechen
+54|Kap.-Zuwachs
+55|Kap.-Verlust
+56|Barmittel
+57|Chat
+58|Prüfe deine Verbindung und versuche es erneut.
+59|Nah am Höchststand
+60|Unternehmen
+61|Unternehmensgröße
+62|Filter Unternehmensgröße, %@
+63|Vergleichen
+64|Apple und Microsoft vergleichen
+65|Vergleich
+66|Verbindungsfehler
+67|Konsum
+68|Weiter
+69|Laden fehlgeschlagen
+70|Unternehmen konnten nicht geladen werden
+71|Favoriten konnten nicht geladen werden
+72|%@ konnte nicht zu den Favoriten hinzugefügt werden. %@
+73|Server nicht erreichbar. Bitte versuche es erneut.
+74|%@ konnte nicht aus den Favoriten entfernt werden. %@
+75|Das Mikrofon konnte nicht gestartet werden. Bitte versuche es erneut.
+76|Länder
+77|Länder und Regionen
+78|Land/Region
+79|Dunkel
+80|Daten aktualisiert %@
+81|Datum
+82|Schulden / Vermögen
+83|Nur in Debug-Builds. Beim Wechsel wirst du abgemeldet, da Konten pro Server getrennt sind. „Production“ ist der Live-Server; „Local Mac“ erfordert, dass das Backend auf deinem Mac läuft.
+84|Account löschen
+85|Account wird gelöscht …
+86|Beschreibe in eigenen Worten, wonach du suchst.
+87|Entwickler
+88|Schließen
+89|Abstand zum Allzeithoch
+90|Div ≥ %@
+91|Dividendenrendite
+92|Dividende %
+93|Fertig
+94|Gewinn
+95|Gewinnrendite
+96|Mitarbeiter
+97|Energie
+98|English
+99|Alle Länder und Sektoren auf einem Bildschirm. Die Kachelgröße zeigt die Marktkapitalisierung, die Farbe die Veränderung.
+100|Entdecken
+101|Account konnte nicht gelöscht werden. Bitte versuche es erneut.
+102|Favoriten
+103|Filter: %@
+104|Finanzen
+105|Finanzkennzahlen
+106|Am weitesten unter dem Höchststand
+107|Gewinner
+108|Anmeldung mit Google fehlgeschlagen. Bitte versuche es erneut.
+109|Wachstum
+110|Wachstum, Beginn des Zeitraums = 100
+111|Hinweis
+112|Gesundheit
+113|Heatmap
+114|Heatmaps nach Land/Region und Sektor
+115|Höchste Dividendenrendite
+116|Widgets für Home-Bildschirm und Sperrbildschirm
+117|Industrie
+118|Sprache
+119|Sprache, die beim Tippen auf das Mikrofon im KI-Chat verwendet wird. Automatisch folgt der Gerätesprache.
+120|Die größten %lld Unternehmen · %@ gesamt
+121|Größte am %@
+122|Verbindlichkeiten
+123|Lebenslang
+124|Lebenslang – danke, dass du MarketAtlas gekauft hast
+125|Hell
+126|Hört zu …
+127|Lädt …
+128|Logarithmische Skala: Gleiche prozentuale Veränderungen sehen gleich aus.
+129|Verlierer
+130|MKap ≥ %@
+131|Abo verwalten
+132|Karte
+133|Marge ≥ %@
+134|Marktkapitalisierung
+135|Marktkap.-Rennen
+136|Markt-Heatmap
+137|Markt-Heatmap nach Sektor
+140|MarketAtlas – entdecke die größten Unternehmen der Welt im Ranking. https://apps.apple.com/app/id6784918078
+141|Märkte
+142|Rohstoffe
+143|Max. KGV
+144|Max.: %@
+145|Medien und Telekommunikation
+146|Nachricht an MarketAtlas AI
+147|Kennzahl
+148|Mikrofonzugriff erforderlich
+149|Min. Dividendenrendite
+150|Min. operative Marge
+151|Min.: %@
+152|Modus
+153|Monatlich
+154|Umsatzentwicklung von NVIDIA
+155|Nahe am Höchststand
+156|Nettovermögen
+157|Nettoliquidität
+158|Nettogewinn
+159|Weiter
+160|Keine Daten
+161|Noch keine Favoriten
+162|Keine Treffer
+163|Keine Kennzahlen
+164|Keine Ergebnisse
+165|Keine Finanzdaten verfügbar.
+166|Für diese Kombination gibt es keinen Verlauf.
+167|Für dieses Datum gibt es keinen Marktkapitalisierungsverlauf.
+168|Es ist kein Mikrofon verfügbar.
+169|Für diesen Apple-Account wurden keine früheren Käufe gefunden.
+170|Nicht jetzt
+171|Aktuell nicht platziert
+172|Nicht abonniert
+173|Jetzt %@
+174|OK
+175|Einmalkauf für %@. Kein Abo, keine Verlängerung.
+176|Op. Marge
+177|Einstellungen öffnen
+178|Öffne ein Unternehmen und tippe auf ★, um es hier zu speichern.
+179|Operative Marge
+180|Reihenfolge
+181|KBV
+182|KGV
+183|KGV
+184|KGV ≤ %@
+185|KGV ≤ %lld
+186|KUV
+187|Letzte 10 Jahre
+188|Letzte 3 Jahre
+189|Letzte 5 Jahre
+190|Letztes Jahr
+191|Pause
+192|Einmal zahlen, für immer behalten
+193|Höchststand
+194|Höchststand %@ · %@
+195|Performance
+196|Zeitraum
+197|Löscht deinen Account und alle zugehörigen Daten dauerhaft. Dies kann nicht rückgängig gemacht werden.
+198|Wähle mindestens zwei Unternehmen zum Vergleichen aus.
+199|Tarif
+200|Abspielen
+201|Aktiviere Mikrofon und Spracherkennung in den Einstellungen.
+202|Kurs
+203|Kursänderung (24 h)
+204|Preise konnten nicht geladen werden. Prüfe deine Verbindung und versuche es erneut.
+205|Datenschutzerklärung
+206|Profil
+207|Quartal
+208|Vierteljährlich
+209|Bereich
+210|Rang %lld
+211|Rang %lld, %@, damals %@, seitdem %@, %@
+212|Ranking-Rennen
+213|Ranking-Rennen und Zeitmaschine
+214|Rankings, Vergleiche und Umsatzverlauf in eigenen Worten. Tippen oder sprechen.
+215|Immobilien
+216|Unerwartete Daten vom Server erhalten.
+217|Entfernen
+218|Aus Favoriten entfernen
+219|Wiederholen
+220|Käufe wiederherstellen
+221|Erneut versuchen
+222|Umsatz
+223|Umsatz / Mitarbeiter
+224|Favoriten speichern
+225|Filtern
+226|Screener
+227|Filtere …
+228|Nach oben
+229|Unternehmen oder Ticker suchen …
+230|Länder/Regionen suchen
+231|Sektor
+232|Sektor-Heatmap
+233|Sektor-Heatmap
+234|Sektoren
+235|Sieh, wie die größten Unternehmen der Welt einander überholt haben, von 2000 bis heute.
+236|Server
+237|Dienstleistungen
+238|Einstellungen
+239|Teilen
+240|Anmelden
+241|Anmeldung fehlgeschlagen
+242|Anmeldung erforderlich
+243|Abmelden
+244|Melde dich an, um deine Favoriten zu speichern und auf allen Geräten zu synchronisieren.
+245|Melde dich an, um Favoriten auf allen Geräten zu speichern.
+246|Melde dich an, um Favoriten zu speichern und geräteübergreifend zu synchronisieren.
+247|Mit Google anmelden
+248|Anmeldung fehlgeschlagen. Prüfe deine Verbindung und versuche es erneut.
+249|Seit 1. Januar
+250|Überspringen
+251|Einige Unternehmen haben zu Beginn dieses Zeitraums keine Daten, daher beginnt ihre Linie später.
+252|Das konnte ich leider nicht verarbeiten. Bitte versuche es erneut.
+253|Die Spracherkennung ist gerade nicht verfügbar. Prüfe deine Verbindung und versuche es erneut.
+254|Tempo
+255|Kostenlos testen
+256|Aktienrankings und Finanzdaten
+257|Abonnieren
+258|System
+259|Technologie
+260|Nutzungsbedingungen
+261|Die größten Unternehmen nach Marktkapitalisierung – und wo sie heute stehen
+262|Der Kauf konnte nicht verifiziert werden. Bitte versuche es erneut.
+263|Das Ranking richtet sich nach der Marktkapitalisierung an diesem Datum.
+264|Zeitüberschreitung bei der Anfrage. Bitte versuche es erneut.
+265|Der Server hatte ein Problem (%lld). Bitte versuche es gleich noch einmal.
+266|Der ganze Markt auf einen Blick
+267|Die größten Unternehmen der Welt – gerankt und erklärt.
+268|Design
+269|Dein Account und alle deine Daten werden dauerhaft gelöscht. Dies kann nicht rückgängig gemacht werden.
+270|Zeitmaschine
+271|Top %lld von %@ gesamt · %@
+272|Top 10 nach Gewinn
+273|Top 10 nach Marktkapitalisierung
+274|Top 10 nach Umsatz
+275|Beste Performer
+276|Größte Unternehmen nach Mitarbeiterzahl
+277|Gesamt
+278|Bilanzsumme
+279|Gesamtschulden
+280|Gesamte Marktkapitalisierung %@ · Kachelgröße = Marktkapitalisierung, Farbe = Veränderung
+281|Erneut versuchen
+282|Passe die Filter an.
+284|Nicht klassifiziert
+285|Nutzer
+287|Wert
+288|Version
+289|Spracheingabe
+290|Die Spracheingabe wurde unerwartet beendet. Bitte versuche es erneut.
+291|Sieh den Giganten beim Rennen zu
+292|Weltmarkt-Heatmap
+293|Weltrang
+294|Weltweite Marktkapitalisierung %@ · Kachelgröße = Marktkapitalisierung, Farbe = Veränderung
+295|Jahr
+296|Jährlich
+297|Rendite ≥ %@
+298|ggü. Vorjahr
+299|ggü. Vorjahr %
+300|Du bist anscheinend offline. Prüfe deine Verbindung und versuche es erneut.
+301|Deine Sitzung ist abgelaufen. Bitte melde dich erneut an.
+302|Null
+303|minus %@ Prozent
+304|heute minus %@ Prozent
+305|z. B. japanische Tech-Aktien mit KGV unter 20
+306|Monat
+307|keine Daten
+308|einmalig
+309|unverändert
+310|heute unverändert
+311|plus %@ Prozent
+312|heute plus %@ Prozent
+313|Jahr

@@ -1,0 +1,157 @@
+Financial services|Serviços financeiros
+Tech|Tecnologia
+Biotech|Biotecnologia
+Manufacturing|Manufatura
+Energy|Energia
+Pharmaceuticals|Farmacêuticas
+Real estate|Imobiliário
+Banks|Bancos
+Investment|Investimentos
+Software|Software
+Oil&Gas|Petróleo e gás
+Retail|Varejo
+Food|Alimentos
+Entertainment|Entretenimento
+Mining|Mineração
+Internet|Internet
+Electricity|Eletricidade
+Professional services|Serviços profissionais
+Insurance|Seguros
+Transportation|Transporte
+REITs|FIIs/REITs
+Electronics|Eletrônicos
+Video games|Videogames
+Tech Hardware|Hardware de tecnologia
+Chemicals|Químicos
+Telecommunication|Telecomunicações
+Healthcare|Saúde
+Travel|Viagens
+Construction|Construção
+Semiconductors|Semicondutores
+Medical Devices|Dispositivos médicos
+Engineering|Engenharia
+Utility companies|Serviços públicos
+Renewable energy|Energia renovável
+IT services|Serviços de TI
+Clothing|Vestuário
+Building materials|Materiais de construção
+Infrastructure|Infraestrutura
+Beverages|Bebidas
+Gold mining|Mineração de ouro
+Asset Management|Gestão de ativos
+Conglomerate|Conglomerado
+Media/Press|Mídia/Imprensa
+Aerospace|Aeroespacial
+E-Commerce|E-commerce
+Automotive Suppliers|Fornecedores automotivos
+Maritime transportation|Transporte marítimo
+Machinery manufacturing|Fabricação de máquinas
+Steel industry|Indústria do aço
+Diagnostics and Testing|Diagnósticos e testes
+AI|IA
+Restaurant chains|Redes de restaurantes
+Airlines|Companhias aéreas
+Hotels|Hotéis
+Auto Parts|Autopeças
+Advertising|Publicidade
+Education|Educação
+Alcoholic beverages|Bebidas alcoólicas
+Cement|Cimento
+Agriculture|Agricultura
+Medical Care Facilities|Unidades de saúde
+Automakers|Montadoras
+Defense contractors|Contratadas de defesa
+Gambling|Apostas
+Supermarket Chains|Redes de supermercados
+IT security|Segurança da informação
+Consumer goods|Bens de consumo
+Steel producers|Produtores de aço
+Packaging|Embalagens
+Furniture|Móveis
+Luxury goods|Artigos de luxo
+Telecommunications equipment|Equipamentos de telecomunicações
+Specialty Vehicles|Veículos especiais
+Bitcoin|Bitcoin
+Genomics|Genômica
+DAX|DAX
+Scientific & Technical Instruments|Instrumentos científicos e técnicos
+CAC 40|CAC 40
+Cannabis|Cannabis
+Silver Mining|Mineração de prata
+Uranium|Urânio
+Pulp and paper|Celulose e papel
+Car retail|Varejo de automóveis
+Staffing & Employment Services|Recrutamento e emprego
+Home & Kitchen Appliances|Eletrodomésticos
+Waste & Recycling|Resíduos e reciclagem
+Rental & Leasing Services|Locação e leasing
+Railways|Ferrovias
+Footwear|Calçados
+Electric Vehicles|Veículos elétricos
+Batteries|Baterias
+Oil & Gas Equipment & Services|Equipamentos e serviços de petróleo e gás
+Medical Equipment|Equipamentos médicos
+Dow jones|Dow Jones
+Robotics|Robótica
+Cosmetics and Beauty|Cosméticos e beleza
+Stock/Crypto exchanges|Bolsas de valores/cripto
+Stock exchanges|Bolsas de valores
+Sports goods|Artigos esportivos
+Networking hardware|Equipamentos de rede
+Coal Mining|Mineração de carvão
+Aluminum|Alumínio
+Dairy companies|Laticínios
+Courier|Entregas
+Fertilizer companies|Fertilizantes
+Tobacco|Tabaco
+Used car retailer|Venda de seminovos
+Airports|Aeroportos
+Bitcoin mining|Mineração de bitcoin
+Aircraft manufacturers|Fabricantes de aeronaves
+Container shipping|Transporte de contêineres
+Ports|Portos
+Gene therapy|Terapia gênica
+Autonomous driving|Direção autônoma
+Tires|Pneus
+Shipbuilding|Construção naval
+Drugstore|Drogarias
+IoT|IoT
+Security & Protection Services|Serviços de segurança
+EV charging|Recarga de veículos elétricos
+Eyewear|Óticas
+Car rental|Aluguel de carros
+Biofuel|Biocombustíveis
+Esports|eSports
+Paint & Coating|Tintas e revestimentos
+Tool manufacturers|Fabricantes de ferramentas
+Football|Futebol
+Online Travel|Viagens online
+Flavors & Fragrances|Aromas e fragrâncias
+Pollution control and treatment|Controle e tratamento de poluição
+Telehealth|Telessaúde
+Tools and Hardware|Ferramentas e ferragens
+Lidar|Lidar
+Gloves & PPE|Luvas e EPIs
+Dietary supplements|Suplementos alimentares
+3D Printing|Impressão 3D
+Food Delivery|Entrega de comida
+Hydrogen fuel cell|Células de hidrogênio
+LED Lighting Manufacturers|Fabricantes de iluminação LED
+Ridesharing|Transporte por aplicativo
+Toll Road Operators|Concessionárias de pedágio
+Wellness|Bem-estar
+Toys|Brinquedos
+Cruise Lines|Cruzeiros
+Motorcycle Manufacturers|Fabricantes de motocicletas
+CRISPR|CRISPR
+Multi-level marketing|Marketing multinível
+Pizza|Pizza
+mRNA therapeutics|Terapias de mRNA
+Aircraft leasing|Leasing de aeronaves
+Online Dating|Relacionamentos online
+Intellectual Property & Patent licensing|Propriedade intelectual e licenciamento de patentes
+Recommerce|Revenda de usados
+Medical Instruments & Supplies|Instrumentos e suprimentos médicos
+Hospitality|Hotelaria
+Personal Care|Cuidados pessoais
+Glassware|Vidraria
