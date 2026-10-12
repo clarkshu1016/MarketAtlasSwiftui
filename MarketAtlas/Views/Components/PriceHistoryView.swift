@@ -61,6 +61,13 @@ private struct HorizontalDragRecognizer: UIViewRepresentable {
 enum HistoryMetric: String, CaseIterable {
     case price     = "Price"
     case marketCap = "Market Cap"
+
+    var label: String {
+        switch self {
+        case .price:     String(localized: "Price")
+        case .marketCap: String(localized: "Market Cap")
+        }
+    }
 }
 
 enum PriceRange: String, CaseIterable {
@@ -178,7 +185,7 @@ struct PriceHistoryView: View {
                                 selectedMcap  = nil
                             }
                         } label: {
-                            Text(m.rawValue)
+                            Text(m.label)
                                 .font(.system(size: 11, weight: .semibold))
                                 .foregroundStyle(metric == m ? btnSelText : btnUnselText)
                                 .padding(.horizontal, 8)

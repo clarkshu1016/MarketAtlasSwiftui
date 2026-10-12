@@ -38,27 +38,27 @@ enum MetricType: String, CaseIterable, Identifiable {
 
     var label: String {
         switch self {
-        case .marketCap:        return "Market Cap"
-        case .earnings:         return "Earnings"
-        case .revenue:          return "Revenue"
-        case .employees:        return "Employees"
-        case .peRatio:          return "P/E Ratio"
-        case .dividendYield:    return "Dividend %"
-        case .mcapGain:         return "Cap Gain"
-        case .mcapLoss:         return "Cap Loss"
-        case .operatingMargin:  return "Op. Margin"
-        case .costToBorrow:     return "Borrow Cost"
-        case .totalAssets:      return "Total Assets"
-        case .netAssets:        return "Net Assets"
-        case .totalLiabilities: return "Liabilities"
-        case .totalDebt:        return "Total Debt"
-        case .cashOnHand:       return "Cash"
-        case .priceToBook:      return "P/B Ratio"
-        case .priceToSales:       return "P/S Ratio"
-        case .earningsYield:      return "Earnings Yield"
-        case .netCash:            return "Net Cash"
-        case .debtToAssets:       return "Debt / Assets"
-        case .revenuePerEmployee: return "Revenue / Employee"
+        case .marketCap:        return String(localized: "Market Cap")
+        case .earnings:         return String(localized: "Earnings")
+        case .revenue:          return String(localized: "Revenue")
+        case .employees:        return String(localized: "Employees")
+        case .peRatio:          return String(localized: "P/E Ratio")
+        case .dividendYield:    return String(localized: "Dividend %")
+        case .mcapGain:         return String(localized: "Cap Gain")
+        case .mcapLoss:         return String(localized: "Cap Loss")
+        case .operatingMargin:  return String(localized: "Op. Margin")
+        case .costToBorrow:     return String(localized: "Borrow Cost")
+        case .totalAssets:      return String(localized: "Total Assets")
+        case .netAssets:        return String(localized: "Net Assets")
+        case .totalLiabilities: return String(localized: "Liabilities")
+        case .totalDebt:        return String(localized: "Total Debt")
+        case .cashOnHand:       return String(localized: "Cash")
+        case .priceToBook:      return String(localized: "P/B Ratio")
+        case .priceToSales:       return String(localized: "P/S Ratio")
+        case .earningsYield:      return String(localized: "Earnings Yield")
+        case .netCash:            return String(localized: "Net Cash")
+        case .debtToAssets:       return String(localized: "Debt / Assets")
+        case .revenuePerEmployee: return String(localized: "Revenue / Employee")
         }
     }
 

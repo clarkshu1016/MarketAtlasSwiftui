@@ -21,7 +21,7 @@ struct FavoritesView: View {
                     ContentUnavailableView {
                         Label("Couldn't Load Favourites", systemImage: "wifi.exclamationmark")
                     } description: {
-                        Text(favVM.errorMessage ?? "Check your connection and try again.")
+                        Text(favVM.errorMessage ?? String(localized: "Check your connection and try again."))
                     } actions: {
                         Button("Try Again") {
                             if let token = authVM.token { Task { await favVM.load(token: token) } }

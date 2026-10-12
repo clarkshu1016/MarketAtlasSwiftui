@@ -1,0 +1,116 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "Market-cap change (includes share issuance, buybacks and currency moves), weighted by market cap, over companies that have history at the start of the period.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "時価総額の変化（新株発行・自社株買い・為替の影響を含む）。期間開始時点で履歴のある企業を対象に、時価総額で加重しています。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "市值变化（包含增发、回购和汇率影响），按市值加权，仅统计期初有历史数据的公司。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "市值變化（包含增發、庫藏股買回與匯率影響），依市值加權，僅統計期初有歷史資料的公司。"
+          }
+        }
+      }
+    },
+    "Market-cap change (includes share issuance, buybacks and currency moves), weighted by market cap, over companies that have history at the start of the period. Sector data is available for part of the market; the rest is shown as Unclassified.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "時価総額の変化（新株発行・自社株買い・為替の影響を含む）。期間開始時点で履歴のある企業を対象に、時価総額で加重しています。セクター情報は市場の一部のみ利用でき、残りは「未分類」として表示されます。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "市值变化（包含增发、回购和汇率影响），按市值加权，仅统计期初有历史数据的公司。行业数据仅覆盖部分市场，其余显示为“未分类”。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "市值變化（包含增發、庫藏股買回與匯率影響），依市值加權，僅統計期初有歷史資料的公司。行業資料僅涵蓋部分市場，其餘顯示為「未分類」。"
+          }
+        }
+      }
+    },
+    "Market-cap change (includes share issuance, buybacks and currency moves). Companies without history at the start of the period have no colour.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "時価総額の変化（新株発行・自社株買い・為替の影響を含む）。期間開始時点で履歴のない企業には色が付きません。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "市值变化（包含增发、回购和汇率影响）。期初没有历史数据的公司不显示颜色。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "市值變化（包含增發、庫藏股買回與匯率影響）。期初沒有歷史資料的公司不顯示顏色。"
+          }
+        }
+      }
+    },
+    "Market-cap change (includes share issuance/buybacks and FX), listed companies only. Early history of some emerging-market companies is unreliable.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "時価総額の変化（新株発行・自社株買い・為替の影響を含む）。上場企業のみ。一部の新興国企業の初期データは信頼性が低い場合があります。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "市值变化（包含增发、回购和汇率影响），仅限上市公司。部分新兴市场公司的早期数据不可靠。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "市值變化（包含增發、庫藏股買回與匯率影響），僅限上市公司。部分新興市場公司的早期資料不可靠。"
+          }
+        }
+      }
+    },
+    "Only companies that are listed today are included, so companies that were later delisted, merged or acquired are missing from historical rankings. Early data for some emerging-market companies is unreliable.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "現在上場している企業のみが対象のため、その後に上場廃止・合併・買収された企業は過去のランキングに含まれません。一部の新興国企業の初期データは信頼性が低い場合があります。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仅包含目前仍在上市的公司，因此后来退市、被合并或被收购的公司不会出现在历史排名中。部分新兴市场公司的早期数据不可靠。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "僅包含目前仍在上市的公司，因此後來下市、被合併或被收購的公司不會出現在歷史排名中。部分新興市場公司的早期資料不可靠。"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

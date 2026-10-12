@@ -12,17 +12,17 @@ struct PerformanceView: View {
             case .y3:  "3Y"
             case .y5:  "5Y"
             case .y10: "10Y"
-            case .peak: "Peak"
+            case .peak: String(localized: "Peak")
             }
         }
         var title: String {
             switch self {
-            case .ytd:  "Since January 1"
-            case .y1:   "Past year"
-            case .y3:   "Past 3 years"
-            case .y5:   "Past 5 years"
-            case .y10:  "Past 10 years"
-            case .peak: "Distance from all-time high"
+            case .ytd:  String(localized: "Since January 1")
+            case .y1:   String(localized: "Past year")
+            case .y3:   String(localized: "Past 3 years")
+            case .y5:   String(localized: "Past 5 years")
+            case .y10:  String(localized: "Past 10 years")
+            case .peak: String(localized: "Distance from all-time high")
             }
         }
     }
@@ -32,7 +32,7 @@ struct PerformanceView: View {
         var id: Double { rawValue }
         var label: String {
             switch self {
-            case .all: "All sizes"
+            case .all: String(localized: "All sizes")
             case .b1: "$1B+"
             case .b10: "$10B+"
             case .b100: "$100B+"
@@ -61,8 +61,8 @@ struct PerformanceView: View {
                 .pickerStyle(.segmented)
 
                 Picker("Order", selection: $worstFirst) {
-                    Text(period == .peak ? "Near Peak" : "Gainers").tag(false)
-                    Text(period == .peak ? "Biggest Drops" : "Losers").tag(true)
+                    Text(period == .peak ? String(localized: "Near Peak") : String(localized: "Gainers")).tag(false)
+                    Text(period == .peak ? String(localized: "Biggest Drops") : String(localized: "Losers")).tag(true)
                 }
                 .pickerStyle(.segmented)
             } footer: {
@@ -108,7 +108,7 @@ struct PerformanceView: View {
                     }
                 }
             } footer: {
-                if let note = response.note { Text(note) }
+                if let note = response.note { Text(DisplayName.note(note)) }
             }
         } else if isLoading {
             ProgressView().frame(maxWidth: .infinity).listRowBackground(Color.clear)

@@ -28,12 +28,12 @@ final class AuthViewModel {
             if let error {
                 // The user backing out of the Google sheet is not an error worth reporting.
                 if (error as NSError).code != GIDSignInError.canceled.rawValue {
-                    self?.authError = "Google sign-in failed. Please try again."
+                    self?.authError = String(localized: "Google sign-in failed. Please try again.")
                 }
                 return
             }
             guard let result, let idToken = result.user.idToken?.tokenString else {
-                self?.authError = "Google sign-in failed. Please try again."
+                self?.authError = String(localized: "Google sign-in failed. Please try again.")
                 return
             }
             let avatarURL = result.user.profile?.imageURL(withDimension: 96)?.absoluteString
@@ -67,7 +67,7 @@ final class AuthViewModel {
         } catch is CancellationError {
             return nil
         } catch {
-            await MainActor.run { authError = "Sign-in failed. Check your connection and try again." }
+            await MainActor.run { authError = String(localized: "Sign-in failed. Check your connection and try again.") }
             return nil
         }
     }

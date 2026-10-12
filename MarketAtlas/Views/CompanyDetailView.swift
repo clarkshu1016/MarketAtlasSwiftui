@@ -153,7 +153,7 @@ struct CompanyDetailView: View {
                                     .clipShape(RoundedRectangle(cornerRadius: 6))
                             }
                             if let c = company.country {
-                                Text(c)
+                                Text(DisplayName.country(c))
                                     .font(.system(size: 13))
                                     .foregroundStyle(.secondary)
                             }
@@ -185,7 +185,7 @@ struct CompanyDetailView: View {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 6) {
                             ForEach(tags, id: \.self) { tag in
-                                Text(tag)
+                                Text(DisplayName.tag(tag))
                                     .font(.system(size: 12, weight: .medium))
                                     .lineLimit(1)
                                     .padding(.horizontal, 11)
@@ -273,7 +273,7 @@ struct CompanyDetailView: View {
                         .scaleEffect(starScale)
                         .rotationEffect(.degrees(starRotation))
                 }
-                .accessibilityLabel(favVM.isFavorite(ticker) ? "Remove from favourites" : "Add to favourites")
+                .accessibilityLabel(favVM.isFavorite(ticker) ? String(localized: "Remove from favourites") : String(localized: "Add to favourites"))
             }
         }
         .shareCard(title: company.name, key: company.id) { CompanyShareCard(company: company) }

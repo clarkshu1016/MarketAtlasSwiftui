@@ -22,7 +22,7 @@ struct SignInButtons: View {
                         let tokenData = credential.identityToken,
                         let token = String(data: tokenData, encoding: .utf8)
                     else {
-                        authVM.authError = "Apple sign-in failed. Please try again."
+                        authVM.authError = String(localized: "Apple sign-in failed. Please try again.")
                         return
                     }
                     let fullName = [credential.fullName?.givenName, credential.fullName?.familyName]
@@ -36,7 +36,7 @@ struct SignInButtons: View {
                     )
                 case .failure(let error):
                     if (error as? ASAuthorizationError)?.code != .canceled {
-                        authVM.authError = "Apple sign-in failed. Please try again."
+                        authVM.authError = String(localized: "Apple sign-in failed. Please try again.")
                     }
                 }
             }

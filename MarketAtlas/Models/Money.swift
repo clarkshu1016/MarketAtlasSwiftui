@@ -24,6 +24,6 @@ enum Money {
         parser.timeZone = TimeZone(identifier: "UTC")
         parser.dateFormat = "yyyy-MM-dd"
         guard let date = parser.date(from: iso) else { return iso }
-        return date.formatted(.dateTime.month(.abbreviated).year().locale(Locale(identifier: "en_US")))
+        return date.formatted(.dateTime.month(.abbreviated).year())
     }
 }

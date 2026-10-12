@@ -69,12 +69,12 @@ struct ChatView: View {
     // MARK: - Empty State
 
     private let suggestions = [
-        "Top 10 by market cap",
-        "Top companies by employee count",
-        "NVIDIA revenue history",
-        "Compare Apple vs Microsoft",
-        "Highest dividend yield",
-        "Best operating margin",
+        String(localized: "Top 10 by market cap"),
+        String(localized: "Top companies by employee count"),
+        String(localized: "NVIDIA revenue history"),
+        String(localized: "Compare Apple vs Microsoft"),
+        String(localized: "Highest dividend yield"),
+        String(localized: "Best operating margin"),
     ]
 
     private var emptyState: some View {
@@ -139,7 +139,7 @@ struct ChatView: View {
             HStack(alignment: .bottom, spacing: 10) {
                 // Pill: text field + trailing action button
                 HStack(alignment: .bottom, spacing: 0) {
-                    TextField(isRec ? "Listening…" : "Message MarketAtlas AI",
+                    TextField(isRec ? String(localized: "Listening…") : String(localized: "Message MarketAtlas AI"),
                               text: $vm.inputText, axis: .vertical)
                         .lineLimit(1...6)
                         .padding(.leading, 16)
@@ -469,28 +469,28 @@ struct TwoWayCompareCard: View {
 
     private var metrics: [CompareMetric] {
         [
-            CompareMetric(id: "mcap", label: "Market Cap",
+            CompareMetric(id: "mcap", label: String(localized: "Market Cap"),
                           aVal: a.market_cap_display ?? "—", bVal: b.market_cap_display ?? "—",
                           aRaw: a.market_cap, bRaw: b.market_cap, higherBetter: true),
-            CompareMetric(id: "rev", label: "Revenue",
+            CompareMetric(id: "rev", label: String(localized: "Revenue"),
                           aVal: a.revenue_display ?? "—", bVal: b.revenue_display ?? "—",
                           aRaw: nil, bRaw: nil, higherBetter: true),
-            CompareMetric(id: "earn", label: "Earnings",
+            CompareMetric(id: "earn", label: String(localized: "Earnings"),
                           aVal: a.earnings_display ?? "—", bVal: b.earnings_display ?? "—",
                           aRaw: nil, bRaw: nil, higherBetter: true),
-            CompareMetric(id: "pe", label: "P/E Ratio",
+            CompareMetric(id: "pe", label: String(localized: "P/E Ratio"),
                           aVal: a.pe_ratio.map { String(format: "%.1f×", $0) } ?? "—",
                           bVal: b.pe_ratio.map { String(format: "%.1f×", $0) } ?? "—",
                           aRaw: a.pe_ratio, bRaw: b.pe_ratio, higherBetter: false),
-            CompareMetric(id: "div", label: "Div. Yield",
+            CompareMetric(id: "div", label: String(localized: "Div. Yield"),
                           aVal: a.dividend_yield.map { String(format: "%.2f%%", $0) } ?? "—",
                           bVal: b.dividend_yield.map { String(format: "%.2f%%", $0) } ?? "—",
                           aRaw: a.dividend_yield, bRaw: b.dividend_yield, higherBetter: true),
-            CompareMetric(id: "margin", label: "Op. Margin",
+            CompareMetric(id: "margin", label: String(localized: "Op. Margin"),
                           aVal: a.operating_margin.map { String(format: "%.1f%%", $0) } ?? "—",
                           bVal: b.operating_margin.map { String(format: "%.1f%%", $0) } ?? "—",
                           aRaw: a.operating_margin, bRaw: b.operating_margin, higherBetter: true),
-            CompareMetric(id: "chg", label: "24h Change",
+            CompareMetric(id: "chg", label: String(localized: "24h Change"),
                           aVal: a.change_24h.map { String(format: "%+.2f%%", $0) } ?? "—",
                           bVal: b.change_24h.map { String(format: "%+.2f%%", $0) } ?? "—",
                           aRaw: a.change_24h, bRaw: b.change_24h, higherBetter: true),

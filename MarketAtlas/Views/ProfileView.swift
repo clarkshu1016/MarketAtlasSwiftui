@@ -28,7 +28,7 @@ struct ProfileView: View {
                         .clipShape(Circle())
 
                     VStack(alignment: .leading, spacing: 4) {
-                        Text(authVM.userName ?? "User")
+                        Text(authVM.userName ?? String(localized: "User"))
                             .font(.title3.bold())
                         if let email = authVM.userEmail {
                             Text(email)
@@ -96,7 +96,7 @@ struct ProfileView: View {
                         try await authVM.deleteAccount()
                         favVM.companies = []
                     } catch {
-                        deleteError = "Failed to delete account. Please try again."
+                        deleteError = String(localized: "Failed to delete account. Please try again.")
                     }
                     isDeletingAccount = false
                 }

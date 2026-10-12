@@ -17,8 +17,8 @@ enum VoiceLanguage: String, CaseIterable, Identifiable {
 
     var label: String {
         switch self {
-        case .auto:               return "Automatic"
-        case .english:            return "English"
+        case .auto:               return String(localized: "Automatic")
+        case .english:            return String(localized: "English")
         case .japanese:           return "日本語"
         case .chineseSimplified:  return "简体中文"
         case .chineseTraditional: return "繁體中文"
@@ -115,7 +115,7 @@ final class SpeechRecognizer {
         }
 
         guard let recognizer = Self.makeRecognizer(), recognizer.isAvailable else {
-            errorMessage = "Speech recognition isn't available right now. Check your connection and try again."
+            errorMessage = String(localized: "Speech recognition isn't available right now. Check your connection and try again.")
             return
         }
 
@@ -137,7 +137,7 @@ final class SpeechRecognizer {
             let format = engine.inputNode.outputFormat(forBus: 0)
             // No usable input (route changed mid-flight, no mic): installTap would raise an exception.
             guard format.sampleRate > 0, format.channelCount > 0 else {
-                errorMessage = "No microphone is available."
+                errorMessage = String(localized: "No microphone is available.")
                 releaseAudioSession()
                 return
             }
@@ -179,7 +179,7 @@ final class SpeechRecognizer {
             audioEngine = engine
             isRecording = true
         } catch {
-            errorMessage = "Couldn't start the microphone. Please try again."
+            errorMessage = String(localized: "Couldn't start the microphone. Please try again.")
             stop()
         }
     }
@@ -237,6 +237,6 @@ final class SpeechRecognizer {
         let benign = ["kAFAssistantErrorDomain", "kLSRErrorDomain"].contains(error.domain)
             && [1110, 216, 301].contains(error.code)
         guard !benign, (error as NSError).code != NSUserCancelledError else { return }
-        errorMessage = "Voice input stopped unexpectedly. Please try again."
+        errorMessage = String(localized: "Voice input stopped unexpectedly. Please try again.")
     }
 }

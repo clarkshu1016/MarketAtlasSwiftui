@@ -6,8 +6,9 @@ struct ChangeBadge: View {
     private var rounded: Double { (value * 100).rounded() / 100 }
     private var color: Color { rounded > 0 ? .green : rounded < 0 ? .red : .secondary }
     private var spoken: String {
-        rounded == 0 ? "unchanged"
-                     : "\(rounded > 0 ? "up" : "down") \(String(format: "%.2f", abs(rounded))) percent"
+        let amount = String(format: "%.2f", abs(rounded))
+        if rounded == 0 { return String(localized: "unchanged") }
+        return rounded > 0 ? String(localized: "up \(amount) percent") : String(localized: "down \(amount) percent")
     }
 
     var body: some View {

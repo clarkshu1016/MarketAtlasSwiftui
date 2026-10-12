@@ -66,12 +66,12 @@ enum APIError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .unauthorized:  return "Your session has expired. Please sign in again."
-        case .server(let c): return "The server had a problem (\(c)). Please try again in a moment."
-        case .offline:       return "You appear to be offline. Check your connection and try again."
-        case .timeout:       return "The request timed out. Please try again."
-        case .network:       return "Couldn't reach the server. Please try again."
-        case .decoding:      return "Received unexpected data from the server."
+        case .unauthorized:  return String(localized: "Your session has expired. Please sign in again.")
+        case .server(let c): return String(localized: "The server had a problem (\(c)). Please try again in a moment.")
+        case .offline:       return String(localized: "You appear to be offline. Check your connection and try again.")
+        case .timeout:       return String(localized: "The request timed out. Please try again.")
+        case .network:       return String(localized: "Couldn't reach the server. Please try again.")
+        case .decoding:      return String(localized: "Received unexpected data from the server.")
         }
     }
 }
@@ -219,6 +219,20 @@ final class APIService {
             URLQueryItem(name: "limit", value: String(limit)),
         ]
         return try await fetch(CompanyHeatmapResponse.self, get("api/market/heatmap/companies", query: query))
+    }
+
+    func fetchSectorHeatmap(period: String) async throws -> SectorHeatmapResponse {
+        try await fetch(SectorHeatmapResponse.self,
+                        get("api/market/heatmap/sectors", query: [URLQueryItem(name: "period", value: period)]))
+    }
+
+    func fetchSectorCompanies(sector: String, period: String, limit: Int = 80) async throws -> SectorCompaniesResponse {
+        let query = [
+            URLQueryItem(name: "sector", value: sector),
+            URLQueryItem(name: "period", value: period),
+            URLQueryItem(name: "limit", value: String(limit)),
+        ]
+        return try await fetch(SectorCompaniesResponse.self, get("api/market/heatmap/sector-companies", query: query))
     }
 
     // MARK: - Favorites

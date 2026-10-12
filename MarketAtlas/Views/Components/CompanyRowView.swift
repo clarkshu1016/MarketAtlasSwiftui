@@ -67,12 +67,14 @@ struct CompanyRowView: View {
     }
 
     private var accessibilityText: String {
-        var parts = ["Rank \(rank)", company.name]
+        var parts = [String(localized: "Rank \(rank)"), company.name]
         if let t = company.ticker { parts.append(t) }
         parts.append("\(metric.label) \(metric.display(from: company))")
         if let ch = company.change_24h {
-            parts.append(ch == 0 ? "unchanged today"
-                                 : "\(ch > 0 ? "up" : "down") \(String(format: "%.2f", abs(ch))) percent today")
+            let amount = String(format: "%.2f", abs(ch))
+            parts.append(ch == 0 ? String(localized: "unchanged today")
+                                 : ch > 0 ? String(localized: "up \(amount) percent today")
+                                          : String(localized: "down \(amount) percent today"))
         }
         return parts.joined(separator: ", ")
     }

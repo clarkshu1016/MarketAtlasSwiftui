@@ -112,7 +112,7 @@ struct TopCompaniesView: View {
             VStack(alignment: .leading, spacing: spacing) {
                 HStack(spacing: 5) {
                     Image(systemName: "chart.bar.xaxis").font(.system(size: 11, weight: .bold))
-                    Text(family == .systemSmall ? "Top by value" : "Top companies · market cap")
+                    Text(family == .systemSmall ? String(localized: "Top by value") : String(localized: "Top companies · market cap"))
                         .font(.system(size: 11, weight: .semibold))
                         .lineLimit(1)
                     Spacer(minLength: 0)

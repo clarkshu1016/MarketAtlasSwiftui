@@ -10,9 +10,9 @@ enum FinancialTab: String, CaseIterable {
 
     var label: String {
         switch self {
-        case .earnings:   return "Net Profit"
-        case .revenue:    return "Revenue"
-        case .cashOnHand: return "Cash"
+        case .earnings:   return String(localized: "Net Profit")
+        case .revenue:    return String(localized: "Revenue")
+        case .cashOnHand: return String(localized: "Cash")
         }
     }
 

@@ -7,13 +7,13 @@ struct StatsRowView: View {
         HStack(spacing: 10) {
             StatCard(icon: "building.2.fill",    color: .accentColor,
                      value: stats.map { "\($0.total_companies)" } ?? "—",
-                     label: "Companies")
+                     label: String(localized: "Companies"))
             StatCard(icon: "globe.americas.fill", color: .green,
                      value: stats.map { "\($0.countries)" } ?? "—",
-                     label: "Markets")
+                     label: String(localized: "Markets"))
             StatCard(icon: "chart.pie.fill",      color: .orange,
                      value: stats?.total_market_cap_display ?? "—",
-                     label: "Market Cap")
+                     label: String(localized: "Market Cap"))
         }
         .padding(.horizontal, 16)
     }

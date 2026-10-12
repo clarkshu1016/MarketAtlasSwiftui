@@ -127,7 +127,7 @@ struct ScreenerView: View {
             Section("Country") {
                 Button { showCountryPicker = true } label: {
                     HStack {
-                        Text(selectedCountry.isEmpty ? "Any country" : selectedCountry)
+                        Text(selectedCountry.isEmpty ? String(localized: "Any country") : DisplayName.country(selectedCountry))
                             .foregroundStyle(selectedCountry.isEmpty ? .secondary : .primary)
                         Spacer()
                         Image(systemName: "chevron.right")
@@ -141,7 +141,7 @@ struct ScreenerView: View {
             Section("Sector") {
                 Button { showSectorPicker = true } label: {
                     HStack {
-                        Text(selectedSector.isEmpty ? "Any sector" : selectedSector)
+                        Text(selectedSector.isEmpty ? String(localized: "Any sector") : Sector.displayName(selectedSector))
                             .foregroundStyle(selectedSector.isEmpty ? .secondary : .primary)
                         Spacer()
                         Image(systemName: "chevron.right")
@@ -162,7 +162,7 @@ struct ScreenerView: View {
                     Text(error).foregroundStyle(.red).font(.caption)
                 }
             } else if hasSearched {
-                Section(results.isEmpty ? "No Results" : "\(results.count) \(results.count == 1 ? "Company" : "Companies")") {
+                Section(results.isEmpty ? String(localized: "No Results") : String(localized: "\(results.count) companies")) {
                     if results.isEmpty {
                         ContentUnavailableView(
                             "No Matches",
@@ -231,7 +231,7 @@ struct ScreenerView: View {
                         showCountryPicker = false
                     } label: {
                         HStack {
-                            Text(country).foregroundStyle(.primary)
+                            Text(DisplayName.country(country)).foregroundStyle(.primary)
                             Spacer()
                             if selectedCountry == country {
                                 Image(systemName: "checkmark").foregroundStyle(Color.accentColor)
@@ -259,7 +259,9 @@ struct ScreenerView: View {
 
     private var filteredCountries: [String] {
         if countrySearch.isEmpty { return availableCountries }
-        return availableCountries.filter { $0.localizedCaseInsensitiveContains(countrySearch) }
+        return availableCountries.filter {
+            $0.localizedCaseInsensitiveContains(countrySearch) || DisplayName.country($0).localizedCaseInsensitiveContains(countrySearch)
+        }
     }
 
     // MARK: - Sector picker
@@ -287,7 +289,7 @@ struct ScreenerView: View {
                         showSectorPicker = false
                     } label: {
                         HStack {
-                            Text(sector).foregroundStyle(.primary)
+                            Text(Sector.displayName(sector)).foregroundStyle(.primary)
                             Spacer()
                             if selectedSector == sector {
                                 Image(systemName: "checkmark").foregroundStyle(Color.accentColor)
@@ -329,14 +331,14 @@ struct ScreenerView: View {
             hasSearched = true
             // Build a human-readable hint
             var parts: [String] = []
-            if let c = f.country { parts.append(c) }
-            if let s = f.sector  { parts.append(s) }
-            if let v = f.pe_ratio_max { parts.append("P/E ≤ \(Int(v))") }
-            if let v = f.market_cap_min { parts.append("MCap ≥ \(formatBillions(v))") }
-            if let v = f.dividend_yield_min { parts.append("Div ≥ \(String(format: "%.1f%%", v*100))") }
-            parsedFiltersText = parts.isEmpty ? nil : "Filters: " + parts.joined(separator: " · ")
+            if let c = f.country { parts.append(DisplayName.country(c)) }
+            if let s = f.sector  { parts.append(Sector.displayName(s)) }
+            if let v = f.pe_ratio_max { parts.append(String(localized: "P/E ≤ \(Int(v))")) }
+            if let v = f.market_cap_min { parts.append(String(localized: "MCap ≥ \(formatBillions(v))")) }
+            if let v = f.dividend_yield_min { parts.append(String(localized: "Div ≥ \(String(format: "%.1f%%", v*100))")) }
+            parsedFiltersText = parts.isEmpty ? nil : String(localized: "Filters: \(parts.joined(separator: " · "))")
         } catch {
-            aiErrorMessage = "AI Search unavailable: \(error.localizedDescription)"
+            aiErrorMessage = String(localized: "AI Search unavailable: \(error.localizedDescription)")
         }
         isAILoading = false
     }

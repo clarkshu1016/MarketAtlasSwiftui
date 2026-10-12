@@ -60,8 +60,8 @@ final class FavoritesViewModel {
             companies = previous
             if !(error is CancellationError) {
                 syncError = wasFavorite
-                    ? "Couldn't remove \(company.name) from favourites. \(error.localizedDescription)"
-                    : "Couldn't add \(company.name) to favourites. \(error.localizedDescription)"
+                    ? String(localized: "Couldn't remove \(company.name) from favourites. \(error.localizedDescription)")
+                    : String(localized: "Couldn't add \(company.name) to favourites. \(error.localizedDescription)")
             }
         }
     }

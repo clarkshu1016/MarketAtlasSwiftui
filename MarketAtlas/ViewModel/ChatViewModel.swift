@@ -52,7 +52,7 @@ final class ChatViewModel {
             messages.append(Message(isUser: false, userText: nil, response: response))
         } catch {
             let fallback = ChatResponse(blocks: [
-                .text(TextChatBlock(content: "Sorry, I couldn't process that. Please try again."))
+                .text(TextChatBlock(content: String(localized: "Sorry, I couldn't process that. Please try again.")))
             ])
             messages.append(Message(isUser: false, userText: nil, response: fallback))
         }

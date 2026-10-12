@@ -62,10 +62,7 @@ struct CountryHeatItem: Codable, Identifiable {
     var id: String { country }
 
     var flag: String { country.split(separator: " ", maxSplits: 1).first.map(String.init) ?? "" }
-    var name: String {
-        let parts = country.split(separator: " ", maxSplits: 1)
-        return parts.count > 1 ? String(parts[1]) : country
-    }
+    var name: String { DisplayName.countryName(country) }
 }
 
 struct CompanyHeatmapResponse: Codable {
@@ -84,6 +81,71 @@ struct CompanyHeatItem: Codable, Identifiable {
     var id: String { company.id }
 }
 
+
+struct SectorHeatmapResponse: Codable {
+    let period: String
+    let total_market_cap: Double
+    let note: String?
+    let items: [SectorHeatItem]
+}
+
+struct SectorHeatItem: Codable, Identifiable {
+    /// Server name, e.g. "Technology" or "Unclassified".
+    let sector: String
+    let market_cap: Double
+    let share_pct: Double
+    let company_count: Int
+    let coverage: Int
+    let change_pct: Double?
+
+    var id: String { sector }
+    var name: String { Sector.displayName(sector) }
+    var icon: String { Sector.icon(sector) }
+}
+
+struct SectorCompaniesResponse: Codable {
+    let sector: String
+    let period: String
+    let sector_market_cap: Double
+    let note: String?
+    let items: [CompanyHeatItem]
+}
+
+enum Sector {
+    /// The name shown to the user. The server value stays English because it is also the filter key.
+    static func displayName(_ raw: String) -> String {
+        switch raw {
+        case "Technology":      String(localized: "Technology")
+        case "Finance":         String(localized: "Finance")
+        case "Consumer":        String(localized: "Consumer")
+        case "Industrials":     String(localized: "Industrials")
+        case "Healthcare":      String(localized: "Healthcare")
+        case "Energy":          String(localized: "Energy")
+        case "Materials":       String(localized: "Materials")
+        case "Media & Telecom": String(localized: "Media & Telecom")
+        case "Real Estate":     String(localized: "Real Estate")
+        case "Services":        String(localized: "Services")
+        case "Unclassified":    String(localized: "Unclassified")
+        default:                raw
+        }
+    }
+
+    static func icon(_ raw: String) -> String {
+        switch raw {
+        case "Technology":      "💻"
+        case "Finance":         "🏦"
+        case "Consumer":        "🛍️"
+        case "Industrials":     "🏭"
+        case "Healthcare":      "🩺"
+        case "Energy":          "⚡"
+        case "Materials":       "⛏️"
+        case "Media & Telecom": "📡"
+        case "Real Estate":     "🏠"
+        case "Services":        "💼"
+        default:                "❔"
+        }
+    }
+}
 
 // MARK: - Display helpers for heatmap tiles
 
@@ -117,7 +179,7 @@ extension PerformanceItem {
     func detailText(isPeak: Bool) -> String {
         let reference = Money.short(reference_value)
         let date = Money.monthYear(fromISO: reference_date)
-        return isPeak ? "Peak \(reference) · \(date)" : "\(reference) → \(Money.short(end_value))"
+        return isPeak ? String(localized: "Peak \(reference) · \(date)") : "\(reference) → \(Money.short(end_value))"
     }
 }
 
@@ -131,6 +193,6 @@ extension TimeMachineItem {
         var parts: [String] = []
         if let rank = rank_now { parts.append("#\(rank)") }
         if let now = value_now { parts.append(Money.short(now)) }
-        return parts.isEmpty ? "Not ranked now" : "Now " + parts.joined(separator: " · ")
+        return parts.isEmpty ? String(localized: "Not ranked now") : String(localized: "Now \(parts.joined(separator: " · "))")
     }
 }

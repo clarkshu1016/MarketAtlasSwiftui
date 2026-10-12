@@ -21,7 +21,7 @@ struct ShareableImage: Transferable {
 enum ShareCard {
     /// Card width in points; rendered at 3× this is 1170 px — the width of a modern iPhone screenshot.
     static let width: CGFloat = 390
-    static let message = "MarketAtlas — rank and explore the world's biggest companies. https://apps.apple.com/app/id6784918078"
+    static var message: String { String(localized: "MarketAtlas — rank and explore the world's biggest companies. https://apps.apple.com/app/id6784918078") }
 }
 
 private struct ShareCardModifier<Card: View>: ViewModifier {
@@ -97,7 +97,7 @@ struct ShareCardFrame<Content: View>: View {
                 Text("MarketAtlas")
                     .font(.system(size: 14, weight: .bold, design: .rounded))
                 Spacer()
-                Text(Date.now.formatted(.dateTime.day().month(.abbreviated).year().locale(Locale(identifier: "en_US"))))
+                Text(Date.now.formatted(.dateTime.day().month(.abbreviated).year()))
                     .font(.system(size: 11, weight: .medium))
                     .foregroundStyle(.white.opacity(0.55))
             }
@@ -128,12 +128,12 @@ enum SharePeriod {
     /// Server period codes → a readable phrase.
     static func phrase(_ raw: String) -> String {
         switch raw {
-        case "ytd": "Since January 1"
-        case "1y":  "Past year"
-        case "3y":  "Past 3 years"
-        case "5y":  "Past 5 years"
-        case "10y": "Past 10 years"
-        case "ath": "Distance from all-time high"
+        case "ytd": String(localized: "Since January 1")
+        case "1y":  String(localized: "Past year")
+        case "3y":  String(localized: "Past 3 years")
+        case "5y":  String(localized: "Past 5 years")
+        case "10y": String(localized: "Past 10 years")
+        case "ath": String(localized: "Distance from all-time high")
         default:    raw.uppercased()
         }
     }
@@ -197,13 +197,34 @@ struct CountryHeatmapShareCard: View {
 
     var body: some View {
         ShareCardFrame(
-            title: "World Market Heatmap",
-            subtitle: "\(Money.short(response.world_market_cap)) world market cap · \(SharePeriod.phrase(response.period))"
+            title: String(localized: "World Market Heatmap"),
+            subtitle: String(localized: "\(Money.short(response.world_market_cap)) world market cap · \(SharePeriod.phrase(response.period))")
         ) {
             VStack(spacing: 8) {
                 TreemapView(weights: response.items.map(\.market_cap)) { i, size in
                     let item = response.items[i]
                     HeatTile(title: item.name, flag: item.flag, change: item.change_pct,
+                             marketCap: item.market_cap, size: size)
+                }
+                .frame(width: ShareCard.width - 40, height: 400)
+                HeatLegend()
+            }
+        }
+    }
+}
+
+struct SectorHeatmapShareCard: View {
+    let response: SectorHeatmapResponse
+
+    var body: some View {
+        ShareCardFrame(
+            title: String(localized: "Market Heatmap by Sector"),
+            subtitle: String(localized: "\(Money.short(response.total_market_cap)) total market cap · \(SharePeriod.phrase(response.period))")
+        ) {
+            VStack(spacing: 8) {
+                TreemapView(weights: response.items.map(\.market_cap)) { i, size in
+                    let item = response.items[i]
+                    HeatTile(title: item.name, flag: item.icon, change: item.change_pct,
                              marketCap: item.market_cap, size: size)
                 }
                 .frame(width: ShareCard.width - 40, height: 400)
@@ -223,8 +244,8 @@ struct CompanyHeatmapShareCard: View {
 
     var body: some View {
         ShareCardFrame(
-            title: "\(countryName) — Largest Companies",
-            subtitle: "Top \(items.count) of \(Money.short(response.country_market_cap)) total · \(SharePeriod.phrase(response.period))"
+            title: String(localized: "\(countryName) — Largest Companies"),
+            subtitle: String(localized: "Top \(items.count) of \(Money.short(response.country_market_cap)) total · \(SharePeriod.phrase(response.period))")
         ) {
             VStack(spacing: 8) {
                 TreemapView(weights: items.map(\.market_cap)) { i, size in
@@ -252,13 +273,13 @@ struct PerformanceShareCard: View {
         return first.change_pct < last.change_pct
     }
     private var title: String {
-        if isPeak { return worstFirst ? "Furthest Below Their Peak" : "Closest to Their Peak" }
-        return worstFirst ? "Biggest Losers" : "Top Performers"
+        if isPeak { return worstFirst ? String(localized: "Furthest Below Their Peak") : String(localized: "Closest to Their Peak") }
+        return worstFirst ? String(localized: "Biggest Losers") : String(localized: "Top Performers")
     }
     private var items: [PerformanceItem] { Array(response.items.prefix(limit)) }
 
     var body: some View {
-        ShareCardFrame(title: title, subtitle: "\(SharePeriod.phrase(response.period)) · market-cap change") {
+        ShareCardFrame(title: title, subtitle: String(localized: "\(SharePeriod.phrase(response.period)) · market-cap change")) {
             ShareRankList(count: items.count) { i in
                 let item = items[i]
                 ShareRankRow(rank: i + 1, name: item.company.name, detail: item.detailText(isPeak: isPeak),
@@ -278,8 +299,8 @@ struct TimeMachineShareCard: View {
 
     var body: some View {
         ShareCardFrame(
-            title: "Biggest in \(Money.monthYear(fromISO: response.date))",
-            subtitle: "The largest companies by market cap — and where they stand today"
+            title: String(localized: "Biggest in \(Money.monthYear(fromISO: response.date))"),
+            subtitle: String(localized: "The largest companies by market cap — and where they stand today")
         ) {
             ShareRankList(count: items.count) { i in
                 let item = items[i]
@@ -329,8 +350,8 @@ struct CompanyShareCard: View {
                 }
 
                 HStack(spacing: 10) {
-                    stat("Market Cap", company.market_cap_display ?? "—")
-                    stat("World Rank", company.market_cap_rank.map { "#\($0)" } ?? "—")
+                    stat(String(localized: "Market Cap"), company.market_cap_display ?? "—")
+                    stat(String(localized: "World Rank"), company.market_cap_rank.map { "#\($0)" } ?? "—")
                 }
 
                 if !metrics.isEmpty {

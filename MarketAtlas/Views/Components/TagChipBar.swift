@@ -6,11 +6,11 @@ struct TagChipBar: View {
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 7) {
-                chip(label: "🏷️ All", selected: vm.selectedTag == nil) {
+                chip(label: "🏷️ \(String(localized: "All"))", selected: vm.selectedTag == nil) {
                     vm.selectedTag = nil
                 }
                 ForEach(vm.availableTags, id: \.self) { tag in
-                    chip(label: tag, selected: vm.selectedTag == tag) {
+                    chip(label: DisplayName.tag(tag), selected: vm.selectedTag == tag) {
                         vm.selectedTag = vm.selectedTag == tag ? nil : tag
                     }
                 }

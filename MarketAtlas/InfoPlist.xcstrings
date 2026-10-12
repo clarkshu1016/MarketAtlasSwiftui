@@ -1,0 +1,64 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "NSMicrophoneUsageDescription": {
+      "comment": "Microphone permission prompt",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MarketAtlas uses the microphone to let you ask questions by voice."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MarketAtlasは、音声で質問できるようにマイクを使用します。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MarketAtlas 使用麦克风，让您可以用语音提问。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MarketAtlas 使用麥克風，讓您可以用語音提問。"
+          }
+        }
+      }
+    },
+    "NSSpeechRecognitionUsageDescription": {
+      "comment": "Speech recognition permission prompt",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MarketAtlas uses speech recognition to convert your voice to text."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MarketAtlasは、音声をテキストに変換するために音声認識を使用します。"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MarketAtlas 使用语音识别将您的语音转换为文字。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MarketAtlas 使用語音辨識將您的語音轉換為文字。"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

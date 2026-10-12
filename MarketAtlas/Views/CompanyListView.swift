@@ -6,7 +6,7 @@ struct CompanyListView: View {
     @State private var showScreener = false
     @State private var exploreDestination: ExploreDestination?
 
-    private enum ExploreDestination: Hashable { case heatmap, performance, timeMachine }
+    private enum ExploreDestination: Hashable { case heatmap, sectors, performance, timeMachine }
 
     var body: some View {
         ScrollViewReader { proxy in
@@ -65,7 +65,7 @@ struct CompanyListView: View {
                             ContentUnavailableView {
                                 Label("Couldn't Load Companies", systemImage: "wifi.exclamationmark")
                             } description: {
-                                Text(vm.errorMessage ?? "Check your connection and try again.")
+                                Text(vm.errorMessage ?? String(localized: "Check your connection and try again."))
                             } actions: {
                                 Button("Try Again") { Task { await vm.refresh() } }
                                     .buttonStyle(.borderedProminent)
@@ -135,6 +135,7 @@ struct CompanyListView: View {
         .navigationDestination(item: $exploreDestination) { destination in
             switch destination {
             case .heatmap:     HeatmapView()
+            case .sectors:     SectorHeatmapView()
             case .performance: PerformanceView()
             case .timeMachine: TimeMachineView()
             }
@@ -144,6 +145,9 @@ struct CompanyListView: View {
                 Menu {
                     Button { exploreDestination = .heatmap } label: {
                         Label("Heatmap", systemImage: "square.grid.3x3.fill")
+                    }
+                    Button { exploreDestination = .sectors } label: {
+                        Label("Sector Heatmap", systemImage: "square.grid.2x2.fill")
                     }
                     Button { exploreDestination = .performance } label: {
                         Label("Performance", systemImage: "chart.line.uptrend.xyaxis")
@@ -170,10 +174,10 @@ struct CompanyListView: View {
 
     private func countLabel(count: Int) -> String {
         let regionLabel = vm.selectedCountry
-            .flatMap { $0.split(separator: " ", maxSplits: 1).last.map(String.init) }
+            .map { DisplayName.countryName($0) }
             .map { " · \($0)" } ?? ""
-        let tagLabel = vm.selectedTag.map { " · \($0)" } ?? ""
-        return "\(count) \(count == 1 ? "company" : "companies")\(regionLabel)\(tagLabel) · sorted by \(vm.selectedMetric.label)"
+        let tagLabel = vm.selectedTag.map { " · \(DisplayName.tag($0))" } ?? ""
+        return String(localized: "\(count) companies\(regionLabel)\(tagLabel) · sorted by \(vm.selectedMetric.label)")
     }
 }
 

@@ -6,11 +6,11 @@ struct CountryChipBar: View {
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 7) {
-                chip(label: "\u{1F30D} All", selected: vm.selectedCountry == nil) {
+                chip(label: "\u{1F30D} \(String(localized: "All"))", selected: vm.selectedCountry == nil) {
                     vm.selectedCountry = nil
                 }
                 ForEach(vm.availableCountries, id: \.self) { country in
-                    chip(label: country, selected: vm.selectedCountry == country) {
+                    chip(label: DisplayName.country(country), selected: vm.selectedCountry == country) {
                         vm.selectedCountry = vm.selectedCountry == country ? nil : country
                     }
                 }

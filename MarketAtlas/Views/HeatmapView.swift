@@ -53,7 +53,7 @@ struct HeatmapView: View {
                     HeatLegend()
                         .listRowBackground(Color.clear)
                 } footer: {
-                    if let note = response.note { Text(note) }
+                    if let note = response.note { Text(DisplayName.note(note)) }
                 }
 
                 // Every country, including the ones whose tiles are too small to read.
@@ -118,10 +118,7 @@ struct CountryHeatmapView: View {
     @State private var isLoading = false
     @State private var errorMessage: String?
 
-    private var displayName: String {
-        let parts = country.split(separator: " ", maxSplits: 1)
-        return parts.count > 1 ? "\(parts[0]) \(parts[1])" : country
-    }
+    private var displayName: String { DisplayName.country(country) }
 
     var body: some View {
         List {
@@ -146,7 +143,7 @@ struct CountryHeatmapView: View {
                 } header: {
                     Text("Largest \(response.items.count) companies · \(Money.short(response.country_market_cap)) total")
                 } footer: {
-                    if let note = response.note { Text(note) }
+                    if let note = response.note { Text(DisplayName.note(note)) }
                 }
 
                 Section("Companies") {
@@ -178,7 +175,7 @@ struct CountryHeatmapView: View {
             CompanyDetailView(company: company)
         }
         .shareCard(title: "\(displayName) heatmap", key: response.map { "\($0.country)|\($0.period)|\($0.items.count)" }) {
-            if let response { CompanyHeatmapShareCard(countryName: country.split(separator: " ", maxSplits: 1).dropFirst().first.map(String.init) ?? country, response: response) }
+            if let response { CompanyHeatmapShareCard(countryName: DisplayName.countryName(country), response: response) }
         }
         .task { await load() }
         .refreshable { await load() }
@@ -367,7 +364,7 @@ private struct CountryRow: View {
     }
 }
 
-private struct CompanyHeatRow: View {
+struct CompanyHeatRow: View {
     let rank: Int
     let item: CompanyHeatItem
 

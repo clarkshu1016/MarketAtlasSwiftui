@@ -62,7 +62,7 @@ struct TimeMachineView: View {
             } header: {
                 Text("Largest on \(date.formatted(date: .long, time: .omitted))")
             } footer: {
-                if let note = response.note { Text(note) }
+                if let note = response.note { Text(DisplayName.note(note)) }
             }
         } else if isLoading {
             ProgressView().frame(maxWidth: .infinity).listRowBackground(Color.clear)
