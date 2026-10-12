@@ -87,6 +87,10 @@ struct PerformanceView: View {
                 .accessibilityLabel("Company size filter, \(size.label)")
             }
         }
+        .shareCard(title: "Performance leaderboard",
+                   key: response.map { "\($0.period)|\($0.items.first?.id ?? "")|\($0.items.count)|\($0.items.last?.id ?? "")" }) {
+            if let response { PerformanceShareCard(response: response) }
+        }
         .onChange(of: period) { _, new in worstFirst = (new == .peak) }   // "biggest drops" is the interesting default
         .task(id: key) { await load() }
         .refreshable { await load() }
@@ -149,18 +153,8 @@ private struct PerformanceRow: View {
 
     private var color: Color { item.change_pct > 0 ? .green : (item.change_pct < 0 ? .red : .secondary) }
 
-    private var changeText: String {
-        let v = item.change_pct
-        // Huge gains read better as a multiple ("×36") than "+3,584%".
-        if v >= 1000 { return String(format: "×%.0f", v / 100 + 1) }
-        return String(format: "%+.1f%%", v)
-    }
-
-    private var detail: String {
-        let reference = Money.short(item.reference_value)
-        let date = Money.monthYear(fromISO: item.reference_date)
-        return isPeak ? "Peak \(reference) · \(date)" : "\(reference) → \(Money.short(item.end_value))"
-    }
+    private var changeText: String { item.changeText }
+    private var detail: String { item.detailText(isPeak: isPeak) }
 
     var body: some View {
         HStack(spacing: 12) {

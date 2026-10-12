@@ -38,6 +38,9 @@ struct TimeMachineView: View {
         .listStyle(.insetGrouped)
         .navigationTitle("Time Machine")
         .navigationBarTitleDisplayMode(.inline)
+        .shareCard(title: "Time Machine", key: response.map { "\($0.date)|\($0.items.count)" }) {
+            if let response { TimeMachineShareCard(response: response) }
+        }
         .task(id: date) {
             try? await Task.sleep(for: .milliseconds(350))   // debounce the date wheel
             guard !Task.isCancelled else { return }
@@ -106,17 +109,8 @@ private struct TimeMachineRow: View {
         return m >= 1 ? .green : .red
     }
 
-    private var multipleText: String {
-        guard let m = item.multiple else { return "—" }
-        return m >= 10 ? String(format: "×%.0f", m) : String(format: "×%.2f", m)
-    }
-
-    private var todayText: String {
-        var parts: [String] = []
-        if let rank = item.rank_now { parts.append("#\(rank)") }
-        if let now = item.value_now { parts.append(Money.short(now)) }
-        return parts.isEmpty ? "Not ranked now" : "Now " + parts.joined(separator: " · ")
-    }
+    private var multipleText: String { item.multipleText }
+    private var todayText: String { item.todayText }
 
     var body: some View {
         HStack(spacing: 12) {

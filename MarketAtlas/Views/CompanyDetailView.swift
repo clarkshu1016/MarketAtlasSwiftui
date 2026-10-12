@@ -276,6 +276,7 @@ struct CompanyDetailView: View {
                 .accessibilityLabel(favVM.isFavorite(ticker) ? "Remove from favourites" : "Add to favourites")
             }
         }
+        .shareCard(title: company.name, key: company.id) { CompanyShareCard(company: company) }
         .sheet(isPresented: $showSignInPrompt) {
             SignInSheet()
         }

@@ -85,6 +85,9 @@ struct HeatmapView: View {
         .navigationDestination(item: $selectedCountry) { country in
             CountryHeatmapView(country: country, period: period)
         }
+        .shareCard(title: "World market heatmap", key: response.map { "\($0.period)|\($0.items.count)|\($0.world_market_cap)" }) {
+            if let response { CountryHeatmapShareCard(response: response) }
+        }
         .task(id: period) { await load() }
         .refreshable { await load() }
     }
@@ -174,6 +177,9 @@ struct CountryHeatmapView: View {
         .navigationDestination(item: $selectedCompany) { company in
             CompanyDetailView(company: company)
         }
+        .shareCard(title: "\(displayName) heatmap", key: response.map { "\($0.country)|\($0.period)|\($0.items.count)" }) {
+            if let response { CompanyHeatmapShareCard(countryName: country.split(separator: " ", maxSplits: 1).dropFirst().first.map(String.init) ?? country, response: response) }
+        }
         .task { await load() }
         .refreshable { await load() }
     }
@@ -195,7 +201,7 @@ struct CountryHeatmapView: View {
 
 // MARK: - Pieces
 
-private struct HeatTile: View {
+struct HeatTile: View {
     let title: String
     /// A short, human-readable code (e.g. "NVDA") usable on small tiles. Exchange codes like
     /// "688825.SS" or "9984.T" mean nothing to users, so those are never passed here.
@@ -317,7 +323,7 @@ private struct HeatTile: View {
     }
 }
 
-private struct HeatLegend: View {
+struct HeatLegend: View {
     var body: some View {
         HStack(spacing: 8) {
             Text("−\(Int(HeatColor.range))%").font(.caption2).foregroundStyle(.secondary)

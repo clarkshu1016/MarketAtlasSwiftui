@@ -104,3 +104,33 @@ extension Company {
         return short.count >= 2 ? short : name
     }
 }
+
+
+// MARK: - Display helpers shared by the list rows and the share cards
+
+extension PerformanceItem {
+    /// Huge gains read better as a multiple ("×36") than "+3,584%".
+    var changeText: String {
+        change_pct >= 1000 ? String(format: "×%.0f", change_pct / 100 + 1) : String(format: "%+.1f%%", change_pct)
+    }
+
+    func detailText(isPeak: Bool) -> String {
+        let reference = Money.short(reference_value)
+        let date = Money.monthYear(fromISO: reference_date)
+        return isPeak ? "Peak \(reference) · \(date)" : "\(reference) → \(Money.short(end_value))"
+    }
+}
+
+extension TimeMachineItem {
+    var multipleText: String {
+        guard let m = multiple else { return "—" }
+        return m >= 10 ? String(format: "×%.0f", m) : String(format: "×%.2f", m)
+    }
+
+    var todayText: String {
+        var parts: [String] = []
+        if let rank = rank_now { parts.append("#\(rank)") }
+        if let now = value_now { parts.append(Money.short(now)) }
+        return parts.isEmpty ? "Not ranked now" : "Now " + parts.joined(separator: " · ")
+    }
+}
