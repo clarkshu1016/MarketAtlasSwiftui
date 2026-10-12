@@ -24,19 +24,19 @@ struct ContentView: View {
             }
             .tabItem { Label("Markets", systemImage: "chart.bar.fill") }
 
-            // ── Favourites ───────────────────────────────────────
-            NavigationStack {
-                FavoritesView()
-            }
-            .tabItem { Label("Favourites", systemImage: "star.fill") }
+            // ── Heatmap ──────────────────────────────────────────
+            HeatmapTabView()
+                .tabItem { Label("Heatmap", systemImage: "square.grid.3x3.fill") }
 
             // ── Chat (center) ─────────────────────────────────────
             ChatView()
                 .tabItem { Label("Chat", systemImage: "sparkles") }
 
-            // ── Heatmap ──────────────────────────────────────────
-            HeatmapTabView()
-                .tabItem { Label("Heatmap", systemImage: "square.grid.3x3.fill") }
+            // ── Favourites ───────────────────────────────────────
+            NavigationStack {
+                FavoritesView()
+            }
+            .tabItem { Label("Favourites", systemImage: "star.fill") }
 
             // ── Profile (Settings lives behind the gear in its toolbar) ──
             NavigationStack {
