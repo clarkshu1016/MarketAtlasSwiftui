@@ -68,9 +68,9 @@ struct MarketRaceView: View {
             Spacer(minLength: 0)
 
             if let response, frameCount > 1 {
-                TimelineView(.animation(minimumInterval: 1.0 / 30, paused: !isPlaying)) { context in
-                    let f = frame(at: context.date)
-                    VStack(spacing: 12) {
+                VStack(spacing: 12) {
+                    TimelineView(.animation(minimumInterval: 1.0 / 30, paused: !isPlaying)) { context in
+                        let f = frame(at: context.date)
                         RaceChart(response: response, frame: f, bars: Self.visibleBars, rowHeight: Self.rowHeight,
                                   title: query.metric.title, annual: isAnnual, colors: colors)
                             .padding(14)
@@ -78,11 +78,11 @@ struct MarketRaceView: View {
                                 RoundedRectangle(cornerRadius: 22, style: .continuous)
                                     .fill(Color(UIColor.secondarySystemGroupedBackground))
                             )
-                        controls(frame: f)
+                            .onChange(of: f >= lastFrame && isPlaying) { _, finished in
+                                if finished { pause(at: lastFrame) }
+                            }
                     }
-                    .onChange(of: f >= lastFrame && isPlaying) { _, finished in
-                        if finished { pause(at: lastFrame) }
-                    }
+                    controls
                 }
                 .padding(.horizontal, 16)
                 .opacity(isLoading ? 0.35 : 1)
@@ -171,32 +171,38 @@ struct MarketRaceView: View {
 
     // MARK: Pieces
 
-    private func controls(frame f: Double) -> some View {
+    /// Only the slider is driven by the timeline. The play button and the speed menu stay outside it:
+    /// a menu inside a view that re-renders every frame is dismissed (or can't be tapped) while playing.
+    private var controls: some View {
         HStack(spacing: 14) {
+            let finished = !isPlaying && baseFrame >= lastFrame
             Button {
-                if isPlaying { pause(at: f) } else { play(from: f >= lastFrame ? 0 : f) }
+                if isPlaying { pause(at: frame(at: .now)) } else { play(from: finished ? 0 : baseFrame) }
             } label: {
-                Image(systemName: isPlaying ? "pause.fill" : (f >= lastFrame ? "arrow.counterclockwise" : "play.fill"))
+                Image(systemName: isPlaying ? "pause.fill" : (finished ? "arrow.counterclockwise" : "play.fill"))
                     .font(.title3)
                     .frame(width: 36, height: 36)
             }
-            .accessibilityLabel(isPlaying ? Text("Pause") : (f >= lastFrame ? Text("Replay") : Text("Play")))
+            .accessibilityLabel(isPlaying ? Text("Pause") : (finished ? Text("Replay") : Text("Play")))
 
-            VStack(spacing: 2) {
-                Slider(value: Binding(
-                    get: { f },
-                    set: { newValue in
-                        baseFrame = newValue
-                        if isPlaying { playStart = .now }
+            TimelineView(.animation(minimumInterval: 1.0 / 30, paused: !isPlaying)) { context in
+                let f = frame(at: context.date)
+                VStack(spacing: 2) {
+                    Slider(value: Binding(
+                        get: { f },
+                        set: { newValue in
+                            baseFrame = newValue
+                            if isPlaying { playStart = .now }
+                        }
+                    ), in: 0...max(lastFrame, 1))
+                    HStack {
+                        Text(verbatim: response?.dates.first.map { String($0.prefix(4)) } ?? "")
+                        Spacer()
+                        Text(verbatim: response?.dates.last.map { String($0.prefix(4)) } ?? "")
                     }
-                ), in: 0...max(lastFrame, 1))
-                HStack {
-                    Text(verbatim: response?.dates.first.map { String($0.prefix(4)) } ?? "")
-                    Spacer()
-                    Text(verbatim: response?.dates.last.map { String($0.prefix(4)) } ?? "")
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
                 }
-                .font(.caption2)
-                .foregroundStyle(.secondary)
             }
 
             Menu {
