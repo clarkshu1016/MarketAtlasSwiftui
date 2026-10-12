@@ -114,9 +114,9 @@ struct CompareView: View {
                 let ranked = pool.filter { $0.slug != nil }.sorted { ($0.market_cap ?? 0) > ($1.market_cap ?? 0) }
                 if let initial {
                     // Prefer the full record from the list: companies reached from a heatmap carry fewer fields.
-                    let first = pool.first { $0.id == initial.id } ?? initial
-                    let partner = ranked.first { $0.id != first.id }
-                    selected = [first] + (partner.map { [$0] } ?? [])
+                    // Only this company: the user picks what to compare it with, so the sheet opens straight away.
+                    selected = [pool.first { $0.id == initial.id } ?? initial]
+                    showPicker = true
                 } else {
                     selected = Array(ranked.prefix(2))
                 }
