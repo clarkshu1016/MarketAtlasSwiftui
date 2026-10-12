@@ -239,7 +239,7 @@ struct PaywallView: View {
                     if entitlements.isPurchasing {
                         ProgressView().tint(.white)
                     } else {
-                        Text(simulatesPurchase ? "\(buttonTitle) · DEBUG" : buttonTitle).font(.system(size: 17, weight: .bold))
+                        Text(buttonTitle).font(.system(size: 17, weight: .bold))
                     }
                 }
                 .frame(maxWidth: .infinity)
