@@ -508,24 +508,24 @@
       }
     },
     "+%lld%%": {},
-    "11,000+ companies in 81 markets": {
+    "11,000+ companies in 81 countries & regions": {
       "localizations": {
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "81市場・11,000社以上の企業"
+            "value": "81の国と地域・11,000社以上の企業"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "覆盖 81 个市场的 11,000 多家公司"
+            "value": "覆盖 81 个国家和地区的 11,000 多家公司"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "涵蓋 81 個市場的 11,000 多家公司"
+            "value": "涵蓋 81 個國家和地區的 11,000 多家公司"
           }
         }
       }

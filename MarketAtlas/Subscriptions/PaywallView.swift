@@ -108,7 +108,7 @@ struct PaywallView: View {
 
     private var features: some View {
         VStack(alignment: .leading, spacing: 12) {
-            feature("globe.europe.africa.fill", "11,000+ companies in 81 markets")
+            feature("globe.europe.africa.fill", "11,000+ companies in 81 countries & regions")
             feature("square.grid.3x3.fill", "Heatmaps by country/region and sector")
             feature("flag.checkered", "Ranking Race and Time Machine")
             feature("sparkles", "AI chat and AI screener")
