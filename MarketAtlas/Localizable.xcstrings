@@ -6255,6 +6255,28 @@
         }
       }
     },
+    "one-time": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "買い切り"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一次性"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一次性"
+          }
+        }
+      }
+    },
     "unchanged": {
       "localizations": {
         "ja": {

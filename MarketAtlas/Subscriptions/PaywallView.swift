@@ -180,7 +180,13 @@ struct PaywallView: View {
                 Spacer(minLength: 8)
 
                 VStack(alignment: .trailing, spacing: 2) {
-                    Text(option.price).font(.system(size: 16, weight: .bold, design: .rounded))
+                    // Every card states what the price covers: "$59.99 / year", "$9.99 / month", "$199.99 one-time".
+                    (Text(option.price).font(.system(size: 16, weight: .bold, design: .rounded))
+                        + Text(option.plan == .lifetime ? " \(String(localized: "one-time"))" : " / \(option.plan.periodText)")
+                            .font(.system(size: 12, weight: .regular))
+                            .foregroundColor(.secondary))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
                     if let perMonth = option.perMonth {
                         Text("\(perMonth) / month").font(.caption).foregroundStyle(.secondary)
                     }
