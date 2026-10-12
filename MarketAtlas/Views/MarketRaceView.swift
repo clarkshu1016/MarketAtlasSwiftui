@@ -40,6 +40,7 @@ struct MarketRaceView: View {
     @State private var query = Query(metric: .marketCap, country: nil, sector: nil)
     @State private var showCountryPicker = false
     @State private var response: RaceResponse?
+    @State private var colors: [String: Int] = [:]
     @State private var isLoading = false
     @State private var errorMessage: String?
 
@@ -71,7 +72,12 @@ struct MarketRaceView: View {
                     let f = frame(at: context.date)
                     VStack(spacing: 12) {
                         RaceChart(response: response, frame: f, bars: Self.visibleBars, rowHeight: Self.rowHeight,
-                                  title: query.metric.title, annual: isAnnual)
+                                  title: query.metric.title, annual: isAnnual, colors: colors)
+                            .padding(14)
+                            .background(
+                                RoundedRectangle(cornerRadius: 22, style: .continuous)
+                                    .fill(Color(UIColor.secondarySystemGroupedBackground))
+                            )
                         controls(frame: f)
                     }
                     .onChange(of: f >= lastFrame && isPlaying) { _, finished in
@@ -233,6 +239,7 @@ struct MarketRaceView: View {
             let loaded = try await APIService.shared.fetchRace(metric: query.metric.rawValue, start: Self.startYear,
                                                                country: query.country, sector: query.sector)
             response = loaded
+            colors = RacePalette.assign(for: loaded, visible: Self.visibleBars)
             play(from: 0)
         } catch is CancellationError {
             return
@@ -301,6 +308,7 @@ private struct RaceChart: View {
     let rowHeight: CGFloat
     let title: String
     let annual: Bool
+    let colors: [String: Int]
 
     private struct Entry: Identifiable {
         let series: RaceSeries
@@ -347,6 +355,7 @@ private struct RaceChart: View {
                 Spacer()
                 Text(dateLabel)
                     .font(.system(size: 30, weight: .heavy, design: .rounded))
+                    .foregroundStyle(.primary)
                     .monospacedDigit()
             }
 
@@ -354,10 +363,11 @@ private struct RaceChart: View {
                 // Every series stays in the tree so a bar slides in from below instead of popping in.
                 ForEach(all.prefix(bars + 4)) { entry in
                     let rank = rankOf[entry.id] ?? bars + 1
-                    RaceBar(series: entry.series, value: entry.value, maxValue: maxValue, rowHeight: rowHeight)
+                    RaceBar(series: entry.series, value: entry.value, maxValue: maxValue, rowHeight: rowHeight,
+                            palette: RacePalette.pair(colors[entry.id] ?? 0))
                         .offset(y: CGFloat(rank) * rowHeight)
                         .opacity(rank < bars ? 1 : 0)
-                        .animation(.easeInOut(duration: 0.35), value: rank)
+                        .animation(.easeInOut(duration: 0.25), value: rank)
                 }
             }
             .frame(maxWidth: .infinity, minHeight: CGFloat(bars) * rowHeight, maxHeight: CGFloat(bars) * rowHeight, alignment: .topLeading)
@@ -373,32 +383,32 @@ private struct RaceBar: View {
     let value: Double
     let maxValue: Double
     let rowHeight: CGFloat
+    let palette: (Color, Color)
 
     private let nameWidth: CGFloat = 92
-
-    /// A stable colour per company (Swift's `hashValue` changes every launch).
-    private var color: Color {
-        let seed = (series.ticker ?? series.name).unicodeScalars.reduce(0) { ($0 &* 31 &+ Int($1.value)) % 360 }
-        return Color(hue: Double(seed) / 360, saturation: 0.55, brightness: 0.85)
-    }
 
     var body: some View {
         HStack(spacing: 6) {
             RaceLogo(urlString: series.logo_url, label: series.ticker ?? series.name, size: 24)
             Text(Company.shortName(series.name))
                 .font(.system(size: 12, weight: .semibold))
+                .foregroundStyle(.primary)
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
                 .frame(width: nameWidth, alignment: .leading)
 
             GeometryReader { geo in
-                let valueText = Money.short(value)
                 let barWidth = max(4, (geo.size.width - 64) * CGFloat(value / maxValue))
-                HStack(spacing: 4) {
-                    RoundedRectangle(cornerRadius: 5, style: .continuous)
-                        .fill(color.gradient)
+                HStack(spacing: 5) {
+                    RoundedRectangle(cornerRadius: 6, style: .continuous)
+                        .fill(LinearGradient(colors: [palette.0, palette.1], startPoint: .leading, endPoint: .trailing))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 6, style: .continuous)
+                                .strokeBorder(.white.opacity(0.35), lineWidth: 0.8)
+                        )
+                        .shadow(color: palette.1.opacity(0.28), radius: 4, y: 2)
                         .frame(width: barWidth)
-                    Text(valueText)
+                    Text(Money.short(value))
                         .font(.system(size: 11, weight: .semibold, design: .rounded))
                         .foregroundStyle(.secondary)
                         .lineLimit(1)
@@ -409,6 +419,39 @@ private struct RaceBar: View {
         }
         .frame(height: rowHeight - 6)
         .padding(.vertical, 3)
+    }
+}
+
+/// A curated set of vivid gradients, assigned so the bars on screen at the same time never share one.
+enum RacePalette {
+    /// Twelve clearly different hues (blue, violet, magenta, pink, red, orange, yellow, lime, green, teal, cyan,
+    /// indigo); each bar fades from a light to a deeper shade of its hue.
+    private static let hues: [Double] = [0.60, 0.74, 0.84, 0.93, 0.995, 0.07, 0.14, 0.24, 0.38, 0.47, 0.53, 0.67]
+    private static let pairs: [(Color, Color)] = hues.map { h in
+        (Color(hue: h, saturation: 0.50, brightness: 1.0), Color(hue: (h + 0.03).truncatingRemainder(dividingBy: 1), saturation: 0.78, brightness: 0.95))
+    }
+
+    static func pair(_ index: Int) -> (Color, Color) { pairs[((index % pairs.count) + pairs.count) % pairs.count] }
+
+    /// Walks the frames in order; a company gets the first colour not used by anyone currently in the top ten.
+    static func assign(for response: RaceResponse, visible: Int) -> [String: Int] {
+        var assigned: [String: Int] = [:]
+        let frames = response.dates.count
+        for i in 0..<frames {
+            let top = response.series
+                .map { ($0, $0.values[i] ?? 0) }
+                .sorted { $0.1 > $1.1 }
+                .prefix(visible)
+                .filter { $0.1 > 0 }
+                .map(\.0)
+            var used = Set(top.compactMap { assigned[$0.id] })
+            for s in top where assigned[s.id] == nil {
+                let free = (0..<pairs.count).first { !used.contains($0) } ?? abs(s.id.hashValue) % pairs.count
+                assigned[s.id] = free
+                used.insert(free)
+            }
+        }
+        return assigned
     }
 }
 
@@ -432,13 +475,14 @@ private struct RaceLogo: View {
             }
         }
         .frame(width: size, height: size)
-        .background(Color(UIColor.secondarySystemBackground))
+        .background(Color.white)
         .clipShape(RoundedRectangle(cornerRadius: size * 0.25, style: .continuous))
+        .overlay(RoundedRectangle(cornerRadius: size * 0.25, style: .continuous).strokeBorder(Color.primary.opacity(0.08), lineWidth: 0.5))
     }
 
     private var initials: some View {
         Text(String(label.prefix(2)).uppercased())
             .font(.system(size: size * 0.38, weight: .bold, design: .rounded))
-            .foregroundStyle(.secondary)
+            .foregroundStyle(Color(white: 0.35))
     }
 }
