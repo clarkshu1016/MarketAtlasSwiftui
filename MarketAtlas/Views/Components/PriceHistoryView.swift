@@ -270,6 +270,7 @@ struct PriceHistoryView: View {
                             ForEach(filteredPrice) { pt in
                                 AreaMark(x: .value("Date", pt.date), y: .value("Value", pt.price))
                                     .foregroundStyle(LinearGradient(colors: [lineColor.opacity(0.3), .clear], startPoint: .top, endPoint: .bottom))
+                                    .interpolationMethod(.catmullRom)
                                 LineMark(x: .value("Date", pt.date), y: .value("Value", pt.price))
                                     .foregroundStyle(lineColor)
                                     .lineStyle(StrokeStyle(lineWidth: 1.8))
@@ -296,6 +297,7 @@ struct PriceHistoryView: View {
                             ForEach(filteredMcap) { pt in
                                 AreaMark(x: .value("Date", pt.date), y: .value("Value", pt.value))
                                     .foregroundStyle(LinearGradient(colors: [lineColor.opacity(0.3), .clear], startPoint: .top, endPoint: .bottom))
+                                    .interpolationMethod(.catmullRom)
                                 LineMark(x: .value("Date", pt.date), y: .value("Value", pt.value))
                                     .foregroundStyle(lineColor)
                                     .lineStyle(StrokeStyle(lineWidth: 1.8))
