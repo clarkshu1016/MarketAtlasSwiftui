@@ -47,7 +47,7 @@ struct MarketRaceView: View {
     // Playback: `frame` is a fractional frame index. While playing it advances from `baseFrame`.
     @State private var baseFrame: Double = 0
     @State private var playStart: Date?
-    @State private var speed: Double = 2
+    @State private var speed: Double = 1
 
     private var frameCount: Int { response?.dates.count ?? 0 }
     private var lastFrame: Double { Double(max(frameCount - 1, 0)) }
