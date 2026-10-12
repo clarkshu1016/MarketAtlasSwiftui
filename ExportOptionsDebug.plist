@@ -12,8 +12,8 @@
     <string>AY6Y6KCP7Y</string>
     <key>provisioningProfiles</key>
     <dict>
-        <key>com.appdevgpt.marketatlas1</key>
-        <string>MarketAtlas AdHoc</string>
+        <key>com.appdevgpt.marketatlas1.debug</key>
+        <string>MarketAtlas Dev AdHoc</string>
     </dict>
 </dict>
 </plist>
