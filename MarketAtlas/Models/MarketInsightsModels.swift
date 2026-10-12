@@ -147,6 +147,28 @@ enum Sector {
     }
 }
 
+// MARK: - /api/market/race
+
+struct RaceResponse: Codable {
+    let start: Int
+    /// Months, "YYYY-MM".
+    let dates: [String]
+    let series: [RaceSeries]
+    let note: String?
+}
+
+struct RaceSeries: Codable, Identifiable {
+    let name: String
+    let ticker: String?
+    let slug: String?
+    let country: String?
+    let logo_url: String?
+    /// Market cap in USD per month (`dates` order); nil = no data that month.
+    let values: [Double?]
+
+    var id: String { slug ?? name }
+}
+
 // MARK: - Display helpers for heatmap tiles
 
 extension Company {
@@ -159,7 +181,9 @@ extension Company {
 
     /// Name without trailing corporate boilerplate ("KIOXIA Holdings Corporation" → "KIOXIA"),
     /// so it fits more often on a tile.
-    var tileName: String {
+    var tileName: String { Company.shortName(name) }
+
+    static func shortName(_ name: String) -> String {
         let boilerplate = #"(?i)(,?\s+(co\.?,?\s*ltd\.?|corporation|corp\.?|incorporated|inc\.?|holdings?|group|limited|ltd\.?|plc|s\.a\.|n\.v\.|ag|se|company|co\.?))+\s*$"#
         let short = name.replacingOccurrences(of: boilerplate, with: "", options: .regularExpression)
             .trimmingCharacters(in: CharacterSet(charactersIn: " ,."))

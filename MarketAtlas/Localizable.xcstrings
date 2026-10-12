@@ -2445,6 +2445,28 @@
         }
       }
     },
+    "Market Cap Race": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "時価総額レース"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "市值赛跑"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "市值賽跑"
+          }
+        }
+      }
+    },
     "Market Heatmap": {
       "localizations": {
         "ja": {
@@ -3415,6 +3437,28 @@
         }
       }
     },
+    "Pause": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一時停止"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "暂停"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "暫停"
+          }
+        }
+      }
+    },
     "Peak": {
       "localizations": {
         "ja": {
@@ -3521,6 +3565,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "將永久刪除您的帳號及所有相關資料，此操作無法復原。"
+          }
+        }
+      }
+    },
+    "Play": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "再生"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "播放"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "播放"
           }
         }
       }
@@ -3741,6 +3807,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "取消收藏"
+          }
+        }
+      }
+    },
+    "Replay": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "もう一度再生"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重播"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重播"
           }
         }
       }
@@ -4401,6 +4489,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "語音辨識目前無法使用，請檢查網路連線後再試。"
+          }
+        }
+      }
+    },
+    "Speed": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "速度"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "速度"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "速度"
           }
         }
       }

@@ -6,7 +6,7 @@ struct CompanyListView: View {
     @State private var showScreener = false
     @State private var exploreDestination: ExploreDestination?
 
-    private enum ExploreDestination: Hashable { case performance, timeMachine }
+    private enum ExploreDestination: Hashable { case performance, timeMachine, race }
 
     var body: some View {
         ScrollViewReader { proxy in
@@ -136,6 +136,7 @@ struct CompanyListView: View {
             switch destination {
             case .performance: PerformanceView()
             case .timeMachine: TimeMachineView()
+            case .race:        MarketRaceView()
             }
         }
         .toolbar {
@@ -146,6 +147,9 @@ struct CompanyListView: View {
                     }
                     Button { exploreDestination = .timeMachine } label: {
                         Label("Time Machine", systemImage: "clock.arrow.circlepath")
+                    }
+                    Button { exploreDestination = .race } label: {
+                        Label("Market Cap Race", systemImage: "flag.checkered")
                     }
                 } label: {
                     Image(systemName: "safari")
