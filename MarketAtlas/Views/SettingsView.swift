@@ -12,6 +12,7 @@ struct SettingsView: View {
     #endif
     #if DEBUG
     @AppStorage(ServerEnvironment.storageKey) private var server: String = ServerEnvironment.default.rawValue
+    @AppStorage(AIAvailability.debugStorefrontKey) private var debugStorefront: String = ""
     #endif
 
     var body: some View {
@@ -28,6 +29,13 @@ struct SettingsView: View {
                 }
                 LabeledContent("URL", value: ServerEnvironment.current.url.absoluteString)
                     .font(.footnote)
+                Picker("App Store country", selection: $debugStorefront) {
+                    Text("Real (from the App Store)").tag("")
+                    Text("China mainland (CHN)").tag("CHN")
+                    Text("Japan (JPN)").tag("JPN")
+                    Text("United States (USA)").tag("USA")
+                }
+                .onChange(of: debugStorefront) { _, _ in Task { await ai.refresh() } }
             } header: {
                 Text("Developer")
             } footer: {

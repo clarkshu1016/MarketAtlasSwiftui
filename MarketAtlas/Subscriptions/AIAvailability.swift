@@ -31,6 +31,15 @@ final class AIAvailability {
         return "Store \(store) · Device \(device) · AI \(state)"
     }
 
+    #if DEBUG
+    static let debugStorefrontKey = "debug_storefront"
+    #endif
+
+    /// Re-reads the storefront (the Debug-only country picker in Settings uses this).
+    func refresh() async {
+        storefrontCountry = await Self.currentStorefront()
+    }
+
     nonisolated static func isMainlandChina(storefront: String?, deviceRegion: String?) -> Bool {
         storefront?.uppercased() == "CHN" || deviceRegion?.uppercased() == "CN"
     }
@@ -47,7 +56,7 @@ final class AIAvailability {
     private static func currentStorefront() async -> String? {
         #if DEBUG
         // Simulate a storefront without changing the Apple Account: `-debug_storefront CHN` or the same key in UserDefaults.
-        if let forced = UserDefaults.standard.string(forKey: "debug_storefront"), !forced.isEmpty { return forced }
+        if let forced = UserDefaults.standard.string(forKey: debugStorefrontKey), !forced.isEmpty { return forced }
         #endif
         return await Storefront.current?.countryCode
     }
