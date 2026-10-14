@@ -18,6 +18,7 @@ struct ContentView: View {
     }
 
     @Environment(EntitlementManager.self) private var entitlements
+    @Environment(AIAvailability.self) private var ai
 
     var body: some View {
         switch entitlements.access {
@@ -51,9 +52,11 @@ struct ContentView: View {
             HeatmapTabView()
                 .tabItem { Label("Heatmap", systemImage: "square.grid.3x3.fill") }
 
-            // ── Chat (center) ─────────────────────────────────────
-            ChatView()
-                .tabItem { Label("Chat", systemImage: "sparkles") }
+            // ── Chat (center). Not offered on the China mainland App Store, see AIAvailability. ──
+            if ai.isEnabled {
+                ChatView()
+                    .tabItem { Label("Chat", systemImage: "sparkles") }
+            }
 
             // ── Favourites ───────────────────────────────────────
             NavigationStack {

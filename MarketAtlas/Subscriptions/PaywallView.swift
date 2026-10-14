@@ -4,6 +4,7 @@ import SwiftUI
 /// Full-screen gate shown until the user has a subscription or the lifetime unlock.
 struct PaywallView: View {
     @Environment(EntitlementManager.self) private var entitlements
+    @Environment(AIAvailability.self) private var ai
     @State private var selected: PlanID = .yearly
     @State private var showError = false
 
@@ -120,7 +121,7 @@ struct PaywallView: View {
             feature("globe.europe.africa.fill", "11,000+ companies in 81 countries & regions")
             feature("square.grid.3x3.fill", "Heatmaps by country/region and sector")
             feature("flag.checkered", "Ranking Race and Time Machine")
-            feature("sparkles", "AI chat and AI screener")
+            if ai.isEnabled { feature("sparkles", "AI chat and AI screener") }
             feature("rectangle.on.rectangle", "Home Screen and Lock Screen widgets")
         }
         .frame(maxWidth: .infinity, alignment: .leading)

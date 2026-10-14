@@ -5,6 +5,7 @@ struct SettingsView: View {
     @AppStorage("app_appearance") private var appearance: String = "system"
     @AppStorage(VoiceLanguage.storageKey) private var voiceLanguage: String = VoiceLanguage.auto.rawValue
     @Environment(EntitlementManager.self) private var entitlements
+    @Environment(AIAvailability.self) private var ai
     @State private var showManageSubscriptions = false
     #if DEBUG
     @AppStorage(DebugProOverride.key) private var proOverride: Bool = false
@@ -45,14 +46,16 @@ struct SettingsView: View {
                 .pickerStyle(.inline)
             }
 
-            Section {
-                Picker("Language", selection: $voiceLanguage) {
-                    ForEach(VoiceLanguage.allCases) { Text($0.label).tag($0.rawValue) }
+            if ai.isEnabled {
+                Section {
+                    Picker("Language", selection: $voiceLanguage) {
+                        ForEach(VoiceLanguage.allCases) { Text($0.label).tag($0.rawValue) }
+                    }
+                } header: {
+                    Text("Voice Input")
+                } footer: {
+                    Text("Language used when you tap the microphone in AI Chat. Automatic follows your device language.")
                 }
-            } header: {
-                Text("Voice Input")
-            } footer: {
-                Text("Language used when you tap the microphone in AI Chat. Automatic follows your device language.")
             }
 
 

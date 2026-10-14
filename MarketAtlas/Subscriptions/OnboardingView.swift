@@ -4,6 +4,7 @@ import SwiftUI
 /// Illustrations are drawn in SwiftUI (no image assets), so they follow dark mode, language and screen size.
 struct OnboardingView: View {
     let onFinish: () -> Void
+    @Environment(AIAvailability.self) private var ai
     @State private var page = 0
 
     private struct Page: Identifiable {
@@ -12,7 +13,7 @@ struct OnboardingView: View {
         let message: LocalizedStringKey
     }
 
-    private let pages: [Page] = [
+    private let allPages: [Page] = [
         Page(id: 0, title: "The whole market at a glance",
              message: "Every country and sector on one screen. Tile size is market cap, colour is the change."),
         Page(id: 1, title: "Watch the giants race",
@@ -20,6 +21,9 @@ struct OnboardingView: View {
         Page(id: 2, title: "Ask anything",
              message: "Rankings, comparisons and revenue history in plain language. Type or speak."),
     ]
+
+    /// The "Ask anything" page is left out where the AI features are not offered.
+    private var pages: [Page] { ai.isEnabled ? allPages : allPages.filter { $0.id != 2 } }
 
     private var isLast: Bool { page == pages.count - 1 }
 
@@ -255,4 +259,5 @@ private struct ChatIllustration: View {
 
 #Preview {
     OnboardingView(onFinish: {})
+        .environment(AIAvailability())
 }

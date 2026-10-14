@@ -28,6 +28,8 @@ struct ScreenerView: View {
     @State private var errorMessage: String?
     @State private var hasSearched = false
 
+    @Environment(AIAvailability.self) private var ai
+
     // AI search
     @State private var aiQuery = ""
     @State private var isAILoading = false
@@ -46,38 +48,40 @@ struct ScreenerView: View {
 
     private var screenerContent: some View {
         List {
-            // ── AI Natural Language Search ─────────────────────────────────
-            Section {
-                HStack {
-                    Image(systemName: "sparkles")
-                        .foregroundStyle(Color.accentColor)
-                    TextField("e.g. Japanese tech stocks with P/E under 20", text: $aiQuery)
-                        .submitLabel(.search)
-                        .onSubmit { Task { await runAIScreener() } }
-                    if isAILoading {
-                        ProgressView().scaleEffect(0.75)
-                    } else if !aiQuery.isEmpty {
-                        Button { Task { await runAIScreener() } } label: {
-                            Image(systemName: "arrow.right.circle.fill")
-                                .foregroundStyle(Color.accentColor)
+            if ai.isEnabled {
+                // ── AI Natural Language Search ─────────────────────────────────
+                Section {
+                    HStack {
+                        Image(systemName: "sparkles")
+                            .foregroundStyle(Color.accentColor)
+                        TextField("e.g. Japanese tech stocks with P/E under 20", text: $aiQuery)
+                            .submitLabel(.search)
+                            .onSubmit { Task { await runAIScreener() } }
+                        if isAILoading {
+                            ProgressView().scaleEffect(0.75)
+                        } else if !aiQuery.isEmpty {
+                            Button { Task { await runAIScreener() } } label: {
+                                Image(systemName: "arrow.right.circle.fill")
+                                    .foregroundStyle(Color.accentColor)
+                            }
+                            .buttonStyle(.plain)
                         }
-                        .buttonStyle(.plain)
                     }
+                    if let hint = parsedFiltersText {
+                        Text(hint)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    if let aiErr = aiErrorMessage {
+                        Text(aiErr)
+                            .font(.caption)
+                            .foregroundStyle(.red)
+                    }
+                } header: {
+                    Text("AI Search")
+                } footer: {
+                    Text("Describe what you're looking for in plain language.")
                 }
-                if let hint = parsedFiltersText {
-                    Text(hint)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-                if let aiErr = aiErrorMessage {
-                    Text(aiErr)
-                        .font(.caption)
-                        .foregroundStyle(.red)
-                }
-            } header: {
-                Text("AI Search")
-            } footer: {
-                Text("Describe what you're looking for in plain language.")
             }
 
             Section("Market Cap") {

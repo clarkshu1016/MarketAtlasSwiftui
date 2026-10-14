@@ -12,6 +12,7 @@ struct MarketAtlasApp: App {
     #endif
 
     @State private var entitlements = EntitlementManager()
+    @State private var ai = AIAvailability()
 
     init() {
         GIDSignIn.sharedInstance.configuration = GIDConfiguration(clientID: googleClientID)
@@ -21,7 +22,9 @@ struct MarketAtlasApp: App {
         WindowGroup {
             ContentView()
                 .environment(entitlements)
+                .environment(ai)
                 .task { await entitlements.start() }
+                .task { await ai.start() }
                 .onOpenURL { GIDSignIn.sharedInstance.handle($0) }
                 #if DEBUG
                 .pulseFloatingBubble()
