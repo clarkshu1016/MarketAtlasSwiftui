@@ -60,6 +60,14 @@ struct SettingsView: View {
 
 
             Section("About") {
+                LabeledContent {
+                    Text(verbatim: ai.statusText)
+                        .font(.caption.monospaced())
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.trailing)
+                } label: {
+                    Text(verbatim: "Region")
+                }
                 LabeledContent("Version", value: {
                     let v = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
                     let b = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"

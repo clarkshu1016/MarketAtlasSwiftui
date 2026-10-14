@@ -22,6 +22,15 @@ final class AIAvailability {
         return !Self.isMainlandChina(storefront: storefrontCountry, deviceRegion: Locale.current.region?.identifier)
     }
 
+    /// One line for Settings → About, so "why is AI missing?" can be answered from the phone itself.
+    /// Not localized on purpose: it is a diagnostic. Store = App Store country the app reads (ISO alpha-3), Device = region setting.
+    var statusText: String {
+        let store = isResolved ? (storefrontCountry ?? "none") : "…"
+        let device = Locale.current.region?.identifier ?? "none"
+        let state = !isResolved ? "checking" : (isEnabled ? "on" : "off")
+        return "Store \(store) · Device \(device) · AI \(state)"
+    }
+
     nonisolated static func isMainlandChina(storefront: String?, deviceRegion: String?) -> Bool {
         storefront?.uppercased() == "CHN" || deviceRegion?.uppercased() == "CN"
     }
