@@ -125,6 +125,8 @@ enum Sector {
         case "Media & Telecom": String(localized: "Media & Telecom")
         case "Real Estate":     String(localized: "Real Estate")
         case "Services":        String(localized: "Services")
+        case "Automotive":      String(localized: "Automotive")
+        case "Retail & E-commerce": String(localized: "Retail & E-commerce")
         case "Unclassified":    String(localized: "Unclassified")
         default:                raw
         }
@@ -142,6 +144,8 @@ enum Sector {
         case "Media & Telecom": "📡"
         case "Real Estate":     "🏠"
         case "Services":        "💼"
+        case "Automotive":      "🚗"
+        case "Retail & E-commerce": "🛒"
         default:                "❔"
         }
     }
