@@ -219,14 +219,12 @@ struct CompanyDetailView: View {
                 }
                 #endif
 
-                // ── Peers (prototype, Debug only) ────────────────
-                #if DEBUG
+                // ── Peers ────────────────────────────────────────
                 if let pool = companyList?.allCompanies, !pool.isEmpty, company.slug != nil {
                     PeersCard(company: company, pool: pool)
                         .padding(.horizontal, 16)
                         .padding(.top, 16)
                 }
-                #endif
 
                 // ── Financial Chart ───────────────────────────────
                 if company.slug != nil {

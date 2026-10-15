@@ -55,7 +55,8 @@ struct FullScreenChartView: View {
 
     private var selected: ChartSeriesPoint? {
         guard let d = selectedDate else { return nil }
-        return points.min { abs($0.date.timeIntervalSince(d)) < abs($1.date.timeIntervalSince(d)) }
+        // Only points that are on screen: pressing at the very edge must not pick one just outside the window.
+        return visible.min { abs($0.date.timeIntervalSince(d)) < abs($1.date.timeIntervalSince(d)) }
     }
 
     private var yDomain: ClosedRange<Double> {
@@ -66,6 +67,18 @@ struct FullScreenChartView: View {
         }
         let pad = (hi - lo) * 0.08
         return (lo - pad)...(hi + pad)
+    }
+
+    /// True once the window has been dragged away from the newest data.
+    private var awayFromLatest: Bool {
+        scrollPosition.addingTimeInterval(visibleLength) < last.addingTimeInterval(-7 * Self.day)
+    }
+
+    private func jumpToLatest() {
+        withAnimation(.easeInOut(duration: 0.25)) {
+            scrollPosition = last.addingTimeInterval(-visibleLength)
+            selectedDate = nil
+        }
     }
 
     private var windowStart: Double { visible.first?.value ?? 0 }
@@ -128,32 +141,34 @@ struct FullScreenChartView: View {
 
     private var header: some View {
         HStack(alignment: .center, spacing: 12) {
-            VStack(alignment: .leading, spacing: 2) {
-                Text(title).font(.footnote.weight(.semibold)).foregroundStyle(secondary).lineLimit(1)
-                // Fixed-size slots, so nothing moves when a point is picked or the figures change.
-                HStack(alignment: .center, spacing: 14) {
+            VStack(alignment: .leading, spacing: 3) {
+                // The top line is the name; while a point is picked it becomes that point's date (same slot, same style).
+                Group {
+                    if let s = selected {
+                        Text(s.date, format: .dateTime.year().month(.abbreviated).day())
+                    } else {
+                        Text(title)
+                    }
+                }
+                .font(.footnote.weight(.semibold)).foregroundStyle(secondary).lineLimit(1)
+                .frame(height: 16, alignment: .leading)
+
+                HStack(alignment: .center, spacing: 10) {
                     Text(format(shownValue))
                         .font(.system(size: 26, weight: .bold, design: .rounded))
                         .monospacedDigit()
                         .lineLimit(1)
                         .minimumScaleFactor(0.6)
-                        .frame(width: 150, alignment: .leading)
-                    VStack(alignment: .leading, spacing: 2) {
-                        if let s = selected {
-                            Text(s.date, format: .dateTime.year().month(.abbreviated).day())
-                                .font(.system(size: 13, weight: .medium)).foregroundStyle(secondary)
-                            if let p = previousOfSelected, p.value > 0 {
-                                changeLine((s.value - p.value) / p.value * 100)
-                            } else {
-                                Text(" ").font(.system(size: 13, weight: .semibold))
-                            }
-                        } else {
-                            Text(" ").font(.system(size: 13, weight: .medium))
-                            changeLine(changePercent, arrow: true)
+                        .frame(minWidth: 118, alignment: .leading)
+                    if let s = selected {
+                        if let p = previousOfSelected, p.value > 0 {
+                            changePill((s.value - p.value) / p.value * 100, arrow: false)
                         }
+                    } else {
+                        changePill(changePercent, arrow: true)
                     }
-                    .frame(width: 150, height: 36, alignment: .leading)
                 }
+                .frame(height: 32, alignment: .leading)
             }
             Spacer()
             HStack(spacing: 4) {
@@ -184,14 +199,16 @@ struct FullScreenChartView: View {
         }
     }
 
-    private func changeLine(_ pct: Double, arrow: Bool = false) -> some View {
-        let color: Color = pct >= 0 ? Color(red: 0.2, green: 0.85, blue: 0.6) : .red
+    private func changePill(_ pct: Double, arrow: Bool) -> some View {
+        let color: Color = pct >= 0 ? Color(red: 0.12, green: 0.72, blue: 0.5) : .red
         return HStack(spacing: 3) {
-            if arrow { Image(systemName: pct >= 0 ? "arrow.up.right" : "arrow.down.right").font(.system(size: 11, weight: .semibold)) }
+            if arrow { Image(systemName: pct >= 0 ? "arrow.up.right" : "arrow.down.right").font(.system(size: 10, weight: .bold)) }
             Text(String(format: "%+.2f%%", pct)).monospacedDigit()
         }
         .font(.system(size: 13, weight: .semibold))
         .foregroundStyle(color)
+        .padding(.horizontal, 8).padding(.vertical, 4)
+        .background(color.opacity(0.14), in: RoundedRectangle(cornerRadius: 6, style: .continuous))
     }
 
     private var chart: some View {
@@ -229,11 +246,27 @@ struct FullScreenChartView: View {
         }
         .chartXAxis {
             // Long spans: one tick a year, so a year is never printed twice.
-            AxisMarks(values: visibleLength > 900 * Self.day ? .stride(by: .year) : .automatic(desiredCount: 8)) { _ in
+            AxisMarks(values: xAxisValues) { _ in
                 AxisGridLine(stroke: StrokeStyle(lineWidth: 0.3))
                 AxisValueLabel(format: xFormat, centered: false).font(.system(size: 10)).foregroundStyle(secondary)
             }
         }
+        .simultaneousGesture(TapGesture(count: 2).onEnded { jumpToLatest() })
+        .overlay(alignment: .topTrailing) {
+            if awayFromLatest {
+                Button { jumpToLatest() } label: {
+                    Label("Latest", systemImage: "forward.end.fill")
+                        .font(.system(size: 12, weight: .semibold))
+                        .padding(.horizontal, 12).padding(.vertical, 7)
+                        .background(Color(UIColor.tertiarySystemGroupedBackground), in: Capsule())
+                        .contentShape(Capsule())
+                }
+                .buttonStyle(.plain)
+                .padding(.top, 6).padding(.trailing, 44)
+                .transition(.opacity)
+            }
+        }
+        .animation(.easeInOut(duration: 0.2), value: awayFromLatest)
         .simultaneousGesture(
             MagnifyGesture()
                 .onChanged { g in
@@ -242,6 +275,14 @@ struct FullScreenChartView: View {
                 }
                 .onEnded { _ in pinchBase = nil }
         )
+    }
+
+    /// Long spans: whole years only, spaced so that about eight labels fit (every year, every 2, 5, 10 years).
+    private var xAxisValues: AxisMarkValues {
+        guard visibleLength > 900 * Self.day else { return .automatic(desiredCount: 8) }
+        let years = visibleLength / (365 * Self.day)
+        let step = [1, 2, 5, 10, 20].first { years / Double($0) <= 8 } ?? 20
+        return .stride(by: .year, count: step)
     }
 
     private var xFormat: Date.FormatStyle {

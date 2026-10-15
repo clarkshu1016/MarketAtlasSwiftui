@@ -30,8 +30,8 @@
 - [ ] **同行卡片（Peers）**：`Views/Components/PeersCard.swift`，放在 About 下面、年度财务上面。已定：去掉 toolbar 里原来的对比按钮，改为同行小卡片右上角的"＋"进入对比（带当前公司 + 这家）；`CompareView` 新增了 `peers` 参数。
   - [x] 长代码（如 Samsung 的 005930.KS）：超过 6 个字符时卡片标题显示公司名，下面一行显示国家（已做）
   - [ ] 没有标签或市值的公司没有同行：显示一行普通的"Compare"（已写，未实测）
-  - [ ] 新增文字要加进 `Localizable.xcstrings`（9 种语言）："About"、"Peers"、"Worldwide"、"Founded"、"Headquarters"、"Website"、"Read more"、"Show less"、"Compare"、来源署名
-  - [ ] 同行卡片目前只在 Debug 编译，上线时去掉 `#if DEBUG`
+  - [ ] 新增文字要加进 `Localizable.xcstrings`（9 种语言）：全屏图表的 "Latest"、"Full screen"、"Close"；"About"、"Peers"、"Worldwide"、"Founded"、"Headquarters"、"Website"、"Read more"、"Show less"、"Compare"、来源署名
+  - [x] 同行卡片已对所有构建开放（真实数据）；简介卡片仍只在 Debug（示例数据），接上真实数据后再放开
   - [ ] App 里其他地方如果提到"详情页右上角的对比按钮"，要一起改（未检查）
   - [ ] 简介卡片的来源署名颜色太浅，改深一点（CC BY-SA 要求保留署名，不能删）
 
