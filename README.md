@@ -2,6 +2,8 @@
 
 SwiftUI stock market app with AI chat, company screener, price history, and favorites.
 
+待办清单（客户端、服务端、网站、商店）见 [ROADMAP.md](ROADMAP.md)。
+
 ---
 
 ## CI/CD — Auto Debug Build → Firebase App Distribution

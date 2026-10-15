@@ -101,6 +101,7 @@ struct PriceHistoryView: View {
     @State private var isDragging    = false
     @State private var selectedPrice: PricePoint?     = nil
     @State private var selectedMcap:  MarketCapPoint? = nil
+    @State private var showFullScreen = false
 
     @Environment(\.colorScheme) private var colorScheme
     @Environment(AuthViewModel.self) private var authVM
@@ -250,6 +251,21 @@ struct PriceHistoryView: View {
                         .foregroundStyle(lineColor)
                     }
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .overlay(alignment: .trailing) {
+                    Button {
+                        var t = Transaction(); t.disablesAnimations = true
+                        withTransaction(t) { showFullScreen = true }
+                    } label: {
+                        Image(systemName: "arrow.up.left.and.arrow.down.right")
+                            .font(.system(size: 12, weight: .semibold))
+                            .foregroundStyle(secondaryText)
+                            .frame(width: 30, height: 30)
+                            .background(btnUnsel, in: Circle())
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("Full screen")
+                }
                 .padding(.horizontal, 16)
                 .padding(.bottom, 8)
                 .animation(.easeInOut(duration: 0.15), value: isDragging)
@@ -273,11 +289,11 @@ struct PriceHistoryView: View {
                             ForEach(filteredPrice) { pt in
                                 AreaMark(x: .value("Date", pt.date), y: .value("Value", pt.price))
                                     .foregroundStyle(LinearGradient(colors: [lineColor.opacity(0.3), .clear], startPoint: .top, endPoint: .bottom))
-                                    .interpolationMethod(.catmullRom)
+                                    .interpolationMethod(.monotone)
                                 LineMark(x: .value("Date", pt.date), y: .value("Value", pt.price))
                                     .foregroundStyle(lineColor)
                                     .lineStyle(StrokeStyle(lineWidth: 1.8))
-                                    .interpolationMethod(.catmullRom)
+                                    .interpolationMethod(.monotone)
                             }
                             if let sel = selectedPrice, isDragging {
                                 RuleMark(x: .value("Date", sel.date))
@@ -300,11 +316,11 @@ struct PriceHistoryView: View {
                             ForEach(filteredMcap) { pt in
                                 AreaMark(x: .value("Date", pt.date), y: .value("Value", pt.value))
                                     .foregroundStyle(LinearGradient(colors: [lineColor.opacity(0.3), .clear], startPoint: .top, endPoint: .bottom))
-                                    .interpolationMethod(.catmullRom)
+                                    .interpolationMethod(.monotone)
                                 LineMark(x: .value("Date", pt.date), y: .value("Value", pt.value))
                                     .foregroundStyle(lineColor)
                                     .lineStyle(StrokeStyle(lineWidth: 1.8))
-                                    .interpolationMethod(.catmullRom)
+                                    .interpolationMethod(.monotone)
                             }
                             if let sel = selectedMcap, isDragging {
                                 RuleMark(x: .value("Date", sel.date))
@@ -373,6 +389,23 @@ struct PriceHistoryView: View {
         .background(bgColor)
         .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
         .task(id: company.slug) { await loadAll() }
+        .fullScreenCover(isPresented: $showFullScreen) {
+            FullScreenChartView(
+                title: [company.name, company.ticker].compactMap { $0 }.joined(separator: " · "),
+                points: fullSeries,
+                initialRange: range,
+                isPresented: $showFullScreen,
+                format: { formatValue($0) },
+                axisFormat: { formatAxisY($0) }
+            )
+        }
+    }
+
+    /// The whole history of the metric on screen, for the full-screen chart.
+    private var fullSeries: [ChartSeriesPoint] {
+        metric == .price
+            ? (priceResponse?.points ?? []).map { ChartSeriesPoint(date: $0.date, value: $0.price) }
+            : (mcapResponse?.points ?? []).map { ChartSeriesPoint(date: $0.date, value: $0.value) }
     }
 
     // MARK: - Selection
@@ -442,6 +475,9 @@ struct PriceHistoryView: View {
         }
     }
 
+    /// True when the last point is more than half a day old, so a live point is worth adding.
+    private func isStale(_ date: Date) -> Bool { Date.now.timeIntervalSince(date) > 12 * 3600 }
+
     private func loadAll() async {
         guard let slug = company.slug else {
             isLoadingPrice = false
@@ -455,13 +491,26 @@ struct PriceHistoryView: View {
 
     private func loadPrice(slug: String) async {
         isLoadingPrice = true
-        priceResponse = try? await APIService.shared.fetchPriceHistory(slug: slug, range: "max", token: authVM.token)
+        var r = try? await APIService.shared.fetchPriceHistory(slug: slug, range: "max", token: authVM.token)
+        // The series is monthly: end it at today's price so the chart agrees with the figure at the top of the page.
+        if let resp = r, let live = company.price, let last = resp.points.last, isStale(last.date),
+           (0.5...2).contains(last.price / max(live, 0.0001)) {
+            r = PriceHistoryResponse(slug: resp.slug, ticker: resp.ticker,
+                                     points: resp.points + [PricePoint(timestamp: Int(Date.now.timeIntervalSince1970), price: live)])
+        }
+        priceResponse = r
         isLoadingPrice = false
     }
 
     private func loadMcap(slug: String) async {
         isLoadingMcap = true
-        mcapResponse = try? await APIService.shared.fetchMarketCapHistory(slug: slug)
+        var r = try? await APIService.shared.fetchMarketCapHistory(slug: slug)
+        if let resp = r, let live = company.market_cap, let last = resp.points.last, isStale(last.date),
+           (0.5...2).contains(last.value / max(live, 1)) {
+            r = MarketCapHistoryResponse(slug: resp.slug, ticker: resp.ticker,
+                                         points: resp.points + [MarketCapPoint(timestamp: Int(Date.now.timeIntervalSince1970), value: live)])
+        }
+        mcapResponse = r
         isLoadingMcap = false
     }
 }

@@ -7,6 +7,8 @@ struct CompareView: View {
     let pool: [Company]
     /// Opened from a company page: start with this company (looked up in `pool` for its full figures).
     var initial: Company? = nil
+    /// With `initial`: start with these alongside it instead of opening the picker (the Peers card on the company page).
+    var peers: [Company] = []
 
     private static let maxCompanies = 4
     private static let palette: [Color] = [
@@ -116,7 +118,11 @@ struct CompareView: View {
                     // Prefer the full record from the list: companies reached from a heatmap carry fewer fields.
                     // Only this company: the user picks what to compare it with, so the sheet opens straight away.
                     selected = [pool.first { $0.id == initial.id } ?? initial]
-                    showPicker = true
+                    if peers.isEmpty {
+                        showPicker = true
+                    } else {
+                        selected += peers.prefix(Self.maxCompanies - 1).map { p in pool.first { $0.id == p.id } ?? p }
+                    }
                 } else {
                     selected = Array(ranked.prefix(2))
                 }

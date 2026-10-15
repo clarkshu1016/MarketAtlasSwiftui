@@ -210,6 +210,24 @@ struct CompanyDetailView: View {
                         .padding(.top, 16)
                 }
 
+                // ── About (prototype, Debug only) ────────────────
+                #if DEBUG
+                if let profile = CompanyProfile.sample(slug: company.slug, japanese: Locale.current.language.languageCode?.identifier == "ja") {
+                    CompanyProfileCard(profile: profile)
+                        .padding(.horizontal, 16)
+                        .padding(.top, 16)
+                }
+                #endif
+
+                // ── Peers (prototype, Debug only) ────────────────
+                #if DEBUG
+                if let pool = companyList?.allCompanies, !pool.isEmpty, company.slug != nil {
+                    PeersCard(company: company, pool: pool)
+                        .padding(.horizontal, 16)
+                        .padding(.top, 16)
+                }
+                #endif
+
                 // ── Financial Chart ───────────────────────────────
                 if company.slug != nil {
                     VStack(spacing: 0) {
@@ -262,14 +280,6 @@ struct CompanyDetailView: View {
             }
         }
         .toolbar {
-            if let pool = companyList?.allCompanies, !pool.isEmpty, company.slug != nil {
-                NavigationLink {
-                    CompareView(pool: pool, initial: company)
-                } label: {
-                    Image(systemName: "rectangle.split.2x1")
-                }
-                .accessibilityLabel("Compare")
-            }
             if let ticker = company.ticker {
                 Button {
                     if authVM.isLoggedIn {
