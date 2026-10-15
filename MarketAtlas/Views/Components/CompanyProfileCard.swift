@@ -1,15 +1,7 @@
 import SwiftUI
 
-/// What a company does, in a few lines, plus a few facts. Shown on the company page under the tags.
-/// (Prototype: the content comes from `CompanyProfile.sample`; the real version will load it from the server.)
-struct CompanyProfile {
-    var summary: String
-    var founded: Int?
-    var headquarters: String?
-    var website: String?
-    var sourceURL: URL
-}
-
+/// What the company does, in a few lines, with its website and where the text came from.
+/// Shown on the company page under the price chart; `CompanyProfileSection` loads it and hides it when there is none.
 struct CompanyProfileCard: View {
     let profile: CompanyProfile
     @State private var expanded = false
@@ -37,22 +29,22 @@ struct CompanyProfileCard: View {
                 }
             }
 
-            if profile.founded != nil || profile.headquarters != nil || profile.website != nil {
+            if let site = profile.websiteDisplay {
                 Divider()
                 HStack(alignment: .top, spacing: 0) {
-                    if let f = profile.founded { fact("Founded", String(f)) }
-                    if let h = profile.headquarters { fact("Headquarters", h) }
-                    if let w = profile.website { fact("Website", w, link: URL.web(w)) }
+                    fact("Website", site, link: profile.websiteURL)
                 }
             }
 
-            Button { browsing = profile.sourceURL } label: {
+            if let source = profile.sourceURL {
+            Button { browsing = source } label: {
                 HStack(spacing: 4) {
                     Image(systemName: "book.closed")
                     Text("Source: Wikipedia · CC BY-SA")
                 }
                 .font(.caption2)
                 .foregroundStyle(.tertiary)
+            }
             }
         }
         .padding(16)
@@ -88,24 +80,26 @@ struct CompanyProfileCard: View {
     }
 }
 
-extension CompanyProfile {
-    /// Real Wikipedia text for a few companies, until the profiles come from the server.
-    static func sample(slug: String?, japanese: Bool) -> CompanyProfile? {
-        switch slug {
-        case "nvidia":
-            return japanese
-            ? CompanyProfile(summary: "NVIDIA Corporation（エヌビディア・コーポレーション）は、アメリカ合衆国に本社を置く、主にGPGPU（汎用計算用GPU）やAI（人工知能）関連の半導体を開発・研究・販売する世界的企業である。",
-                             founded: 1993, headquarters: "カリフォルニア州サンタクララ", website: "nvidia.com",
-                             sourceURL: URL(string: "https://ja.wikipedia.org/wiki/NVIDIA")!)
-            : CompanyProfile(summary: "Nvidia Corporation is an American multinational technology company headquartered in Santa Clara, California. The company develops graphics processing units (GPUs), systems on chips (SoCs), and application programming interfaces (APIs) for data science, high-performance computing, and mobile and automotive applications. Nvidia is the world's largest supplier of artificial intelligence hardware and software.",
-                             founded: 1993, headquarters: "Santa Clara, US", website: "nvidia.com",
-                             sourceURL: URL(string: "https://en.wikipedia.org/wiki/Nvidia")!)
-        case "toyota":
-            return CompanyProfile(summary: "Toyota Motor Corporation is a Japanese multinational automotive manufacturer headquartered in Toyota City, Aichi, Japan. It was founded by Kiichiro Toyoda and incorporated on August 28, 1937.",
-                                  founded: 1937, headquarters: "Toyota City, Japan", website: "toyota.com",
-                                  sourceURL: URL(string: "https://en.wikipedia.org/wiki/Toyota")!)
-        default:
-            return nil
+/// Loads the profile for a company in the app's language and shows the card, or nothing when there is none
+/// (a company without a profile, offline, or any error: the page simply has no About card).
+struct CompanyProfileSection: View {
+    let slug: String?
+    @State private var profile: CompanyProfile?
+
+    var body: some View {
+        VStack(spacing: 0) {
+            // The task needs a view to hang on while there is no card (a Group with nothing in it never runs it).
+            Color.clear.frame(height: 0)
+                .task(id: slug) {
+                    profile = nil
+                    guard let slug else { return }
+                    profile = try? await APIService.shared.fetchProfile(slug: slug, language: CompanyProfile.serverLanguage)
+                }
+            if let profile {
+                CompanyProfileCard(profile: profile)
+                    .padding(.horizontal, 16)
+                    .padding(.top, 16)
+            }
         }
     }
 }

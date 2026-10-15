@@ -182,6 +182,16 @@ final class APIService {
         return try await fetch(PriceHistoryResponse.self, req)
     }
 
+    /// The company's "About" text, or nil when we have none for it.
+    func fetchProfile(slug: String, language: String) async throws -> CompanyProfile? {
+        let req = get("api/companies/\(slug)/profile", query: [URLQueryItem(name: "lang", value: language)])
+        do {
+            return try await fetch(CompanyProfile.self, req)
+        } catch APIError.server(let code) where code == 404 {
+            return nil
+        }
+    }
+
     func fetchMarketCapHistory(slug: String) async throws -> MarketCapHistoryResponse {
         try await fetch(MarketCapHistoryResponse.self, get("api/companies/\(slug)/market-cap-history"))
     }
