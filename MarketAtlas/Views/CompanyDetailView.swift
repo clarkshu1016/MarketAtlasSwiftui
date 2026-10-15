@@ -210,14 +210,12 @@ struct CompanyDetailView: View {
                         .padding(.top, 16)
                 }
 
-                // ── About (prototype, Debug only) ────────────────
-                #if DEBUG
+                // ── About (sample text for now; shown only when a profile exists) ─────
                 if let profile = CompanyProfile.sample(slug: company.slug, japanese: Locale.current.language.languageCode?.identifier == "ja") {
                     CompanyProfileCard(profile: profile)
                         .padding(.horizontal, 16)
                         .padding(.top, 16)
                 }
-                #endif
 
                 // ── Peers ────────────────────────────────────────
                 if let pool = companyList?.allCompanies, !pool.isEmpty, company.slug != nil {

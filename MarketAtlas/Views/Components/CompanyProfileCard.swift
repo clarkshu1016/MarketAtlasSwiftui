@@ -13,6 +13,7 @@ struct CompanyProfile {
 struct CompanyProfileCard: View {
     let profile: CompanyProfile
     @State private var expanded = false
+    @State private var browsing: URL?
 
     private var isLong: Bool { profile.summary.count > 170 }
 
@@ -41,11 +42,11 @@ struct CompanyProfileCard: View {
                 HStack(alignment: .top, spacing: 0) {
                     if let f = profile.founded { fact("Founded", String(f)) }
                     if let h = profile.headquarters { fact("Headquarters", h) }
-                    if let w = profile.website { fact("Website", w) }
+                    if let w = profile.website { fact("Website", w, link: URL.web(w)) }
                 }
             }
 
-            Link(destination: profile.sourceURL) {
+            Button { browsing = profile.sourceURL } label: {
                 HStack(spacing: 4) {
                     Image(systemName: "book.closed")
                     Text("Source: Wikipedia · CC BY-SA")
@@ -58,25 +59,37 @@ struct CompanyProfileCard: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(Color(UIColor.secondarySystemGroupedBackground))
         .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+        .inAppBrowser(url: $browsing)
     }
 
-    private func fact(_ label: LocalizedStringKey, _ value: String) -> some View {
+    private func fact(_ label: LocalizedStringKey, _ value: String, link: URL? = nil) -> some View {
         VStack(alignment: .leading, spacing: 3) {
             Text(label)
                 .font(.caption2)
                 .foregroundStyle(.secondary)
-            Text(value)
-                .font(.footnote.weight(.semibold))
-                .lineLimit(2)
-                .minimumScaleFactor(0.8)
+            if let link {
+                Button { browsing = link } label: {
+                    Text(value)
+                        .font(.footnote.weight(.semibold))
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.8)
+                        .multilineTextAlignment(.leading)
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle(Color.accentColor)
+            } else {
+                Text(value)
+                    .font(.footnote.weight(.semibold))
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.8)
+            }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
-#if DEBUG
 extension CompanyProfile {
-    /// Real Wikipedia text for a few companies, to judge the layout. Not shipped.
+    /// Real Wikipedia text for a few companies, until the profiles come from the server.
     static func sample(slug: String?, japanese: Bool) -> CompanyProfile? {
         switch slug {
         case "nvidia":
@@ -96,4 +109,3 @@ extension CompanyProfile {
         }
     }
 }
-#endif
